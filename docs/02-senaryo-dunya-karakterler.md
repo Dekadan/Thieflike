@@ -1,4 +1,9 @@
-# 02 — Senaryo, Dünya ve Karakterler
+# 02 — Senaryo, Dünya ve Karakterler — ⚠️ ARŞİV (ilk taslak)
+
+> **Güncel kanon: `07-evren-kitabi.md`.** Yapımcı kararıyla evren, imparatorluğun
+> çöküş/soyulma devrine taşındı ve kahraman bir hürriyet cemiyetine bağlandı.
+> Bu dosyadaki çekirdekler (Hafızlar, Yaban, Saatçi, Kalb, Karagöz perdesi) 07'de
+> evrilerek yaşıyor; çelişki hâlinde 07 geçerlidir.
 
 > Bu doküman Sezon 1'in ("Akrep ve Yelkovan") tam senaryo iskeletini içerir.
 > Thief karşılıkları parantezle işaretlidir ki neyin neye hizmet ettiği görülsün —

@@ -1,6 +1,11 @@
 # GÖLGE OYUNU (kod adı: KUZGUN)
 
-> *"Sayeban'da gece iki tür insana aittir: aseslere ve benim gibilere."* — Kuzgun
+> *"Sendika şehri kalemle soyuyor. Ben de kalem işindeyim sayılır."* — Kuzgun
+
+**Yüksek konsept:** Çöken bir imparatorlukta, **imparatorluğu soyanları soyan adam.**
+Büyük İflas sonrası Sayeban'da gelirler yabancı alacaklıların Sendikası'na devredilmiş,
+ateş bile tekele bağlanmıştır — mühürsüz alev yakmak suçtur. Kuzgun, gizli Şafak
+Cemiyeti'nin "El"idir: kalemler yazar, matbaa basar, El çalar. (Ayrıntı: `docs/07`.)
 
 **Thief: The Dark Project / Thief II: The Metal Age** ruhunda, Osmanlı esintili kurgusal bir liman şehrinde geçen, ışık–gölge ve ses üzerine kurulu **birinci şahıs (POV), retro piksel-doku gizlilik oyunu**. Ara sahneleri geleneksel **Karagöz gölge tiyatrosu** estetiğiyle anlatılır — çünkü bu zaten bir "gölge oyunu"dur.
 
@@ -17,7 +22,8 @@ istediğin yerde yeniden yakarsın: karanlığı kendin kazar, sahte ışıkla d
 | Yol | İçerik |
 |---|---|
 | `docs/01-vizyon-ve-konsept.md` | Oyunun ne olduğu, tasarım sütunları, tema kararı ve alternatifler |
-| `docs/02-senaryo-dunya-karakterler.md` | Sayeban dünyası, fraksiyonlar, karakterler, Sezon 1 senaryosu (8 görev) |
+| `docs/07-evren-kitabi.md` | **EVREN KİTABI (güncel kanon):** Muahede Devri, Şafak Cemiyeti, ışık tekeli, Sezon 1 "Vade Gecesi" |
+| `docs/02-senaryo-dunya-karakterler.md` | İlk evren taslağı (arşiv — çekirdekler 07'ye evrildi) |
 | `docs/03-oyun-tasarimi-mekanikler.md` | Çekirdek döngü, ışık/ses sistemleri, yapay zekâ, araçlar, ekonomi |
 | `docs/04-sanat-ve-ses-yonetimi.md` | Piksel sanat yönü, palet, Karagöz ara sahneleri, müzik ve SFX |
 | `docs/05-hedef-kitle-ve-pazar.md` | Tür analizi (2025–26), hedef kitle segmentleri, Türkiye pazarı, fiyatlama |

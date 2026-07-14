@@ -6,9 +6,13 @@
 geleneğini takip eden bir **birinci şahıs gizlilik oyunu**dur — Thief gibi POV, ama dev bütçeli
 fotogerçekçilik yerine tek kişilik/küçük ekiple üretilebilir **retro piksel-doku 3D**
 ("software-render" estetiği; Gloomwood/Dusk okulunun bizdeki karşılığı).
-Mekân: Osmanlı estetiğinden beslenen **kurgusal** liman şehri **Sayeban**.
+Mekân: Osmanlı estetiğinden beslenen **kurgusal** liman şehri **Sayeban** —
+artık **Muahede Devri**'nde: iflas etmiş, gelirleri yabancı alacaklı Sendikası'na
+devredilmiş, ışığı bile tekele bağlanmış bir şehir (**güncel evren: `07-evren-kitabi.md`**).
+Kahraman, gizli Şafak Cemiyeti'nin hırsızıdır: *imparatorluğu soyanları soyar.*
 Thief'i kopyalamaz: çekirdeğin üstüne kendi imza sistemini koyar — **Fanus**
-(ışığı söndürmek değil, çalıp yeniden yerleştirmek; bkz. `03` §6).
+(ışığı söndürmek değil, çalıp yeniden yerleştirmek; bu evrende mühürsüz alev
+taşımak zaten suçtur — mekanik, temanın kendisidir; bkz. `03` §6 ve `07` §6).
 
 Oyuncu, kentin en usta hırsızı **Kuzgun**'dur. Görev tabanlı ilerler: her görev bir "bulmaca
 kutusu" gibi tasarlanmış bir mekândır (konak, bedesten, sarnıç, saat kulesi...). Amaç çoğu zaman
