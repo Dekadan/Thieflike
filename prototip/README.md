@@ -1,7 +1,9 @@
-# Prototip: "Kesat Zamanlar" (birinci şahıs ön izleme)
+# Prototip: "Kesat Zamanlar" (birinci şahıs 3D ön izleme)
 
-Tek dosyalık, kurulumsuz **POV** tarayıcı prototipi. `index.html`'i çift tıkla → oyna.
-(Klavye + fare gerekir; fareyle bakmak için oyuna bir kez tıkla. Ses ilk tuşla açılır.)
+Tek dosyalık, kurulumsuz **gerçek 3D (WebGL)** tarayıcı prototipi: serbest fare bakışı
+(yukarı/aşağı/çapraz), kutu-gövde low-poly asesler, yumuşak kandil ışığı, yıldızlı gece.
+`index.html`'i çift tıkla → oyna. (Klavye + fare gerekir; fareyle bakmak için oyuna bir
+kez tıkla. Ses ilk tuşla açılır. WebGL destekli güncel tarayıcı ister — hepsi destekler.)
 
 İlk üstten bakış denemesi `arsiv-ustten-bakis.html`'de arşivlidir — devriye rotalarını
 kuşbakışı okumak için hâlâ faydalı bir tasarım aracı.
@@ -48,6 +50,7 @@ Thief'in su oku ışığı *yok eder*; fanus ışığı **mala çevirir**:
 
 ## Bu prototip neyi kanıtlıyor?
 
-Thief çekirdeğinin (gözle-planla-sız-al-kaybol) POV'de, ve **Fanus**'un onun üstüne
-bir şey kattığını. Godot'a geçerken `buildWorld()` kat planının, `updateGuard()` devriye
-durum makinesinin, `computeLight()` ışık sisteminin referansıdır.
+Thief çekirdeğinin (gözle-planla-sız-al-kaybol) gerçek 3D birinci şahısta çalıştığını,
+ve **Fanus**'un onun üstüne bir şey kattığını. Godot'a geçerken `buildWorld()` kat planının,
+`updateGuard()` devriye durum makinesinin, `computeLight()` ışık sisteminin,
+`drawGuard()` ise kutu-gövde karakter dilinin referansıdır.

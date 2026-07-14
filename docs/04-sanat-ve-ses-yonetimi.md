@@ -6,12 +6,13 @@ Kullanıcı vizyonu net: **POV görünüm + piksel tarzı korunacak, ama daha ho
 Çeviri: 1998'in "software-render" bakışı, bugünün eliyle — düşük çözünürlüklü birinci şahıs,
 piksel dokular, kuantalanmış ışık (Gloomwood/Dusk/Cruelty Squad okulunun atmosferik kanadı).
 
-- **İç çözünürlük:** 480×270 render, tam sayı katlarıyla ölçekleme (prototip birebir bu).
-- **Doku:** 16×16 – 32×32 px duvar/zemin dokuları; el boyaması, palet disiplinli.
-- **Varlıklar:** billboard sprite (Doom usulü) — devriye 20×30 px; bu, piksel sanat
-  becerisinin 3D modellemeye hiç bulaşmadan POV'de yaşamasını sağlar. Godot'ta ileri
-  aşamada "sprite → düşük poligon + piksel doku" melezi denenebilir (Kukla düşmanlar
-  low-poly'ye çok yakışır: köşeli, mekanik).
+- **Ekran keskin, doku retro:** ekran tam çözünürlük (yazılar cam gibi), dünya dokuları
+  32×32 px el boyaması — Thief 1998'in gerçek reçetesi budur (düşük doku, net ekran).
+- **Karakterler: kutu-gövde low-poly** (prototipte kanıtlandı): kafa/gövde/bacak/kol
+  kutuları + yüz dokusu (göz-kaş-bıyık) + börk. PS1/N64 dönemi insan hissi — piksel
+  sanat becerisiyle üretilebilir, animasyonu programatik (bacak salınımı, eğilme).
+  Godot'ta bir tık yukarısı: aynı oranlarda düşük poligon gövde + piksel doku giydirme;
+  Kukla (otomat) düşmanlar bu dile zaten mükemmel oturur (köşeli, mekanik).
 - **Işık kuantalanır:** parlaklık 8 kademeye yuvarlanır (banding = estetik imza),
   kaynak yakını amber, gölge mavi; mesafe sisi karanlığa değil laciverte düşer.
 - **Siluet kuralı:** Her varlık dış hattından tanınmalı — oyun çoğu zaman karanlık.

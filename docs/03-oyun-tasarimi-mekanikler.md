@@ -13,10 +13,12 @@
 | Yukarıdan bakış | Planlama netliği, en ucuz üretim | "İçinde olma" hissi yok | Arşivlendi; belki "Hafız kayıt masası" mini-oyunu olarak döner |
 | Yandan görünüm / izometrik | — | Kat planı hissi ve/veya maliyet | Reddedildi |
 
-**Teknik çeviri:** Prototip el yazması raycast motoru (Wolfenstein tekniği + karo bazlı
-ışık haritası). Godot'da hedef: düşük çözünürlüklü 3D (SubViewport 480×270, ışıksız/unlit
-piksel dokular, karo bazlı ışık değeri gameplay için ayrı hesaplanır) — görünüm retro,
-sistemler modern.
+**Teknik çeviri:** Prototip el yazması **WebGL gerçek-3D motoru**: serbest bakış
+(yukarı/aşağı/çapraz fare kontrolü), gerçek perspektif kamera, kutu-gövde low-poly
+karakterler (yüz dokulu), karo bazlı ışık haritası shader'da yumuşak örneklenir,
+UI tam çözünürlüklü ayrı katmanda (okunur tipografi). Godot'da hedef aynı reçetenin
+büyüğü: Godot 3D + piksel dokular + karo bazlı ışık değeri gameplay için ayrı hesap —
+görünüm retro (Thief 1998 "software-render" hissi), sistemler modern.
 
 ## 2. Çekirdek Döngü (30 saniyelik döngü)
 

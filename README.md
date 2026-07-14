@@ -39,7 +39,7 @@ yerleştirmek**; keseni doldurup sırra kadem basmak.
 - [x] Konsept, dünya ve Sezon 1 senaryosu
 - [x] Çekirdek mekanik tasarımı + imza mekanik (**Fanus**)
 - [x] Sanat/ses yönü ve pazar analizi
-- [x] Oynanabilir **birinci şahıs** prototip (raycast; ışık-gölge, ses, devriye YZ, fanus, bayıltma)
+- [x] Oynanabilir **birinci şahıs gerçek 3D** prototip (WebGL; serbest bakış, ışık-gölge, ses, devriye YZ, fanus, bayıltma)
 - [ ] Godot 4 (3D low-res) projesine geçiş (bkz. `docs/06`)
 - [ ] Dikey dilim: "Kesat Zamanlar" görevi
 
