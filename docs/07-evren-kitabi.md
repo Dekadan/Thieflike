@@ -115,7 +115,21 @@ Sendika'ya geçer. Yani Vade Gecesi'nde şehrin **tarihi ipotektedir.**
 
 **Kimlik:** Muahede'ye ve Nizamname'nin rafa kalkmasına karşı, kalemle örgütlenen gizli
 cemiyet. Sloganları: ***"Karanlıkta yazarız ki şafak sökünce okunsun."*** Gizli gazeteleri
-**FECİR**, el altından dağıtılır; matbaaları her baskından sonra semt değiştirir.
+**FECİR**, el altından dağıtılır; her sayının başlığı altında şu satır durur:
+***"Fecir, güneşe yasak koyulmayan bir memleket bulur, yine doğar."*** Matbaa her
+baskından sonra semt değiştirir; sokağa bakan yüzü, ders kitabı bastığı iddiasındaki
+paravan dernektir: **Maarif ve Neşriyat Cemiyeti.** *(Kaynak dokusu: `08` D-K.)*
+
+**Usuller (kitaptan damıtıldı — `08` A/B/C):**
+- **Tahkikat:** Aday üye, birbirinden habersiz tahkik memurlarının imzasız raporlarıyla
+  elenir; raporlar çelişirse tahkikat başkalarıyla tekrarlanır. Kuzgun'un Görev 1'i,
+  bilmeden girdiği bu sınavdır — sonunda iki rapor okunur: biri lehte, biri aleyhte.
+- **Yemin:** *"Şafak, kimsenin burnunu kanatmaz."* Cemiyetin şiddetsizlik doktrini —
+  bayıltma sopası Kuzgun'a verilen tek tavizdir ve tartışması hiç bitmez. (Oyunun
+  öldürmeme kuralı ve HAYALET derecesinin evren içi karşılığı budur.)
+- **Sandık:** Mîrza Paşa'nın döner sermayesi; her harcama Basmacı'nın defterine
+  makbuz karşılığı işlenir, üyelere kademeli aylık bağlanır. Sendika da makbuz keser,
+  Cemiyet de — bu evrende savaş, iki defter arasındadır.
 
 **Yapı (hücre tipi):**
 - **Kalemler:** yazarlar, mütercimler, hocalar — cemiyetin aklı. Kod adları kalem
@@ -221,6 +235,12 @@ geçer. Baş Muhasip, Vade Kulesi'ndeki **Büyük Defter**'i gece yarısı "kapa
 hazırlamaktadır. Kimse defteri durduramaz — çünkü kimse defteri **taşıyamaz**.
 Ama defterin kalbinde, Kadim Şehir'den sökülmüş kendi kendine kurulan bir çark döner:
 **Kalb.** Ve Kuzgun, taşınamayanı taşımakta ustadır.
+
+**Koşu yan-hikâye — "Aramızdaki Muhbir"** *(kaynak: `08` F/G)*: Sezon boyunca
+Cemiyet'ten Böcekbaşılığa imzasız jurnaller sızar. Bilgi halkaları dardır ("bunu üç
+kişi biliyordu..."); görevlerde toplanan ipuçları ve oyuncuya sunulan sahte-bilgi
+dağıtma seçenekleri, finalden önce muhbiri işaret eder. Cevap, Mîrza Paşa sorusuyla
+düğümlenir: para mı sızdırıyor, adam mı?
 
 **Perde I — Kese (1-3):**
 1. **MÜHÜRSÜZ ALEV** *(eğitim — mevcut konak haritası buraya bağlanır)*: Reji'nin
