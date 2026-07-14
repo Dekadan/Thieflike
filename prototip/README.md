@@ -27,6 +27,7 @@ Haritada toplam 790 akçe var — hangi odaları göze alacağın senin kararın
 | Q / sağ tık | Çakıl fırlat (ses tuzağı) |
 | Space | Arkadan habersiz devriyeyi bayılt |
 | TAB (basılı) | Kat planı |
+| 1 / 2 | Parlaklık azalt / artır (kalıcı; oyun dengesini etkilemez) |
 | M / R | Ses aç-kapa / yeniden başla |
 
 ## FANUS — imza mekanik

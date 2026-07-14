@@ -24,6 +24,13 @@ document.title='Gölge Oyunu — Kuzgun (3D Prototip)';
 // =====================================================================
 const TILE=16, MW=46, MH=30, GOAL=450;
 const WALL_H=1.5, EYE=0.95, EYE_CROUCH=0.6;
+let BRIGHT=1.15; // görsel parlaklık (1/2 tuşları; oyun dengesini etkilemez)
+try{ BRIGHT=Math.min(1.9,Math.max(0.7,parseFloat(localStorage.getItem('golge_bright'))||1.15)); }catch(e){}
+function setBright(d){
+  BRIGHT=Math.min(1.9,Math.max(0.7,BRIGHT+d));
+  try{ localStorage.setItem('golge_bright',BRIGHT); }catch(e){}
+  toast('Parlaklık %'+Math.round(BRIGHT*100)+(BRIGHT>=1.9?' (azami)':BRIGHT<=0.7?' (asgari)':''),'#cbb98a');
+}
 
 // ---------------- Dünya (Paşa Rüstem'in Konağı) ----------------
 let floorG, solidG, indoorG, doors, lights, loots, guards, bodies, projs, toasts, player, state, timeInMission, tension;
@@ -349,6 +356,8 @@ addEventListener('keydown',e=>{
   if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space','Tab','KeyE'].includes(e.code))e.preventDefault();
   if(keys[e.code])return; keys[e.code]=true;
   if(e.code==='KeyM'){muted=!muted;toast(muted?'Ses kapalı':'Ses açık','#9fb0c8');}
+  if(e.code==='Digit1')setBright(-0.1);
+  if(e.code==='Digit2')setBright(0.1);
   if(state==='title'&&e.code==='Enter'){buildWorld();state='play';}
   else if(state==='play'){
     if(e.code==='KeyC')player.crouch=!player.crouch;
@@ -698,20 +707,21 @@ const FS=`
 precision mediump float;
 varying vec2 vUV; varying float vShade; varying vec3 vWorld;
 uniform sampler2D uTex, uLight;
-uniform vec3 uCam; uniform vec4 uTint; uniform float uEmissive;
+uniform vec3 uCam; uniform vec4 uTint; uniform float uEmissive, uBright;
 void main(){
   vec4 t=texture2D(uTex,vUV)*uTint;
   if(t.a<0.06)discard;
   float L=texture2D(uLight,vec2(vWorld.x/46.0,vWorld.z/30.0)).r;
-  float br=mix(clamp(0.19+1.05*L,0.0,1.15),1.0,uEmissive);
-  br=floor(br*12.0+0.5)/12.0;
-  vec3 warm=vec3(1.08,0.99,0.86), cool=vec3(0.68,0.78,1.12);
+  // görsel taban aydınlık yüksek tutulur; oyun kuralı (devriye görüşü) L'yi ayrı kullanır
+  float br=mix(clamp(0.36+0.84*L,0.0,1.2),1.0,uEmissive)*uBright;
+  br=floor(br*14.0+0.5)/14.0;
+  vec3 warm=vec3(1.08,0.99,0.86), cool=vec3(0.72,0.81,1.10);
   vec3 tint=mix(cool,warm,clamp(L*1.7,0.0,1.0));
   vec3 col=t.rgb*br*vShade*mix(tint,vec3(1.0),uEmissive);
   float d=distance(vWorld.xz,uCam.xz);
-  float fog=clamp(1.0-d/32.0,0.12,1.0);
+  float fog=clamp(1.0-d/42.0,0.34,1.0);
   fog=mix(fog,1.0,uEmissive); // ışık saçanlar sise batmaz
-  col=mix(vec3(0.030,0.040,0.085),col,fog);
+  col=mix(vec3(0.045,0.055,0.10),col,fog);
   gl_FragColor=vec4(col,t.a);
 }`;
 function glInit(){
@@ -727,7 +737,7 @@ function glInit(){
   gl.linkProgram(prog);
   if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(prog));
   gl.useProgram(prog);
-  for(const n of ['uVP','uModel','uCam','uTint','uEmissive','uTex','uLight'])U[n]=gl.getUniformLocation(prog,n);
+  for(const n of ['uVP','uModel','uCam','uTint','uEmissive','uBright','uTex','uLight'])U[n]=gl.getUniformLocation(prog,n);
   for(const n of ['aPos','aUV','aShade'])A[n]=gl.getAttribLocation(prog,n);
   // atlas
   atlasTex=gl.createTexture();
@@ -903,6 +913,7 @@ function renderWorld(t){
   gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,lightTex);gl.uniform1i(U.uLight,1);
   gl.uniformMatrix4fv(U.uVP,false,VP);
   gl.uniform3fv(U.uCam,camPos);
+  gl.uniform1f(U.uBright,BRIGHT);
   // ay (derinliğe yazmadan; yıldızlar UI katmanında)
   gl.depthMask(false);
   bindMesh(meshQuad);
@@ -1062,8 +1073,8 @@ function drawHUD(t){
   ux.clearRect(0,0,uiW,uiH);
   drawStarsUI(t);
   // vinyet
-  const vg=ux.createRadialGradient(uiW/2,uiH/2,uiH*0.42,uiW/2,uiH/2,uiH*0.85);
-  vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(2,3,8,0.5)');
+  const vg=ux.createRadialGradient(uiW/2,uiH/2,uiH*0.48,uiW/2,uiH/2,uiH*0.9);
+  vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(2,3,8,0.26)');
   ux.fillStyle=vg;ux.fillRect(0,0,uiW,uiH);
   // devriye durum + laf balonları (3D projeksiyon)
   for(const g of guards){
@@ -1261,10 +1272,10 @@ function drawTitle(t){
   const loreY=uiH*0.46, loreH=Math.min(26,uiH*0.05);
   lore.forEach((l,i)=>text(l,uiW/2,loreY+i*loreH,Math.min(16,uiH*0.031),'rgba(200,209,228,0.9)','center',F_DISP,'400'));
   // kontroller — iki sütun
-  const cy=uiH*0.66, rowH=Math.min(26,uiH*0.048), colL=uiW/2-260, colR=uiW/2+20;
+  const cy=uiH*0.63, rowH=Math.min(26,uiH*0.046), colL=uiW/2-260, colR=uiW/2+20;
   const fs=Math.min(14,uiH*0.028);
-  const ctrlL=[['FARE','bak (tıklayıp kilitle)'],['W A S D','yürü / yan adım'],['SHIFT','koş — gürültülü!'],['C','çömel'],['TAB','kat planı']];
-  const ctrlR=[['E','al · kapı'],['E basılı','alevi fanusla ÇAL'],['SOL TIK','alevi bırak (yeniden yanar)'],['Q / SAĞ TIK','çakıl fırlat'],['SPACE','arkadan bayılt']];
+  const ctrlL=[['FARE','bak (tıklayıp kilitle)'],['W A S D','yürü / yan adım'],['SHIFT','koş — gürültülü!'],['C','çömel'],['TAB','kat planı'],['1 / 2','parlaklık ayarı']];
+  const ctrlR=[['E','al · kapı'],['E basılı','alevi fanusla ÇAL'],['SOL TIK','alevi bırak (yeniden yanar)'],['Q / SAĞ TIK','çakıl fırlat'],['SPACE','arkadan bayılt'],['M · R','ses · yeniden başla']];
   [[ctrlL,colL],[ctrlR,colR]].forEach(([list,cx])=>{
     list.forEach(([k,v],i)=>{
       text(k,cx+90,cy+i*rowH,fs,'#ffd76a','right',F_UI,'700');
