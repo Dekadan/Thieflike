@@ -1,12 +1,22 @@
 # 03 — Oyun Tasarımı ve Mekanikler
 
-## 1. Perspektif Kararı
+## 1. Perspektif Kararı — **BİRİNCİ ŞAHIS (POV)** ✅
+
+> Revizyon: İlk taslak yukarıdan bakışı öneriyordu; yapımcı kararıyla perspektif
+> **birinci şahsa** çevrildi — Thief'in "kapı aralığından süzülme" gerginliği ancak
+> POV'de yaşanır. Üstten bakış prototipi `prototip/arsiv-ustten-bakis.html`'de
+> arşivlendi (devriye rotası okuma/planlama aracı olarak hâlâ değerli).
 
 | Aday | Artıları | Eksileri | Karar |
 |---|---|---|---|
-| **Yukarıdan bakış (top-down)** ✅ | Görüş konileri/devriye okuma kristal netlikte; ışık-gölge 2D'de en iyi burada çalışır; seviye tasarımı = kat planı (konak planı çizmek gibi); üretimi en ucuz | "Birinci şahıs gerginliği" birebir taşınamaz | **Seçildi.** Thief'in *sistemlerini* en sadık taşıyan 2D form bu. Gerginliği ses tasarımı + görüş menzili kısıtıyla geri kazanacağız. |
-| Yandan görünüm (Mark of the Ninja tarzı) | Siluet estetiği güçlü; platform hissi | Kat planı hissi kaybolur, "binayı soymak" yerine "ekranı geçmek" hissi; animasyon yükü çok daha ağır | Sezon 2'de tek görevlik deney olabilir |
-| İzometrik | Mimari gösterişli | Üretim maliyeti (her sprite 4-8 açı), gölge hesabı karmaşık | Reddedildi (tek kişilik ekip için) |
+| **Birinci şahıs, retro "software-render" estetiği** ✅ | Thief gerginliğinin aslı; piksel doku + düşük çözünürlük = tek kişiyle üretilebilir 3D (Gloomwood/Dusk okulu); ışık-gölge yüz hatlarında hissedilir; ses yönü POV'de iki kat etkili | Devriye rotası okumak zorlaşır → çözüm: ses işaretleri (asa tık-tıkı), TAB el çizimi harita, kapı aralığından gözetleme | **Seçildi** — prototip bu formda |
+| Yukarıdan bakış | Planlama netliği, en ucuz üretim | "İçinde olma" hissi yok | Arşivlendi; belki "Hafız kayıt masası" mini-oyunu olarak döner |
+| Yandan görünüm / izometrik | — | Kat planı hissi ve/veya maliyet | Reddedildi |
+
+**Teknik çeviri:** Prototip el yazması raycast motoru (Wolfenstein tekniği + karo bazlı
+ışık haritası). Godot'da hedef: düşük çözünürlüklü 3D (SubViewport 480×270, ışıksız/unlit
+piksel dokular, karo bazlı ışık değeri gameplay için ayrı hesaplanır) — görünüm retro,
+sistemler modern.
 
 ## 2. Çekirdek Döngü (30 saniyelik döngü)
 
@@ -68,21 +78,45 @@ DEVRİYE ──(kısmi görme / ses)──► ŞÜPHE ──(tam görme)──�
 - Devriyeler insan gibi yazılır: kendi kendine söylenir, mola verir, pencereden bakar.
   YZ'nin "aptallıkları" bile karakter olmalı (Thief muhafızlarının mirası).
 
-## 6. Araç Çantası (Thief karşılıkları)
+## 6. İMZA MEKANİK: **FANUS** — "Işığı söndürmezsin, ÇALARSIN."
+
+Thief'i kopyalamamak için çekirdeğe (ışık-gölge) eklediğimiz, oyunun adına dönüşecek sistem.
+Thief'in su oku ışığı *yok eder* (tek yönlü, tüketilir). Fanus ışığı **taşınabilir mala** çevirir:
+
+- **Çal:** Herhangi bir alevin (mum, fener, meşale) başında `E`'ye basılı tut (~1 sn, kıpırdamadan).
+  Alev fanusa girer, kaynak söner. Sessizdir — ama **ışığın söndüğünü gören devriye şüphelenir.**
+- **Taşı:** Fanus en fazla 2 alev alır. (Elindeki fanusta alevler gerçekten yanar — HUD'ın kalbi.)
+- **Bırak:** Sol tıkla alevi fırlat; düştüğü yerde **yeniden yanar** — yeni, gerçek bir ışık kaynağı.
+  **Yoktan beliren ışığı gören devriye de şüphelenir** ve bakmaya gelir.
+
+Bu üçlü tek başına şu oyunları doğurur:
+1. **Karanlık kazmak:** Rotandaki ışıkları söküp geçilmez koridoru geçilir yapmak (su oku işlevi, ama geri alınabilir).
+2. **Sahte ışık tuzağı:** Alevi boş odaya fırlat → devriye "Bu ışık da nereden çıktı?" diye oraya yürür → sen ters kapıdan geçersin (çakıldan daha güçlü, çünkü devriye ışığı *incelemek için bekler*).
+3. **Risk ekonomisi:** Çalma kanalı seni 1 sn kımıldamaz bırakır; dolu fanus elini aydınlatır (görünürlüğün artar — ışığı taşımak bedel ister).
+4. **Tema = mekanik:** Sezonun finali Kalb'i çalmaktır; oyun boyunca zaten "yanan şeyleri çalıyorsun". Kandil Gecesi görevinde (G6) şehir şenlik ışıklarıyla donanır — fanus orada altın değerinde.
+
+**Diğer aday imza mekanikler** (Sezon 1 içinde katman olarak eklenebilir; öncelik sırasıyla):
+
+| Fikir | Ne katıyor | Durum |
+|---|---|---|
+| **Islık / işaret taklidi** — aseslerin asa tık-tık kodlarını dinleyip taklit etmek ("devriye değiş" sinyaliyle nöbetçiyi yerinden etmek) | Ses sistemini savunmadan saldırıya çevirir; her görevde dinleyerek öğrenilir | G4'te sisteme girsin (planlandı) |
+| **Gölge Kipi ("Perde")** — tam karanlıkta duvara yaslanınca Karagöz silüetine dönüşüp duvar boyunca kayma; ışık değene kadar görünmezsin | Fantezi ve sanat imzası; Yeşil Pir'in lütfu olarak hikâyeyle açılır | Sezon ortası güç (G7 rüyasından sonra) |
+| **Kayıt Defteri** — kulak misafirliğiyle toplanan sırlar somut anahtara dönüşür (şantajla kapı açtırma, nöbet değiştirme) | Hafızlar temasını oynanışa bağlar; konuşmaları dinlemeye sebep verir | Dikey dilimde metin düzeyinde, sistemleşmesi Sezon 1 sonu |
+
+## 6b. Araç Çantası (Thief karşılıkları)
 
 | Bizim | Thief'teki | İşlev | Prototipte? |
 |---|---|---|---|
-| **Matara** (su kesesi) | Water arrow | Fırlat: fener/meşale söndür | ✅ (F / sağ tık) |
-| **Fitil makası** | (yakın söndürme) | Bitişik mumu sessizce söndür | ✅ (E) |
-| **Çakıl taşı** | Noisemaker | Fırlat: sahte gürültü | ✅ (sol tık) |
+| **FANUS** | Water arrow'un tersyüz edilmişi | Alev çal / taşı / yeniden yerleştir | ✅ (E basılı + sol tık) |
+| **Çakıl taşı** | Noisemaker | Fırlat: sahte gürültü | ✅ (Q / sağ tık) |
 | **Kum kesesi** (topuz) | Blackjack | Arkadan habersiz devriyeyi bayılt | ✅ (Space) |
 | **Maymuncuk takımı** | Lockpicks | Kilitli kapı/kasa mini-etkileşimi | Tam oyunda |
-| **Kement + kanca** | Rope arrow | Belirli noktalara düşey erişim | Tam oyunda |
-| **Keçe parçası** | Moss arrow | Gürültülü zemine sessiz şerit döşe | Tam oyunda |
-| **Dürbün** | Scouting orb yok ama... | Uzak devriye rotası okuma | Tam oyunda (belki) |
+| **Kement + kanca** | Rope arrow | Düşey erişim | Tam oyunda |
+| **Keçe parçası** | Moss arrow | Gürültülü zemine sessiz şerit | Tam oyunda |
 
 Araçlar **görevler arası dükkândan** akçeyle alınır (Thief II'nin görev önü mağazası):
-çaldığın para, sonraki işin sermayesi. Ekonomi döngüsü budur; para biriktirme oyunu değildir.
+çaldığın para, sonraki işin sermayesi. Fanus satın alınmaz — Kuzgun'un alametifarikasıdır;
+kapasite yükseltmeleri (2→3 alev) dükkândan gelir.
 
 ## 7. Loot ve Ekonomi
 
@@ -94,17 +128,20 @@ Araçlar **görevler arası dükkândan** akçeyle alınır (Thief II'nin görev
   sayısı değil, **hedef listesi** değiştirir: Hayalet'te "hiç görünme, kimseyi bayıltma,
   %90 loot" gibi şartlar eklenir. Aynı harita, üç ayrı oyun.
 
-## 8. Kontroller (PC birinci hedef)
+## 8. Kontroller (PC birinci hedef — POV düzeni)
 
 | Girdi | Eylem |
 |---|---|
-| WASD / oklar | Hareket (varsayılan: sessize yakın **yürüyüş**) |
+| Fare | Bakış (tıklayıp kilitle) |
+| WASD | Yürü/yan adım (varsayılan: sessize yakın **yürüyüş**) |
 | Shift (basılı) | **Koş** — hızlı ve gürültülü |
-| C | **Çömel/gizlen** — yavaş, sessiz, zor görünür |
-| E | Etkileşim: loot al, kapı aç/kapa, mum söndür |
-| Sol tık | Çakıl fırlat (imlece) |
-| F / sağ tık | Matara fırlat (imlece) |
+| C | **Çömel** — yavaş, sessiz, alçak (kamera düşer) |
+| E (tık) | Etkileşim: loot al, kapı aç/kapa |
+| E (basılı tut) | **Alevi fanusla çal** (~1 sn kanal) |
+| Sol tık | **Fanustaki alevi fırlat** (baktığın yere yerleşir, yanar) |
+| Q / sağ tık | Çakıl fırlat (baktığın yöne) |
 | Space | Arkadan bayılt |
+| TAB (basılı) | El çizimi kat planı |
 | M | Ses aç/kapa · R | Yeniden başlat |
 
 Gamepad desteği Godot aşamasında eklenir (stealth kitlesi klavye ağırlıklıdır, öncelik düşük).
@@ -113,10 +150,11 @@ Gamepad desteği Godot aşamasında eklenir (stealth kitlesi klavye ağırlıkl�
 
 | Sistem | Prototip (bu depo) | Dikey dilim (Godot) | Sezon 1 |
 |---|---|---|---|
-| Işık/gölge + Işık Taşı | ✅ karo tabanlı | Godot 2D ışık/gölge (piksel-perfect) | + pencere/ay, hareketli ışık (el feneri devriyesi) |
+| POV render | ✅ raycast (tek kat) | Godot 3D low-res (çok kat, merdiven, pencere) | + dam/çatı seviyeleri |
+| Işık/gölge + Işık Taşı | ✅ karo tabanlı | ışık prob sistemi (gameplay) + görsel ışık ayrımı | + hareketli ışık (el feneri devriyesi) |
+| **Fanus** | ✅ çal/taşı/bırak + devriye tepkisi | + kapasite yükseltme, ateş fiziği (perde tutuşması?) | + Kandil Gecesi set-piece, ıslık taklidi, Gölge Kipi |
 | Zemin sesi | ✅ 4 tür | + su, cam kırığı | + ıslak iz sistemi |
-| Devriye YZ | ✅ 4 durumlu | + rota varyasyonu, ikili muhabbet | + kukla (otomat) düşman sınıfı |
-| Araçlar | ✅ 4 araç | + maymuncuk | + kement, keçe, dükkân |
+| Devriye YZ | ✅ 4 durumlu + ışık değişimi tepkisi | + rota varyasyonu, ikili muhabbet, asa tık-tık işaretleri | + kukla (otomat) düşman sınıfı |
 | Bayıltma/ceset | ✅ bayılt + fark edilme | + taşıma/saklama | + "öldürme yasağı" zorluk şartı |
 | Görev yapısı | tek konak, loot hedefi | tam "Kesat Zamanlar" (çok katlı, 3 giriş) | 8 görev + zorluk sözleşmeleri |
 | Anlatı | başlık + görev metni | Karagöz açılış perdesi | tam senaryo, ara perdeler, mektuplar |

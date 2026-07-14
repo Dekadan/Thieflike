@@ -1,19 +1,23 @@
 # 04 — Sanat ve Ses Yönetimi
 
-## 1. Görsel Kimlik: "Kandil ışığında piksel"
+## 1. Görsel Kimlik: "Kandil ışığında piksel" — POV sürümü
 
-Kullanıcı vizyonu net: **piksel tarzı korunacak, ama daha hoş görünecek.** Çeviri:
-"retro çözünürlük + modern ışıklandırma" okulu (Gloomwood'un low-poly'ye yaptığını
-biz piksele yapıyoruz).
+Kullanıcı vizyonu net: **POV görünüm + piksel tarzı korunacak, ama daha hoş görünecek.**
+Çeviri: 1998'in "software-render" bakışı, bugünün eliyle — düşük çözünürlüklü birinci şahıs,
+piksel dokular, kuantalanmış ışık (Gloomwood/Dusk/Cruelty Squad okulunun atmosferik kanadı).
 
-- **İç çözünürlük:** 640×360 (tam sayı katlarıyla 1080p/4K'ya ölçeklenir). Prototip 480×270.
-- **Karo:** 16×16 px. **Karakterler:** 16×24 px (okunaklı silüet önce gelir).
-- **Işık modern:** Piksel sanatın üstünde yumuşak-ama-kuantalanmış (4–6 kademeli) ışık
-  halkaları; sert piksel + kademeli glow = "daha hoş görünen retro"nun formülü
-  (The Siege and the Sandfox, Octopath'in 2D-HD mantığının 2D'si).
-- **Siluet kuralı:** Her varlık (devriye, kukla, loot, Kuzgun) yalnızca dış hattından
-  tanınabilmeli — çünkü oyun çoğu zaman karanlık. Karagöz estetiğiyle aynı disiplin:
-  perde figürü gibi çiz.
+- **İç çözünürlük:** 480×270 render, tam sayı katlarıyla ölçekleme (prototip birebir bu).
+- **Doku:** 16×16 – 32×32 px duvar/zemin dokuları; el boyaması, palet disiplinli.
+- **Varlıklar:** billboard sprite (Doom usulü) — devriye 20×30 px; bu, piksel sanat
+  becerisinin 3D modellemeye hiç bulaşmadan POV'de yaşamasını sağlar. Godot'ta ileri
+  aşamada "sprite → düşük poligon + piksel doku" melezi denenebilir (Kukla düşmanlar
+  low-poly'ye çok yakışır: köşeli, mekanik).
+- **Işık kuantalanır:** parlaklık 8 kademeye yuvarlanır (banding = estetik imza),
+  kaynak yakını amber, gölge mavi; mesafe sisi karanlığa değil laciverte düşer.
+- **Siluet kuralı:** Her varlık dış hattından tanınmalı — oyun çoğu zaman karanlık.
+  Karagöz disipliniyle: perde figürü gibi çiz.
+- **El varlığı:** Ekranın sağ altında Kuzgun'un eli + **fanus** — içindeki çalıntı alevler
+  gerçek zamanlı yanar. Oyuncunun gözü sürekli orada; oyunun poster karesi budur.
 
 ## 2. Renk Paleti (Thief II gecesinin Sayeban çevirisi)
 

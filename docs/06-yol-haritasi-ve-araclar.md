@@ -4,10 +4,15 @@
 
 | Motor | Değerlendirme |
 |---|---|
-| **Godot 4.x** ✅ | Ücretsiz + açık kaynak (telif/abonelik derdi yok), 2D'de sınıfının en iyisi, **2D ışık-gölge sistemi hazır** (`PointLight2D` + `LightOccluder2D` = Thief ışık mekaniği neredeyse bedava), GDScript Python kadar kolay, tek tıkla Win/Linux/Mac/Web export, dev topluluk + bol Türkçe kaynak |
-| Unity | Lisans güveni sarsıldı, 2D ışıkta Godot'dan hantal, öğrenme yükü daha çok |
-| GameMaker | 2D'de iyi ama abonelik/lisans + ışık sistemini elle kurmak gerek |
+| **Godot 4.x** ✅ | Ücretsiz + açık kaynak (telif/abonelik derdi yok), GDScript Python kadar kolay, tek tıkla Win/Linux/Mac export, dev topluluk + bol Türkçe kaynak. **POV pivotu sonrası reçete:** Godot 3D + düşük çözünürlüklü `SubViewport` (480×270) + `nearest` filtreli piksel dokular + billboard `Sprite3D` düşmanlar. Retro FPS şablonları hazır (aşağıda). |
+| Unity | Lisans güveni sarsıldı, öğrenme yükü daha çok |
+| GZDoom / Doom motoru | Retro POV'nin en otantiği ve harita editörü müthiş; ama gizlilik YZ'si/ışık-gameplay bağı için motoru eğmek gerekir — ikinci aday olarak cepte dursun |
 | Löve2D / MonoGame | Saf kod; her şeyi elle yazarsın — öğrenme projesi olur, ürün gecikir |
+
+**Godot retro-FPS hızlandırıcıları:** itch.io/GitHub'da "Godot Retro FPS template",
+"Godot PSX style shader" aramaları hazır başlangıç projeleri verir (ör. düşük çözünürlük
++ doku titremesi shader'ları). Prototipteki karo bazlı ışık haritası mantığı GDScript'e
+birebir taşınır: ışık DEĞERİ gameplay içindir, görsel ışık ayrı katmandır.
 
 **İndir:** https://godotengine.org/download (standart sürüm yeterli, .NET gerekmez).
 
@@ -27,15 +32,16 @@
 
 ## 3. Öğrenme Sırası (sıfırdan, ~6-8 hafta yarı zamanlı)
 
-1. **Hafta 1-2 — Godot alfabesi:** Resmî "Your first 2D game" eğitimi (docs.godotengine.org)
-   → GDQuest'in ücretsiz "Learn GDScript From Zero" uygulaması.
-2. **Hafta 3-4 — Top-down temelleri:** Bir YouTube "Godot top-down movement + tilemap"
-   serisi bitir (HeartBeast / DevWorm tarzı). Bu aşamada bizim prototipteki konağı
-   Godot'da **gri kutularla** yeniden kur (birebir aynı plan!).
-3. **Hafta 5-6 — Işık ve YZ:** `PointLight2D` + `LightOccluder2D` ile ışık taşını kur;
-   `NavigationAgent2D` + basit durum makinesiyle devriyeyi yaz (`03`'teki şema).
-4. **Hafta 7-8 — His:** ayak sesi/zemin sistemi, kamera yumuşatma, bark balonları.
-   Sonuç: **M1 tamam** demektir.
+1. **Hafta 1-2 — Godot alfabesi:** Resmî "Your first 2D game" + "Your first 3D game"
+   eğitimleri (docs.godotengine.org) → GDQuest'in ücretsiz "Learn GDScript From Zero" uygulaması.
+2. **Hafta 3-4 — POV temelleri:** Bir "Godot FPS controller" serisi bitir (fare bakışı,
+   çarpışma, merdiven). Retro görünüm: SubViewport 480×270 + nearest doku filtresi.
+   Bu aşamada prototipteki konağı Godot'da **GridMap + gri kutularla** yeniden kur (aynı plan!).
+3. **Hafta 5-6 — Işık ve YZ:** Karo bazlı ışık haritasını GDScript'e taşı (prototipteki
+   `computeLight()` birebir çevrilir); `NavigationAgent3D` + durum makinesiyle devriye
+   (`03`'teki şema); Işık Taşı HUD'ı.
+4. **Hafta 7-8 — His + Fanus:** ayak sesi/zemin sistemi, E-kanalı ile alev çalma,
+   alev fırlatma, devriyenin ışık değişimi tepkisi. Sonuç: **M1 tamam** demektir.
 5. **Sürekli:** Mark of the Ninja GDC konuşması ("Empowering the Player in a Stealth Game"),
    Thief post-mortem yazıları, Monaco/Intravenous incelemesi — haftada bir "usta işi" analiz et.
 

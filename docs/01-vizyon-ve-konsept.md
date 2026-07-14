@@ -3,9 +3,12 @@
 ## Ne yapıyoruz?
 
 **Gölge Oyunu** (kod adı: Kuzgun), Thief: The Dark Project (1998) ve Thief II: The Metal Age (2000)
-geleneğini takip eden bir **birinci sınıf gizlilik oyunu**dur — ama 3D birinci şahıs yerine,
-tek kişilik/küçük ekiple üretilebilir **2D piksel sanat, yukarıdan bakışlı** bir formda.
+geleneğini takip eden bir **birinci şahıs gizlilik oyunu**dur — Thief gibi POV, ama dev bütçeli
+fotogerçekçilik yerine tek kişilik/küçük ekiple üretilebilir **retro piksel-doku 3D**
+("software-render" estetiği; Gloomwood/Dusk okulunun bizdeki karşılığı).
 Mekân: Osmanlı estetiğinden beslenen **kurgusal** liman şehri **Sayeban**.
+Thief'i kopyalamaz: çekirdeğin üstüne kendi imza sistemini koyar — **Fanus**
+(ışığı söndürmek değil, çalıp yeniden yerleştirmek; bkz. `03` §6).
 
 Oyuncu, kentin en usta hırsızı **Kuzgun**'dur. Görev tabanlı ilerler: her görev bir "bulmaca
 kutusu" gibi tasarlanmış bir mekândır (konak, bedesten, sarnıç, saat kulesi...). Amaç çoğu zaman
@@ -28,8 +31,9 @@ aynıdır: **içeri gir, keseni doldur, asıl hedefi ele geçir, görünmeden ç
 
 ## Tasarım Sütunları (her karar bunlara vurulur)
 
-1. **Gölge özgürlüktür.** Işık mekanik bir kaynaktır: fener, mum, ay. Oyuncu ışığı söndürür,
-   gölgeyi giyinir. Ekrandaki "Işık Taşı" ne kadar parlaksa o kadar görünürsün.
+1. **Gölge özgürlüktür — ve ışık maldır.** Işık mekanik bir kaynaktır: fener, mum, ay.
+   Oyuncu ışığı yalnızca söndürmez; **fanusuyla çalar, taşır, istediği yerde yeniden yakar.**
+   Ekrandaki "Işık Taşı" ne kadar parlaksa o kadar görünürsün.
 2. **Ses bir sistemdir.** Halı susturur, taş fısıldar, gıcırtılı ahşap ihbar eder. Koşmak
    bir karardır, bedeli vardır.
 3. **Şiddet son çaredir.** Kuzgun savaşçı değildir. Bayıltmak mümkün, öldürmek (varsa bile)
