@@ -3,11 +3,12 @@
 > *"Devleti kalemle soyuyorlar. Ben de kalem işindeyim sayılır."* — Kuzgun
 
 **Yüksek konsept (TARİHÎ KURGU):** Çöken bir imparatorlukta, **imparatorluğu soyanları
-soyan adam.** Alternatif-tarih İstanbul'unda Düyun-u Umumiye gelirlere, Reji tütüne —
-ve bizim kurgumuzda ışığa — el koymuştur: mühürsüz alev yakmak suçtur. Kuzgun,
-**Yeni Osmanlılar Cemiyeti'nin** tutanaklara yazılmayan üyesidir; Namık Kemal yazar,
-matbaa basar, Kuzgun çalar. Karşısında: Düyun'un içine yuvalanmış, "her şey sayıdır"
-diyen kadim **Fisagoriler** tarikatı. (Güncel kanon: `docs/07-evren-kitabi.md` v3.)
+soyan adam.** Oyun, Ebüzziya Tevfik'in hiç basılmamış defteri — "yazılamayan fasıl"dır;
+adları o değiştirmiştir. Alternatif-tarih İstanbul'unda Düyun-u Umumiye gelirlere,
+Reji tütüne — ve kurgumuzda ışığa — el koymuştur: mühürsüz alev yakmak suçtur.
+Kuzgun, gizli cemiyetin tutanaklara yazılmayan "El"idir; Muharrir yazar, matbaa basar,
+El çalar. Sahnede: her biri bir sefarete yaslanan **Dört Paşa** + Meclisçi Beşinci;
+kuyuda: "her şey sayıdır" diyen **Fisagoriler**. (Kanon: `docs/07` v4 + `docs/09`.)
 
 **Thief: The Dark Project / Thief II: The Metal Age** ruhunda, Osmanlı esintili kurgusal bir liman şehrinde geçen, ışık–gölge ve ses üzerine kurulu **birinci şahıs (POV), retro piksel-doku gizlilik oyunu**. Ara sahneleri geleneksel **Karagöz gölge tiyatrosu** estetiğiyle anlatılır — çünkü bu zaten bir "gölge oyunu"dur.
 

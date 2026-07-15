@@ -1,322 +1,200 @@
-# 07 — EVREN KİTABI (v3 — güncel kanon: TARİHÎ KURGU)
+# 07 — EVREN KİTABI (v4 — güncel kanon)
 
-> **v3 neden var?** Yapımcı geri bildirimi: (1) v2'deki "her kurumun kurgusal yankısı"
-> yöntemi, karakterleri Thief'in aynadaki yansımaları gibi hissettiriyordu; (2) saat
-> kulesi finali Thief'i çağrıştırıyordu (haklı sezgi: Thief Deadly Shadows'ta Saat
-> Kulesi bölümü vardır, Metal Age finali de kule+makinedir); (3) istenen şey yankı
-> değil, **gerçek isimleriyle Düyun-u Umumiye, Tütün Rejisi ve Yeni Osmanlılar** —
-> yani tarihî kurgu; (4) düzen takıntılı yapı **Pisagor tarikatına** bağlansın.
-> Bu sürüm dördünü de uygular. v2 git geçmişinde durur; `08-kitap-notlari.md`
-> bulguları aynen geçerlidir ve artık doğrudan gerçek adlarla kullanılır.
+> **v4 değişikliği (yapımcı kararı):** Karakterler yeniden **kurgusal adlar** taşır;
+> tek gerçek isim, çerçeve anlatıcı **Ebüzziya Tevfik**'tir. Kurumlar (Düyun-u
+> Umumiye, Reji, kapitülasyonlar, sefaretler) gerçek adlarıyla kalır — kurum kişi
+> değildir, mesele onlarla anlaşılır. Ayrıca dönemin **denge siyaseti** oyuna girdi:
+> her biri bir büyük devlete yaslanan **Dört Paşa** + onlara karşı **Meşrutiyetçi
+> Beşinci**. Karakter kapsülleri: `09-karakter-defteri.md`. Kaynak notları: `08`.
 
 ---
 
-## 0. TÜR BEYANI: TARİHÎ KURGU (alternatif-tarih sıkıştırması)
+## 0. ÇERÇEVE: "YAZILAMAYAN FASIL" (oyunun anlatı numarası)
 
-Oyun açılışında duracak beyan (taslak):
+Oyun, **Ebüzziya Tevfik'in** (gerçek; *Yeni Osmanlılar Tarihi*'nin yazarı) hiç
+basılmamış bir defteridir. Açılış metni (taslak):
 
-> *"Bu bir tarihî kurgudur. Yeni Osmanlılar 1865'te örgütlendi; Devlet-i Aliyye 1875'te
-> borcunu ödeyemez oldu; Düyun-u Umumiye 1881'de, Reji 1883'te kuruldu. Tarih bu
-> hâdiseleri yirmi yıla yaydı — biz hikâye icabı tek bir şehrin tek bir on yılına
-> sığdırdık. Kişilerin bir kısmı yaşamıştır, bir kısmı yaşamalıydı."*
+> *"Cemiyetin tarihini yazdım; okudunuz. Bir faslı vardı ki sağ olanlara zarar
+> gelmesin diye yazamadım. Şimdi yazıyorum — lâkin adları değiştirerek. Paşaları
+> paşa diye, sefirleri sefir diye bilirsiniz; kimin kim olduğunu anlayan anlar.
+> Bir de aramızda bir adam vardı ki zaten hiçbir deftere adı girmemişti.
+> Ona verdiğim ad, kendi seçtiği addır: Kuzgun."*
 
-**Yöntem üç katmandır:**
-1. **Gerçek katman (adıyla sanıyla):** Düyun-u Umumiye İdaresi, Tütün Rejisi ve
-   kolcuları, Yeni Osmanlılar Cemiyeti, zaptiye-hafiye düzeni, sansür, matbaalar,
-   İstanbul'un semtleri. Oyuncu "buradaki meseleyi" gerçek adlarıyla öğrenir.
-2. **Kurgu payı (gerçeğin üstüne bizim koyduklarımız):** ışık/kandil resmi ve
-   "mühürsüz alev" suçu, Vade Gecesi, Büyük Defter, kukla-tahsildarlar — hepsi
-   "böyle olabilirdi" tonunda, beyanla dürüstçe işaretli.
-3. **Tam kurgu (bizim mitolojimiz):** FİSAGORİLER (Pisagor tarikatının şehrin
-   altında yaşayan bakiyesi), Kadim Şehir, Kuzgun ve yakın kadrosu.
+**Bu çerçevenin kazandırdıkları:**
+1. Bütün kurgusal isimler **evren içinde gerekçeli** (Ebüzziya değiştirdi) —
+   "çalıntı/uydurma isim" hissi yerine edebî bir oyun.
+2. Gerçek kişiler korunur (kimse temsil edilmiyor; "anlayan anlar" seviyesinde
+   ilham), araştıran oyuncu Tarih Varakaları'ndan gerçeğini öğrenir.
+3. Ebüzziya'nın sesi = görev arası anlatım + Karagöz perdesinin "Hayalî"si.
+   (Kendine de kurgu ad verir: hikâye içindeki genç mürettip **Basmacı Ferid**,
+   onun gençliğidir — *"Kendime de başka ad koydum; mürekkep sıçramasın."*)
 
-**Thief'e mesafe (v3'te ne değişti):**
-- Hafızlar (Keeper yansıması) **silindi** — işlevi Fisagoriler'e ve Kuzgun'un
-  geçmişine devredildi.
-- Yaban / Yeşil Pir (Pagan yansıması) **fraksiyon olmaktan çıktı** — kaçakçıların
-  gerçek dünyası kaldı; Hızır folkloru yalnızca halk inancı dokusu olarak yaşar.
-- Ehl-i Mizan / "inşaatçı tarikat" (Hammerite yansıması) **silindi** — düzen
-  takıntısının sahibi artık Fisagoriler (gerçek bir antik tarikatın kurgusu).
-- Saat kulesi finali **silindi** — final, gerçek Düyun-u Umumiye sarayında ve
-  altındaki Fisagori mahzeninde geçer.
-- Fraksiyonlar artık "Thief'te şuna denk gelir" diye tanımlanmaz; bu belgeden o
-  eşleme dili tamamen çıkarılmıştır.
-
-**Gerçek kişi tasvir ilkeleri (pazarlıksız):**
-- Gerçek kişiler (Namık Kemal, Ziya Bey, Ali Suavi, Mustafa Fazıl Paşa, Ebüzziya
-  Tevfik...) belgelenmiş karakterleriyle tutarlı yazılır; onlara **uydurma suç,
-  uydurma aşk, uydurma alçaklık** yakıştırılmaz.
-- Kirli işleri kurgusal karakterler yapar (işbirlikçi "Mabeyinci Paşa" gibi kurgusal
-  kompozit figürler); gerçek devlet adamları (Âli Paşa vb.) anılırsa tarihî
-  rolleriyle ve vakarıyla anılır.
-- Padişah sahneye çıkmaz, adı anılmaz ("Saray" denir) — alternatif-tarih bulanıklığı
-  bunu zaten kolaylaştırır. Din, ibadet mekânı ve gerçek tarikatlar oyun malzemesi değildir;
-  Fisagoriler bilerek İslam dışı, antik-pagan kökenli bir KURGU tarikattır.
+**Tür beyanı:** Tarihî kurgu / alternatif-tarih sıkıştırması (Tanzimat sonrası
+"Uzun On Yıl": iflas, Düyun, Reji ve cemiyet aynı sahnede). Padişah sahneye
+çıkmaz, adlandırılmaz. Din oyun malzemesi değildir. Kurumlar gerçek, kişiler
+kurgu, mesele hakiki.
 
 ---
 
 ## 1. SAHNE: İSTANBUL, "UZUN ON YIL"
 
-Şehir artık kurgusal Sayeban değil, **İstanbul'dur** (resmî ağızda Dersaadet).
-Alternatif-tarih sıkıştırmasıyla tek bir on yılda: iflasın ilanı, Muharrem
-Kararnamesi'yle **Düyun-u Umumiye İdaresi'nin** kuruluşu, **Reji'nin** tütün-tuz
-tekeli, ve yeraltında hâlâ nefes alan Yeni Osmanlılar. Sokakta üç üniforma:
-zaptiye (devletin), kolcu (Reji'nin), Düyun muhafızı (alacaklıların).
-Ve üniformasız dördüncüsü: hafiye.
+*(v3'ten aynen: gerçek İstanbul; iflas + Muharrem Kararnamesi + Düyun-u Umumiye
++ Reji + zaptiye/hafiye; ışık tekeli kurgu payı; kapitülasyon duvarı.)*
 
-**Kapitülasyon duvarı (oyunun varlık sebebi):** Ecnebi tüccarı, kumpanyayı ve
-memuru Osmanlı mahkemesine çıkarmak fiilen imkânsızdır — kapitülasyonlar ve
-sefaret himayesi, soyguncunun etrafına **hukuki bir sur** örmüştür. Reji kolcusu
-kaçakçıyı vurur, beraat eder; kumpanya defterini kimse denetleyemez; dava açsan
-konsolos mahkemesine düşer. **Cemiyetin elinde üç yol kalır: yazmak (sansür),
-seçilmek (meclis kapalı), ve gece.** Kuzgun, üçüncü yoldur. Oyunun her görevi bu
-cümleden doğar: *adalete kapanan kapıyı, maymuncuk açar.* Emperyalizm burada
-soyut laf değil, seviye tasarımıdır: girilemeyen bina, dokunulamayan adam,
-okunamayan defter — oyuncunun gece gece girdiği, dokunduğu, okuduğu şeyler.
+**Kapitülasyon duvarı (oyunun varlık sebebi):** Ecnebi kumpanyayı Osmanlı
+mahkemesine çıkaramazsın — sefaret himayesi soyguncunun etrafına hukuki bir sur
+örmüştür. Cemiyetin elinde üç yol kalır: **yazmak** (sansürlü), **seçilmek**
+(meclis kapalı), **gece** (Kuzgun). Adalete kapanan kapıyı maymuncuk açar.
+Emperyalizm burada soyut laf değil seviye tasarımıdır: girilemeyen bina,
+dokunulamayan adam, okunamayan defter — oyuncunun girdiği, dokunduğu, okuduğu.
 
-**Işık meselesi (kurgu payı):** Kararname'nin bizim evrendeki ek maddesi, kandil
-yağını ve sokak aydınlatma imtiyazını da Düyun gelirlerine bağlamıştır: fenerler
-kurşun mühürlü, her alev "kandil resmi"ne tabi. **Mühürsüz ateş yakmak kaçakçılıktır.**
-Gazhane kumpanyasının borulu havagazı Beyoğlu'nu aydınlatır — o ışık fanusla
-çalınamaz, ancak vanası kapanır. (Fanus mekaniğinin evren gerekçesi aynen yaşıyor;
-artık gerçek kurumların gölgesinde.)
+**Işık meselesi (kurgu payı):** Kararname'nin bizim evrendeki ek maddesi kandil
+yağını ve aydınlatma imtiyazını Düyun gelirlerine bağladı: fenerler kurşun mühürlü,
+mühürsüz alev **kaçak**. Beyoğlu'nun borulu havagazı fanusla çalınamaz — vanası
+kapanır. (Fanus mekaniğinin evren gerekçesi.)
 
-**Semtler / görev sahneleri (gerçek yerler):**
+**Semtler:** Cibali Tütün Fabrikası ve Reji ambarları · Galata rıhtımı ·
+Cağaloğlu'nda Düyun-u Umumiye sarayı · Babıali matbaaları · Pera/sefaretler ·
+Dolmabahçe Gazhanesi · Boğaz yalıları · paşa konakları · Yerebatan ve sarnıç
+ağı ("Kadim Şehir" — Fisagoriler'in mahzeni).
 
-| Yer | Doku | Kim hükmeder |
-|---|---|---|
-| **Cibali Tütün Fabrikası & Reji ambarları** | balya, kantar, mühür damgası | Reji + kolcular |
-| **Galata rıhtımı & Karaköy** | vinç, sis, kaçak mal, meyhane | kaçakçılar ↔ kolcular |
-| **Cağaloğlu — Düyun-u Umumiye Sarayı** | mermer koridor, kasa katı, ecnebi memurlar | Düyun İdaresi |
-| **Babıali yokuşu — matbaalar** | hurufat kasaları, sansür memuru, gazete kokusu | kalem erbabı ↔ sansür |
-| **Beyoğlu / Pera** | havagazı ışığı, sefaret balosu, tiyatro | kumpanyalar, sefaretler |
-| **Dolmabahçe Gazhanesi** | boru, vana, buhar | gaz kumpanyası |
-| **Eski İstanbul konakları** | taşlık, harem-selamlık, avize | paşalar, zaptiye |
-| **Yerebatan ve sarnıçlar ağı ("Kadim Şehir")** | sütun ormanı, ölü dil, su sesi | **Fisagoriler** |
-
-**Oyuncu meseleyi anlasın:** her görev sonunda bir **"Tarih Varakası"** açılır —
-tek sayfalık, sade dille yazılmış gerçek tarih notu ("Düyun-u Umumiye gerçekte
-neydi?", "Reji kolcuları kimdi?", "Muharrem Kararnamesi ne dedi?"). Kurgu payı
-olan öğelerin varakasında köşeye kurgu damgası basılır: **"BU KISIM KURGUDUR."**
-Böylece oyun hem dürüst kalır hem öğretir. (AC'nin ansiklopedisi gibi, ama bizim
-varakalarımız Fecir hurufatıyla dizilmiş gazete kupürü estetiğinde.)
+**Tarih Varakası (codex):** Her görev sonunda tek sayfalık gerçek tarih notu
+(Düyun neydi, Reji kimdi, kapitülasyon ne demekti, denge siyaseti nasıl işledi).
+Kurgu payı taşıyan öğelerin varakasına damga basılır: **"BU KISIM KURGUDUR."**
 
 ---
 
-## 2. YENİ OSMANLILAR CEMİYETİ (gerçek; oyuncunun evi)
+## 2. DÖRT PAŞA VE BEŞİNCİSİ (denge siyasetinin satranç tahtası)
 
-Artık takma adlı bir yankı değil: **cemiyetin kendisi.** `08`'deki kitap bulguları
-doğrudan buraya akar: birbirinden habersiz tahkik memurlarıyla üye tahkikatı (A),
-"bir ferdin burnu kanamayacak" ilkesi (B — oyunun şiddetsizlik kuralının ve HAYALET
-derecesinin kaynağı), Mustafa Fazıl Paşa'nın 250.000 franklık sandığı ve makbuzlu
-maaş düzeni (C), matbaanın kulüp gibi işlemesi (E), paravan cemiyet ilanı (K),
-"iki ay sonra dönüp haine cezasını vereceğim" gazete ilanları (F).
+Tarihî zemin (varakalarda açıkça anlatılır): Tanzimat ricali, Düvel-i Muazzama
+arasında denge siyaseti güttü; kimi paşa Londra'ya, kimi Paris'e, kimi
+Petersburg'a yaslandı — sefaretler sadrazam deviren güçtü. Oyunda bu harita,
+**kurgusal adlı** beş paşayla kurulur (ilhamları şeffaftır; temsil değildir):
 
-**Gerçek kadro (tasvir ilkelerine tabi):**
-- **Namık Kemal** — kalemin ateşi. Kuzgun'la ilişkisi oyunun ahlaki omurgası:
-  Kemal onun yöntemini reddeder, sonuçlarına muhtaçtır; Kuzgun onun "vatan"
-  lafını tiye alır, şiirlerini ezbere bilir. (Hürriyet Kasidesi'nden kısa,
-  kamu malı dizeler perde aralarında okunabilir — telif yok, saygı tam.)
-- **Ziya Bey** — sandığın ve aklın adamı; Bosna teftişindeki "kasa mühürleme"
-  soğukkanlılığı (`08` I) karakterinin oyunda da imzasıdır.
-- **Ali Suavi** — sarıklı fırtına; Muhbir'i tek başına çıkaracak kadar inatçı.
-  Cemiyet içi ihtilafların (gerçek!) dramatik motoru.
-- **Mustafa Fazıl Paşa** — sürgündeki hami; üniformasız alaya katılan adam
-  (`08` H). Parası cemiyeti yaşatır, mektupları politikayı belirler; "Paris'ten
-  gelen zarf" her perdede bir düğümdür.
-- **Ebüzziya Tevfik** — genç kronikçi. Oyunun çerçeve anlatıcısı: **bütün oyun,
-  Ebüzziya'nın yıllar sonra yazdığı hatıratın "yazılamayan faslı"dır** — "Cemiyetin
-  bir üyesi daha vardı ki adını hiçbir yere yazamadım..." Bu çerçeve, gerçek tarihe
-  kurgu sokmanın en zarif kapısı: tarih kitabında olmayan adam, tarihçinin sakladığı adamdır.
+| Kurgu paşa | Yaslandığı güç | İlham | Oyundaki işlevi |
+|---|---|---|---|
+| **"Londralı" VÂSIF PAŞA** | İngiliz sefareti | Reşid Paşa tipi | Serbest ticaret ve "ıslahat" diliyle imtiyaz pazarlar; İngiliz elçisiyle mektuplaşması Sezon 1'in kozlarından. |
+| **"Frenk" REFİK PAŞA** | Fransız sefareti | Âli Paşa tipi | Diplomasi dehası, soğuk, kusursuz; cemiyeti "romantik çocuklar" diye küçümser. Sansürün ve sürgün fermanlarının imzası. |
+| **"Nüktedan" ŞEFİK PAŞA** | Fransız sefareti | Fuad Paşa tipi | Refik'in ayrılmaz ikizi; espriyle gerçeği söyleyen tek devletli. Düşman mı dost mu — sezon boyu oynanır. |
+| **"Moskof" NADİR PAŞA** — muhaliflerin diliyle **"NADİROF"** | Rus sefareti | Mahmud Nedim tipi | Elçiden icazetsiz iş yapmaz; Düyun'a en teslimiyetçi paşa. Sezon 1'in siyasi baş hedefi. |
+| **SERVER PAŞA** ("Meclisçi") | — (millet) | Mithat Paşa tipi | Meşrutiyet kanadı; cemiyetin saraydaki umudu ve gizli dostu. Kuzgun'a görev değil "rica" iletir; bedelini finalde öder ya da ödetir. |
 
-**Kurgusal üye — KUZGUN ("El"):** Cemiyetin tutanaklara geçmeyen adamı; kafadan
-kopuk bir "evrende gezen hırsız" değil, **bu dünyanın ürünü**: Tercüme Odası'nın
-kapısından kovulmuş bir kâtip çırağı (dil bilir, evrak okur — hırsız için altın),
-sarnıçlardan kaçmış bir Dinleyici, ve rıhtımın yetiştirdiği bir filinta.
-Cemiyete Fransızca gazete kaçakçılığıyla bulaştı; kalmasının sebebini hâlâ
-"alacaklarım" diye açıklar. Kimse inanmaz.
-
-**Üç kaidesi (karakterin çekirdeği — "paraya düşkün ama vatanını satmaz"):**
-1. *"Ücretimi peşin alırım. Ecnebiden çift tarife."*
-2. *"Mühürsüz alev yakarım; mühürlü söz vermem."* (kimseye kayıtlı sadakat yok — cemiyet hariç, onu da itiraf etmez)
-3. *"Fiyatım var. Vatanımın yok."* — Böcekbaşılığın ve Rakım Efendi'nin ona
-   teklif götürdüğü sahnelerde bu kaide sınanır; oyuncu Kuzgun'un "satılık ama
-   satılmaz" paradoksunu bizzat oynar (rüşvet teklifleri diyalogda gelir,
-   kabul etmek görev başarısızlığı değildir — ama Fecir'in bir sonraki sayısında
-   köşe yazısı acı olur).
-
-Kemal'in öfkesini, Ziya'nın hesabını, Suavi'nin inadını yanında taşır; vatan lafı
-edince alay eder, Fecir kapatılınca o gece uyuyamaz. (Kitaptaki üslupla:
-"hamiyetli ve ketum ve hele cesur ve faal" — ama bunu asla kabul etmez.)
-
-**Basın savaşı doku olarak:** Cemiyetin gerçek gazeteleri (Muhbir, Hürriyet)
-gurbette basılır; İstanbul'daki gizli nüsha bizim kurgumuz **Fecir**'dir
-("isim yapımız uyuyor" onayıyla korunur). Her görevin girişi bir Fecir manşeti,
-çıkışı bir Tarih Varakası: oyuncu meseleyi gazeteyle girer, tarihle çıkar.
+**Oyun kuralı — paşa terazisi:** Paşalar hem hedef hem kalkandır. Bir paşanın
+konağını soymak, rakibinin işine yarar; balodaki tek gece hepsinin yolu kesişir.
+Oyuncunun kime zarar verip kimi salim bıraktığı, finalin devriye yoğunluğunu ve
+müttefik kapılarını değiştirir (5. görevdeki seçimler → 8. görevin şartları).
+Cemiyetin çizgisi sabittir: *"Paşalar arası kavgada taraf değiliz; milletin
+cebinden çıkan her şeyde tarafız."*
 
 ---
 
-## 3. DÜŞMAN KURUMLAR (gerçek)
+## 3. ŞAFAK CEMİYETİ (Yeni Osmanlılar'ın defterdeki adı)
 
-**DÜYUN-U UMUMİYE İDARESİ** — "Devlet içinde devlet." Alacaklı devletlerin ve
-bankerlerin meclisi; tuzun, pulun, ipeğin, tütünün — ve bizim kurgumuzda ışığın —
-gelirini toplar. Cağaloğlu'ndaki sarayı, kasa katları ve ecnebi muhafızlarıyla
-oyunun en büyük "soyulacak yer"idir. Kötülüğü şahsi değil **usuli**dir: kimse
-bağırmaz, herkes makbuz keser.
+Ebüzziya, cemiyetin gerçek adını da yazmaz — defterde **Şafak Cemiyeti** der.
+Gazetenin defterdeki adı **FECİR**'dir (şiarı: *"Fecir, güneşe yasak koyulmayan
+bir memleket bulur, yine doğar."*). Usuller `08`'den: birbirinden habersiz
+tahkik memurlarıyla üye tahkikatı; **"Şafak, kimsenin burnunu kanatmaz"** yemini
+(şiddetsizlik doktrini = HAYALET derecesinin evren içi adı); Mîrza Paşa'nın
+sandığı, makbuzlu maaşlar; paravan dernek (Maarif ve Neşriyat Cemiyeti);
+matbaanın kulüp gibi işlemesi; "iki ay sonra dönüp haine cezasını vereceğim"
+tarzı gazete ilanlarıyla psikolojik harp.
 
-**TÜTÜN REJİSİ** — Tekelin silahlı yüzü. Kolcuları kaçakçıya kurşun atar (tarihen
-sabit); ambarları, kantarları, mühür daireleri erken görevlerin sahnesidir.
-Kaçakçılar bu yüzden oyuncunun doğal (ama güvenilmez) müttefikidir.
+**Kadro (kurgu adlar; kapsüller `09`'da):**
+- **NÂMİ BEY ("Muharrir")** — vatan şairi, cemiyetin sesi ve vicdanı (Namık Kemal tipi).
+- **ZİVER BEY ("Sandık Emini")** — hesap, hiciv ve soğukkanlılık (Ziya Paşa tipi);
+  kasa mühürleyen müfettiş sahnesinin (`08` I) sahibi.
+- **SUPHİ HOCA** — sarıklı fırtına; tek başına gazete çıkaracak inat (Ali Suavi tipi).
+- **MÎRZA PAŞA** — sürgündeki hami; parası bol, mektubu süslü, niyeti kapalı
+  (Fazıl Paşa tipi).
+- **BASMACI FERİD** — genç mürettip; anlatıcının gençliği.
+- **KUZGUN ("El")** — aşağıda.
 
-**ZAPTİYE & HAFİYE AĞI** — Devletin kolluk gücü ve jurnal düzeni. Kurgusal amiri:
-**"Örümcek" lakaplı başhafiye Mürüvvet Hanım** (kurgu; kadın başhafiye tarihe
-aykırıdır ve bunu biliyoruz — kurgu payı damgasıyla). Jurnal/eşkâl sistemi
-(`07-v2`'den miras, `08` F-G ile beslenmiş) aynen yaşar: görülmek kayda geçmektir.
-
-**İşbirlikçi kompozit: "MABEYİNCİ PAŞA"** (kurgu) — Reji hissesi tutan, Düyun'a
-ihale aracılık eden, konağında sefaret balosu veren kurgusal paşa. Gerçek paşaları
-kirletmemek için kirli işlerin adresi bu kompozit karakterdir.
-
----
-
-## 4. FİSAGORİLER (tam kurgu; yapımcının Pisagor önerisi)
-
-**Kök:** Pisagor'un tarikatı (M.Ö. 6. yy) gerçekten vardı: "her şey sayıdır" diyen,
-sırrına yemin ettiren, iç halkası **matematikoi** ve dış halkası **akusmatikoi**
-diye ikiye ayrılan bir felsefe-tarikatı. Bizim kurgumuz: tarikatın bir kolu
-Bizans'a, oradan yerin altına sızdı ve **sarnıçlarda yirmi beş asır hesap tutarak**
-bugüne ulaştı. Şehrin üstünde imparatorluklar değişti; altında **oran** değişmedi.
-
-**İnanç:** Evren sayıdır; ahenk, oranların doğruluğudur. Küsurat — kapanmayan
-hesap, affedilen borç, silinen kayıt — **kâinatta yırtıktır.** Musiki, kürelerin
-sesidir; **faiz, zamanın musikisidir.** (Düzen takıntısı artık bir Hammerite
-yankısı değil; gerçek bir antik doktrinin mantıklı-korkunç uzantısıdır.)
-
-**Modern hamle:** Fisagoriler çağlar boyu saklandı; ama çift kayıtlı defter,
-bileşik faiz ve istatistik çağı gelince **kendi ilahiyatlarının dünyayı ele
-geçirdiğini** gördüler. Düyun-u Umumiye kurulunca içine sızdılar — muhasip,
-aktüer, kâtip olarak. Artık dua etmiyorlar; **tahsil ediyorlar.**
-
-- **Semboller:** tetraktis (on noktalı üçgen), pentagram (üye mührü), monokord.
-  Mühürleri, Düyun evrakının köşesindeki zararsız görünen on noktadır — oyuncu
-  bunu fark ettiği an evraklar harita olur.
-- **Rütbeler:** **Dinleyiciler** (dış halka: beş yıl sükût yemini) ve **Hesapçılar**
-  (iç halka: "küsuratsızlar"). Baklagil yemezler (tarihî tuhaflık — bark'lık detay).
-- **Büyük Defter ("Ahenk"):** Kasa katının altındaki mahzende, pirinç dişlilerle
-  işleyen bir **fark makinesi** (Babbage çağı — dönemin gerçek teknolojisi; büyü
-  değil mühendislik). Şehrin her mührü, her resmi, her borcu ona işlenir.
-  Kalbinde, sarnıçlardan çıkarılmış kendi kendine kurulan kadim çark: **Kalb.**
-- **Kukla-tahsildarlar:** Fisagori yapımı otomat mübaşirler. Kör ama kulağı
-  keskin (salt-ses düşmanı — mekanik `03`'te). Kapıya gelen tahsildarın yüzü
-  yoksa, borçlunun pazarlık edeceği kimse de yoktur.
-- **Baş Muhasip RAKIM EFENDİ** (kurgu) — Hesapçıların bu asırdaki reisi, Düyun'da
-  baş aktüer. Yumuşak sesli, kibar, mutlak: *"Şahsi değil efendim. Bileşik faiz
-  şahsi olamaz."* Vade Gecesi'nde Ahenk'i "tam sese" getirecek: şehrin bütün
-  borcu tek makamda çalacak ve temerrüt maddesi gereği **yeraltı imtiyazı** —
-  Kadim Şehir, yani tarikatın mabedi — resmen ve ilelebet onların olacak.
-  (Kötünün planı: alacaklıya tapınağı **tapulatmak.** Tanrı öldürmek değil,
-  tescil ettirmek — bizim devrin kötülüğü budur.)
-
-**KUZGUN'UN SIRRI (Hafızlar'ın yerine geçen geçmiş):** Kuzgun, sarnıçlarda büyütülmüş
-bir **Dinleyici**ydi: hilkat garibesi bir hafıza ve hesap yeteneği için toplanmış
-bir yetim. Beş yıllık sükût yemininin dördüncü yılında kaçtı. Tarikatın kaidesi
-kesindir: **yazılan silinmez.** Kuzgun bu yüzden onların defterinde **kapanmamış
-tek satırdır** — "açık kalem". Rakım Efendi'nin onu istemesi kişisel değildir:
-**muhasebeseldir.** (Kuzgun'un mirası: Fisagori nokta-şifresini okuyabilir —
-oynanışta gizli işaretleri görme yeteneğinin anlatı gerekçesi.)
+**KUZGUN:** Tercüme Odası'ndan kovulmuş kâtip çırağı (dil bilir, evrak okur),
+sarnıçlardan kaçmış Dinleyici (Fisagori nokta-şifresini söker), rıhtımın
+yetiştirdiği filinta. Cemiyete Fransızca gazete kaçakçılığıyla bulaştı.
+**Üç kaidesi:** 1) *"Ücret peşin; ecnebiden çift tarife."* 2) *"Mühürsüz alev
+yakarım; mühürlü söz vermem."* 3) *"Fiyatım var. Vatanımın yok."* — paraya
+düşkünlüğü oynanır (rüşvet teklifleri diyalogda gelir), çizgisi oynanmaz.
+Vatan lafına alay eder; Fecir kapatılınca uyuyamaz.
 
 ---
 
-## 5. KARAKTER LİSTESİ (özet tablo)
+## 4. FİSAGORİLER (tam kurgu) & DÜŞMAN KURUMLAR
 
-| Karakter | Statü | Rol |
-|---|---|---|
-| Kuzgun | kurgu | Kahraman; cemiyetin "El"i; kaçak Dinleyici |
-| Namık Kemal | gerçek | Cemiyetin sesi; ahlaki mihenk |
-| Ziya Bey | gerçek | Sandık ve strateji |
-| Ali Suavi | gerçek | İhtilafın ve cüretin adamı |
-| Mustafa Fazıl Paşa | gerçek | Hami; Paris'ten gelen zarflar |
-| Ebüzziya Tevfik | gerçek | Çerçeve anlatıcı; "yazılamayan fasıl" |
-| Rakım Efendi | kurgu | Baş Muhasip; Fisagori reisi; baş düşman |
-| "Örümcek" Mürüvvet Hanım | kurgu | Başhafiye; jurnal ağı |
-| Mabeyinci Paşa | kurgu (kompozit) | İşbirlikçi; Ziyafet görevinin ev sahibi |
-| Sansar | kurgu | Galata simsarı; kaçakçı dünyasına kapı |
+*(v3'ten aynen — özet:)* "Her şey sayıdır" diyen antik tarikatın sarnıçlarda
+25 asır hesap tutmuş bakiyesi; çift kayıtlı defter ve bileşik faiz çağında kendi
+ilahiyatının hükümran olduğunu görüp **Düyun-u Umumiye'ye muhasip olarak sızdılar**.
+Rütbeler: Dinleyiciler / Hesapçılar. Semboller: tetraktis, monokord, evrak
+köşesindeki on nokta. Mahzenlerinde pirinç dişlili **Büyük Defter ("Ahenk")** —
+dönemin gerçek teknolojisi olan fark makinesi soyundan; kalbinde kadim çark
+**Kalb**. Otomat mübaşirleri **kukla-tahsildarlar** (kör, kulağı keskin —
+salt-ses düşmanı). Reisleri **Baş Muhasip RAKIM EFENDİ**: *"Şahsi değil
+efendim. Bileşik faiz şahsi olamaz."* Kuzgun, defterlerinde kapanmamış tek
+satırdır — **"açık kalem"**; kovalanması muhasebeseldir.
+
+Reji + kolcular, zaptiye + hafiye ağı ("Örümcek" Mürüvvet Hanım — kurgu) ve
+kompozit işbirlikçi **Mabeyinci Paşa** v3'teki gibi. (Mabeyinci, Dört Paşa'nın
+kirli aracısıdır — gerçek ilhamlı paşaların elini kirletmeden pisliği taşır.)
 
 ---
 
-## 6. SEZON 1 (v3): **"MUHARREM DEFTERİ"**
+## 5. SEZON 1 (v4): **"MUHARREM DEFTERİ"** — paşa terazili akış
 
-*(Kule finali silindi; omurga Düyun sarayına taşındı. Yan hikâye "Aramızdaki
-Muhbir" [`08` F] aynen sürer. Her görev sonunda Tarih Varakası açılır.)*
-
-**Görev tasarım kuralı (yeni):** Hiçbir görev "hırsız hırsızlık yapar" diye var
-olamaz. Her görevin künyesinde şu satır doldurulmak zorundadır —
-**"Meseleye vuruşu:"** yani bu soygun, Osmanlı'yı soyan çarkın hangi dişlisini
-kırıyor? (1: Reji'nin mahalle tahsilatını keser · 2: sansürün eline geçen matbaayı
-geri alır · 3: kolcu zulmünün delilini çıkarır · 4: ipotek senedini — şehrin
-rehnini — çalar · 5: işbirlikçi paşayı sermayesiyle karşı karşıya bırakır ·
-6: tekelin "çalınamaz" ışığını söndürülebilir kılar · 7: tahsilat gecesinin
-haber ağını keser · 8: temerrüt hükmünü hukuken imkânsızlaştırır.) Bu satırı
-dolduramayan görev, tasarımdan döner.
+**Görev tasarım kuralı:** Her görevin künyesinde **"Meseleye vuruşu"** satırı
+zorunludur: bu soygun, milleti soyan çarkın hangi dişlisini kırıyor? Dolduramayan
+görev tasarımdan döner. Koşu yan-hikâye: **"Aramızdaki Muhbir"** (`08` F) —
+bilgi halkaları, sahte-bilgi tuzakları; iz artık sefaretlerden birine de çıkabilir.
 
 **Perde I — Mühür (1-3)**
 1. **MÜHÜRSÜZ ALEV** — Reji mahalle deposu + Mabeyinci Paşa'nın konağı (mevcut
-   prototip haritası burada yaşar). Fanus tanışması. Görev aslında cemiyetin
-   Kuzgun **tahkikatıdır** (`08` A): finalde hakkında iki imzasız rapor okunur.
-2. **BABIÂLİ BASKINI** — Sansür, cemiyetin matbaasını mühürledi; zaptiye
-   deposundan **hurufat kasalarını** geri çal. Jurnal/eşkâl sistemi tanışması.
-3. **CİBALİ AMBARI** — Kaçakçılarla ilk iş: kolcuların el koyduğu balyalar ve
-   defter. Kanca: balyaların arasında Düyun evrakı — köşesinde **on nokta.**
+   prototip haritası). Fanus tanışması; görev aslında cemiyetin Kuzgun tahkikatı.
+   *Vuruş: Reji'nin mahalle tahsilatı keser.*
+2. **BABIÂLİ BASKINI** — Nadirof'un emriyle mühürlenen matbaadan hurufat
+   kasalarını geri al. Jurnal/eşkâl tanışması. *Vuruş: sansürün eline geçen
+   matbaa geri alınır.*
+3. **CİBALİ AMBARI** — Kaçakçılarla ilk iş; kolcuların el koyduğu balyalar ve
+   ambar defteri. Kanca: defter arasında köşesi **on noktalı** Düyun evrakı.
+   *Vuruş: kolcu zulmünün delili çıkar.*
 
-**Perde II — Nokta (4-6)**
-4. **DÜYUN SARAYI: KASA KATI** — İpotek senedinin peşinde ilk büyük sızma.
-   Senet "asıl nüshası Deftere işlendi" damgalı çıkar; ilk kukla-tahsildar.
-   Kuzgun on noktayı okur — ve okuduğunu Rakım Efendi anlar: *"Açık kalem
-   dönmüş."*
-5. **PERA BALOSU** — Mabeyinci Paşa'nın konağında sefaret balosu; Rakım Efendi
-   şereflidir. Hedef: Ahenk'in "akort çizelgesi". Yan hedef: Kemal'in yasak
-   şiirini paşanın zarfına "sahte atıfla" bırakmak (`08` J — edebî sabotaj).
-6. **GAZHANE** — Çalınamaz ışığın kalbi; vanalar, buhar, karartma. Rakım'la
-   cam ardından ilk yüzleşme: *"Işığı şebekeye bağladık. Fanusunuz, efendim,
-   nostalji."*
+**Perde II — Terazi (4-6)**
+4. **DÜYUN SARAYI: KASA KATI** — İpotek senedi ("asıl nüsha Deftere işlendi"
+   damgalı); ilk kukla-tahsildar; Rakım, "açık kalem"in döndüğünü anlar.
+   *Vuruş: şehrin rehin senedi çalınır.*
+5. **SEFARET BALOSU (PERA)** — Dört Paşa aynı çatı altında; Rakım şeref
+   konuğu. Ana hedef: Ahenk'in "akort çizelgesi". **Paşa terazisi mekaniği:**
+   dört odadan en fazla ikisine girecek vaktin var — hangi paşanın sırrını
+   aldığın (Vâsıf'ın İngiliz mektubu / Refik'in sürgün listesi / Şefik'in
+   "özel defteri" / Nadirof'un Rus protokolü) finalin şartlarını ve Fecir'in
+   manşetini belirler. *Vuruş: paşaları birbirinin sermayesiyle vurur.*
+6. **NADİROF'UN YALISI** — Boğaz gecesi; kayıkla yanaşma, rıhtım feneri,
+   yalı baskını: Rus elçisiyle gizli protokolün aslı. Fecir bastığında
+   "Nadirof" lakabı sokağa düşer. *Vuruş: en teslimiyetçi paşayı devirir
+   (siyasi doruk).*
 
 **Perde III — Küsurat (7-8)**
-7. **TELGRAFHANE** *(seçimli hazırlık)* — Vade Gecesi öncesi şehrin sinir ağı;
-   kestiğin hatlar finalin devriye takviyesini belirler. Muhbir yan hikâyesi
-   burada düğümlenir: sahte-bilgi tuzağının sonucu okunur.
-8. **VADE GECESİ: AHENK** *(final)* — Muharrem'in on beşi, tahsilat gece yarısı.
-   Düyun sarayı → kasa katı → **Fisagori mahzeni** (sarnıca açılan merdiven).
-   Ahenk "tam sese" gelirken Kuzgun makineyi kırmaz (Ziya Bey'in planı buydu;
-   Kemal "yazılı şeyi yakmak bizden olmaz" diye reddetmişti) — **Kalb'i söker.**
-   Fark makinesi küsuratta donar: **kapanmayan hesap, hüküm doğuramaz.**
-   Temerrüt ilan edilemez; imtiyaz devri düşer.
-- **Kapanış (Karagöz perdesi + Ebüzziya'nın kalemi):** *"Cemiyetin bir üyesi daha
-  vardı; adını yazamadım. Yalnız şunu yazabilirim: o gece şehrin bütün borcu,
-  bir adamın göğsünde tık tık atıyordu."* — Kuzgun damlarda; göğsünde Kalb.
-  **Sezon 2 kancası:** açık kalem artık kendi defterini taşıyor — ve sarnıçlarda
-  biri yeni sayfa açtı.
+7. **TELGRAFHANE** *(seçimli hazırlık)* — Vade Gecesi öncesi haber ağını kes;
+   Server Paşa'nın "ricası" ve (balodaki seçimlere göre) kasa planları.
+   Muhbir düğümü çözülür. *Vuruş: tahsilat gecesinin gözünü kör eder.*
+8. **VADE GECESİ: AHENK** *(final)* — Muharrem'in on beşi. Düyun sarayı →
+   kasa katı → Fisagori mahzeni. Ahenk "tam sese" gelirken Kuzgun makineyi
+   kırmaz — **Kalb'i söker**: kapanmayan hesap hüküm doğuramaz; temerrüt ilan
+   edilemez, imtiyaz devri düşer. *Vuruş: haciz hükmünü hukuken imkânsız kılar.*
+- **Kapanış:** Ebüzziya'nın kalemi + Karagöz perdesi: *"O gece şehrin bütün
+  borcu, bir adamın göğsünde tık tık atıyordu."* Server Paşa sadarete yaklaşır
+  (umut); Rakım kaybolur (tehdit); Kuzgun'un göğsünde Kalb (Sezon 2). Balo
+  seçimlerine göre iki paşadan biri düşmüş, biri alacaklı kalmıştır — Sezon 2'nin
+  siyasi haritası oyuncunun mirasıdır.
 
 ---
 
-## 7. DİĞER DOKÜMANLARA ETKİSİ
+## 6. DİĞER DOKÜMANLARA ETKİSİ + AÇIK SORULAR
 
-- `03` mekanik: değişmez. Kukla-tahsildar, jurnal/eşkâl, havagazı vanası aynı
-  tasarım tohumları; yalnız sahipleri artık gerçek/kurgu karışımı doğru adreste.
-- `04` sanat: Karagöz perdesi kalır (evren içi propaganda); Fisagori estetiği
-  eklenir: tetraktis, pirinç dişli, monokord, nokta-şifre süslemeleri.
-- `05` pazar: konum güçlenir — "gerçek tarihle yüzleşen ilk Türk stealth oyunu";
-  Tarih Varakaları eğitim/basın açısı doğurur.
-- `08` kaynak notları: tümü geçerli; artık takma adsız, doğrudan kullanılır.
-- `02` (v1) ve v2 metni: git geçmişinde; Sayeban adı ve "yankı" kadrosu emekli.
-  (Sayeban ileride başka bir projenin tohumu olarak cepte dursun.)
-
-## 8. AÇIK SORULAR (yapımcı feedback'i bekleyen)
-
-1. **Kuzgun** kod adı kalsın mı, yoksa dönem kokulu başka bir lakap mı? (El,
-   Gececi, Kandilsiz...?) — bence kalsın: kısa, marka değeri var.
-2. **Rakım Efendi** ismi oturuyor mu? (Alternatif: Mizancı, Aded Efendi,
-   Muhasip-i Evvel unvanıyla isimsiz.)
-3. Gerçek paşalardan (Âli Paşa gibi) herhangi biri sahneye çıksın mı, yoksa
-   yalnızca adları mı geçsin? (Şu an: adları geçer, sahnede kompozit Mabeyinci var.)
-4. Dönem yayı: "uzun on yıl" sıkıştırması yeterli mi, yoksa net bir yıl mı
-   yazalım (ör. kurgusal 1288/1872)?
+- `09-karakter-defteri.md` (yeni): tüm kadronun kapsül background'ları —
+  yapımcıyla birlikte büyütülecek ("her birine ayrı ayrı hikâye yazarız").
+- `03` mekanik değişmez; balo "paşa terazisi" seçim mekaniği dikey dilim sonrası.
+- `08` kaynak notları aynen; artık Ebüzziya-anlatıcı çerçevesine akar.
+- **Açık sorular:** (1) Paşa adları (Vâsıf/Refik/Şefik/Nadir/Server) oturdu mu?
+  (2) Balodaki "en fazla iki oda" kuralı mı, yoksa hepsine girilebilsin ama
+  vakit/jurnal bedelli mi? (3) Sezon 1'de hangi paşa ön planda olsun —
+  önerim: düşman yükü Nadirof'ta, dost yükü Server'da; Vâsıf ile Refik-Şefik
+  ikizi baloda tanıtılıp Sezon 2'de büyür.
