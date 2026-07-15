@@ -57,6 +57,12 @@ görünüm retro (Thief 1998 "software-render" hissi), sistemler modern.
 - **Çakıl taşı**: oyuncunun cebindeki taşınabilir gürültü — istediğin köşeye "ses" atarsın
   (Thief'in noisemaker oku). Devriyeyi kapıdan uzaklaştırmanın temel aleti.
 - Kapılar açılırken ses çıkarır; koşarak kapı açmak "davul çalmak"tır.
+- **Dinleyerek takip (oyuncunun kulağı):** Devriyenin ayak sesi, mırıltısı ve asa
+  tak-tağı (bkz. `04` §6) tam 3D konumludur — yön ve mesafe HUD'suz okunur; **kat
+  farkı** ayrı bir ipucu katmanıdır (üst kattaki muhafız alttakinden boğuk duyulur).
+  Bir devriyeyi görmeden, sadece dinleyerek haritalamak Thief'in temel becerisiydi;
+  bizde de görüş hattı kapalıyken geçerli bir bilgi kanalı olmalı. Kapsam: prototip
+  tek katlı (§9), kat-farkı ayrışması Dikey dilimde gelir.
 
 ## 5. Devriye Yapay Zekâsı — durum makinesi
 
@@ -102,7 +108,7 @@ Bu üçlü tek başına şu oyunları doğurur:
 | Fikir | Ne katıyor | Durum |
 |---|---|---|
 | **Islık / işaret taklidi** — aseslerin asa tık-tık kodlarını dinleyip taklit etmek ("devriye değiş" sinyaliyle nöbetçiyi yerinden etmek) | Ses sistemini savunmadan saldırıya çevirir; her görevde dinleyerek öğrenilir | G4'te sisteme girsin (planlandı) |
-| **Gölge Kipi ("Perde")** — tam karanlıkta duvara yaslanınca Karagöz silüetine dönüşüp duvar boyunca kayma; ışık değene kadar görünmezsin | Fantezi ve sanat imzası; Yeşil Pir'in lütfu olarak hikâyeyle açılır | Sezon ortası güç (G7 rüyasından sonra) |
+| **Gölge Kipi ("Perde")** — tam karanlıkta duvara yaslanınca Karagöz silüetine dönüşüp duvar boyunca kayma; ışık değene kadar görünmezsin | Fantezi ve sanat imzası; Yeşil Pir'in lütfu olarak hikâyeyle açılır | Sezon ortası güç (G7 rüyasından sonra — bkz. `07` §5 Ara Perde) |
 | **Kayıt Defteri** — kulak misafirliğiyle toplanan sırlar somut anahtara dönüşür (şantajla kapı açtırma, nöbet değiştirme) | Hafızlar temasını oynanışa bağlar; konuşmaları dinlemeye sebep verir | Dikey dilimde metin düzeyinde, sistemleşmesi Sezon 1 sonu |
 
 ## 6b. Araç Çantası (Thief karşılıkları)
@@ -156,6 +162,7 @@ Gamepad desteği Godot aşamasında eklenir (stealth kitlesi klavye ağırlıkl�
 | Işık/gölge + Işık Taşı | ✅ karo tabanlı | ışık prob sistemi (gameplay) + görsel ışık ayrımı | + hareketli ışık (el feneri devriyesi) |
 | **Fanus** | ✅ çal/taşı/bırak + devriye tepkisi | + kapasite yükseltme, ateş fiziği (perde tutuşması?) | + Kandil Gecesi set-piece, ıslık taklidi, Gölge Kipi |
 | Zemin sesi | ✅ 4 tür | + su, cam kırığı | + ıslak iz sistemi |
+| Konumsal ses (devriye) | tek kanal, mesafeyle sönümlenir | ✅ tam 3D + kat/döşeme filtresi (üst/alt ayrışması) | + oda-arası kapı "dikkat" olayı |
 | Devriye YZ | ✅ 4 durumlu + ışık değişimi tepkisi | + rota varyasyonu, ikili muhabbet, asa tık-tık işaretleri | + kukla (otomat) düşman sınıfı |
 | Bayıltma/ceset | ✅ bayılt + fark edilme | + taşıma/saklama | + "öldürme yasağı" zorluk şartı |
 | Görev yapısı | tek konak, loot hedefi | tam "Kesat Zamanlar" (çok katlı, 3 giriş) | 8 görev + zorluk sözleşmeleri |

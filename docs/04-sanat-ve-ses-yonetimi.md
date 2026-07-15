@@ -76,6 +76,18 @@ sahnelenir:
 
 **İlke: Bu oyun kulakla oynanır.** Ses bütçesi görselden önce gelir.
 
+- **Sessizlik korkutur, gürültü değil.** Modern korku oyunlarının aksine (sıçratma +
+  sürekli müzik), varsayılan durum **suskunluktur**: uzak bir ayak sesi, bir mırıltı,
+  sonra yine hiçlik — boşluğu oyuncunun hayal gücü doldurur. Müzik/gerilim katmanı
+  cimri tetiklenir ve devriye durum makinesine kilitlenir (`03` §5): DEVRİYE'de
+  ambiyans neredeyse yok, katman yalnız ŞÜPHE'de incelir, ALARM'da açılır. Thief
+  1998'de bunu kanıtladı: sessizliğin ekonomisi kısıtlı bütçeli prodüksiyon için de
+  en ucuz korku aracıdır.
+- **Konumsal (3D) ses.** Gerçek 3D motora geçtiğimiz için bedava bir kazanç: devriye
+  ayak sesi, mırıltı ve asa tak-tağı yön + mesafe + **kat farkıyla** duyulmalı (üst
+  kattaki muhafız alttakinden boğuk/tiz ayrışır — döşeme/tavan filtreli sönümleme).
+  Başka odada açılan kapı, o odaya özgü lokal bir "dikkat" olayıdır — oyuncu
+  görmeden konumunu tahmin eder. Kapsam ve uygulama: `03` §4 ve §9.
 - **Müzik:** Makam esintili karanlık ambiyans — Nihavend/Hüseynî merkezli, ney + tanbur +
   su damlası + uzak liman çanları; gerilim katmanı (şüphe/alarm durumunda yükselen
   perdeli katman — dikey remix tekniği). Referans ruh: Thief'in Eric Brosius ambiyansı ×

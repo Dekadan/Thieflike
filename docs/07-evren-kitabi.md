@@ -207,6 +207,18 @@ bilgi halkaları, sahte-bilgi tuzakları; iz artık sefaretlerden birine de çı
 7. **TELGRAFHANE** *(seçimli hazırlık)* — Vade Gecesi öncesi haber ağını kes;
    Server Paşa'nın "ricası" ve (balodaki seçimlere göre) kasa planları.
    Muhbir düğümü çözülür. *Vuruş: tahsilat gecesinin gözünü kör eder.*
+
+**Ara Perde — RÜYA** *(Karagöz perdesi, görev sayılmaz; 7 ile 8 arası)* — Telgrafhane
+sonrası bir gece, Kuzgun'un uykusu Kadim Şehir'e düşer: Bin Direk'in sütun ormanı,
+ölü dil mırıltısı, "her şey sayıdır" diyen su sesi (Fisagoriler). Ton burada
+tamamen kırılır — soygun gerilimi yerini psikolojik korkuya bırakır. `04` §3'te
+zaten planlanan "rüya bölümleri → Karagöz perdesi" kuralına birebir oturur: silüet
+kukla, tek anlatıcı (Hayalî), ucuz üretim — yeni bir oynanabilir seviye açmadan
+Thief'in "The Sword" tarzı ton kırılmasını verir, `01`'in kapsam disiplinini bozmaz.
+Uyanınca **Yeşil Pir'in lütfu**: Gölge Kipi açılır (`03` §6'daki "G7 rüyasından
+sonra" referansı budur — artık kanona bağlandı). *İşlev: 8. görevin (Vade Gecesi)
+gerilimine, Kalb'in ilk kez "duyulduğu" an olarak zemin hazırlar.*
+
 8. **VADE GECESİ: AHENK** *(final)* — Muharrem'in on beşi. Borçhane →
    kasa katı → Fisagori mahzeni. Ahenk "tam sese" gelirken Kuzgun makineyi
    kırmaz — **Kalb'i söker**: kapanmayan hesap hüküm doğuramaz; temerrüt ilan
@@ -225,6 +237,9 @@ bilgi halkaları, sahte-bilgi tuzakları; iz artık sefaretlerden birine de çı
   yapımcıyla birlikte büyütülecek ("her birine ayrı ayrı hikâye yazarız").
 - `03` mekanik değişmez; balo "paşa terazisi" seçim mekaniği dikey dilim sonrası.
 - `08` kaynak notları aynen; artık Ebüzziya-anlatıcı çerçevesine akar.
+- `03` §6 ve `04` §3/§6 ile bağlandı: "G7 rüyası" artık somut bir Ara Perde
+  (Kadim Şehir/Fisagoriler, Karagöz formatında, §5'te) + sessizlik ilkesi ve
+  konumsal ses `04` §6'ya işlendi (kaynak: Thief video-döküm değerlendirmesi).
 - **Açık sorular:** (1) Paşa adları (Vâsıf/Refik/Şefik/Nadir/Server) oturdu mu?
   (2) Balodaki "en fazla iki oda" kuralı mı, yoksa hepsine girilebilsin ama
   vakit/jurnal bedelli mi? (3) Sezon 1'de hangi paşa ön planda olsun —
