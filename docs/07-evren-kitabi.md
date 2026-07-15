@@ -1,11 +1,13 @@
-# 07 — EVREN KİTABI (v4 — güncel kanon)
+# 07 — EVREN KİTABI (v5 — güncel kanon)
 
-> **v4 değişikliği (yapımcı kararı):** Karakterler yeniden **kurgusal adlar** taşır;
-> tek gerçek isim, çerçeve anlatıcı **Ebüzziya Tevfik**'tir. Kurumlar (Düyun-u
-> Umumiye, Reji, kapitülasyonlar, sefaretler) gerçek adlarıyla kalır — kurum kişi
-> değildir, mesele onlarla anlaşılır. Ayrıca dönemin **denge siyaseti** oyuna girdi:
-> her biri bir büyük devlete yaslanan **Dört Paşa** + onlara karşı **Meşrutiyetçi
-> Beşinci**. Karakter kapsülleri: `09-karakter-defteri.md`. Kaynak notları: `08`.
+> **v5 değişikliği (yapımcı kararı):** Şehir yeniden **kurgusaldır** (İstanbul
+> değil, **SAYEBAN**) ve **kurum adları da kurgudur** (Borçhane, Reji İdaresi...) —
+> genel yapıyı ve haritaları kurarken elimizi serbest bırakır; tarihsel gerçek
+> adlar istenirse sonradan eklenebilir. **Gerçek kalanlar:** çerçeve anlatıcı
+> **Ebüzziya Tevfik** ve paşaların yaslandığı **büyük devletler** (İngiltere,
+> Fransa, Rusya — "şimdilik böyle"). **Böcekbaşılık geri döndü** (Mürüvvet Hanım
+> yine Böcekbaşı — evrene renk katan o kurum korunur). **Fisagoriler aynen
+> sürüyor.** Karakter kapsülleri: `09`. Kaynak notları: `08`.
 
 ---
 
@@ -15,9 +17,10 @@ Oyun, **Ebüzziya Tevfik'in** (gerçek; *Yeni Osmanlılar Tarihi*'nin yazarı) h
 basılmamış bir defteridir. Açılış metni (taslak):
 
 > *"Cemiyetin tarihini yazdım; okudunuz. Bir faslı vardı ki sağ olanlara zarar
-> gelmesin diye yazamadım. Şimdi yazıyorum — lâkin adları değiştirerek. Paşaları
-> paşa diye, sefirleri sefir diye bilirsiniz; kimin kim olduğunu anlayan anlar.
-> Bir de aramızda bir adam vardı ki zaten hiçbir deftere adı girmemişti.
+> gelmesin diye yazamadım. Şimdi yazıyorum — lâkin adları değiştirerek. Şehrin
+> adını dahi değiştirdim; kim arasa bulamasın: ben ona Sayeban diyeceğim.
+> Paşaları paşa diye, sefirleri sefir diye bilirsiniz; kimin kim olduğunu anlayan
+> anlar. Bir de aramızda bir adam vardı ki zaten hiçbir deftere adı girmemişti.
 > Ona verdiğim ad, kendi seçtiği addır: Kuzgun."*
 
 **Bu çerçevenin kazandırdıkları:**
@@ -29,17 +32,31 @@ basılmamış bir defteridir. Açılış metni (taslak):
    (Kendine de kurgu ad verir: hikâye içindeki genç mürettip **Basmacı Ferid**,
    onun gençliğidir — *"Kendime de başka ad koydum; mürekkep sıçramasın."*)
 
-**Tür beyanı:** Tarihî kurgu / alternatif-tarih sıkıştırması (Tanzimat sonrası
-"Uzun On Yıl": iflas, Düyun, Reji ve cemiyet aynı sahnede). Padişah sahneye
-çıkmaz, adlandırılmaz. Din oyun malzemesi değildir. Kurumlar gerçek, kişiler
-kurgu, mesele hakiki.
+**Tür beyanı:** Tarihten esinlenen kurgu ("Uzun On Yıl": iflas, borç idaresi,
+tekel ve cemiyet aynı sahnede — geç Osmanlı devrinin yankısı). Padişah sahneye
+çıkmaz, adlandırılmaz; devletin adı da anılmaz ("Devlet" denir). Din oyun
+malzemesi değildir. **Formül: şehir kurgu + kurumlar kurgu + kişiler kurgu
+(anlatıcı hariç) + büyük devletler gerçek + mesele hakiki.** Tarih Varakaları
+codex'i, her kurgu kurumun gerçek ilhamını (Düyun-u Umumiye, Tütün Rejisi,
+kapitülasyonlar...) açıkça anlatır — oyuncu meseleyi yine gerçek adlarıyla öğrenir.
 
 ---
 
-## 1. SAHNE: İSTANBUL, "UZUN ON YIL"
+## 1. SAHNE: SAYEBAN, "UZUN ON YIL"
 
-*(v3'ten aynen: gerçek İstanbul; iflas + Muharrem Kararnamesi + Düyun-u Umumiye
-+ Reji + zaptiye/hafiye; ışık tekeli kurgu payı; kapitülasyon duvarı.)*
+**Şehir:** İki denizin boğazına kurulmuş liman payitahtı **SAYEBAN** (sâyebân =
+gölgelik) — geç Osmanlı İstanbul'unun kurgusal yankısı. Devlet bir nesil önce
+**Büyük İflas**'la tediyeleri durdurdu; alacaklı devletlerin bankerleri
+**Muharrem Kararnamesi**'yle (kurgu; gerçek ilhamı codex'te) şehrin gelirlerine
+el koyan **DÜYÛN DİVANI**'nı kurdular — halk dilinde **BORÇHANE**. Tütünü, tuzu
+ve kandil yağını **REJİ İDARESİ** işletir; silahlı **kolcuları** kaçakçıya kurşun
+atar. Sokakta üç üniforma: zaptiye (devletin), kolcu (Reji'nin), Divan muhafızı
+(alacaklıların). Üniformasızı en tehlikelisi: **Böcekbaşılığın hafiyeleri.**
+
+**Büyük devletler gerçektir:** Borçhane'nin arkasındaki sermaye ve sefaretler
+gerçek Düvel-i Muazzama'dır — **İngiltere, Fransa, Rusya** (ve diğerleri).
+Kurgusal şehir, gerçek emperyalizmin tezgâhıdır; paşalar bu gerçek devletlerin
+gölgesinde saf tutar (§2).
 
 **Kapitülasyon duvarı (oyunun varlık sebebi):** Ecnebi kumpanyayı Osmanlı
 mahkemesine çıkaramazsın — sefaret himayesi soyguncunun etrafına hukuki bir sur
@@ -48,19 +65,29 @@ mahkemesine çıkaramazsın — sefaret himayesi soyguncunun etrafına hukuki bi
 Emperyalizm burada soyut laf değil seviye tasarımıdır: girilemeyen bina,
 dokunulamayan adam, okunamayan defter — oyuncunun girdiği, dokunduğu, okuduğu.
 
-**Işık meselesi (kurgu payı):** Kararname'nin bizim evrendeki ek maddesi kandil
-yağını ve aydınlatma imtiyazını Düyun gelirlerine bağladı: fenerler kurşun mühürlü,
-mühürsüz alev **kaçak**. Beyoğlu'nun borulu havagazı fanusla çalınamaz — vanası
+**Işık meselesi:** Kararname'nin ek maddesi kandil yağını ve aydınlatma
+imtiyazını Divan gelirlerine bağladı: fenerler kurşun mühürlü, mühürsüz alev
+**kaçak**. Frenk Mahallesi'nin borulu havagazı fanusla çalınamaz — vanası
 kapanır. (Fanus mekaniğinin evren gerekçesi.)
 
-**Semtler:** Cibali Tütün Fabrikası ve Reji ambarları · Galata rıhtımı ·
-Cağaloğlu'nda Düyun-u Umumiye sarayı · Babıali matbaaları · Pera/sefaretler ·
-Dolmabahçe Gazhanesi · Boğaz yalıları · paşa konakları · Yerebatan ve sarnıç
-ağı ("Kadim Şehir" — Fisagoriler'in mahzeni).
+**Sayeban semtleri (görev sahneleri — hepsi kurgu, dokusu tarihî):**
 
-**Tarih Varakası (codex):** Her görev sonunda tek sayfalık gerçek tarih notu
-(Düyun neydi, Reji kimdi, kapitülasyon ne demekti, denge siyaseti nasıl işledi).
-Kurgu payı taşıyan öğelerin varakasına damga basılır: **"BU KISIM KURGUDUR."**
+| Semt | Doku | Kim hükmeder |
+|---|---|---|
+| **Rıhtım & Ambarlar** | vinç, balya, sis, meyhane, kaçak mal | kolcular ↔ kaçakçılar |
+| **Duhan Kapısı** (tütün fabrikası mahallesi) | fıçı, kantar, mühür damgası | Reji İdaresi |
+| **Borçhane Meydanı** | mermer cephe, demir parmaklık, kasa katları | Düyûn Divanı |
+| **Matbaacılar Yokuşu** | hurufat kasaları, sansür memuru, mürekkep kokusu | kalem erbabı ↔ sansür |
+| **Frenk Mahallesi** | havagazı ışığı, sefaretler, balo, tiyatro | İngiliz/Fransız/Rus sefaretleri |
+| **Gazhane & Telgrafhane** | boru, vana, buhar, tel ormanı | imtiyazlı kumpanyalar |
+| **Koy Yalıları** | rıhtım fenerleri, kayıkla yanaşma | paşalar (Nadirof'un yalısı) |
+| **Eski Şehir** | konaklar, bedesten, hamam (mevcut prototip haritası) | paşalar, zaptiye |
+| **Bin Direk & sarnıç ağı** ("Kadim Şehir") | sütun ormanı, ölü dil, su sesi | **Fisagoriler** |
+
+**Tarih Varakası (codex):** Her görev sonunda tek sayfalık gerçek tarih notu —
+kurgu kurumun gerçek ilhamı adıyla anlatılır (Borçhane → Düyun-u Umumiye;
+Reji İdaresi → Tütün Rejisi; denge siyaseti → Tanzimat paşaları). Kurgu payı
+taşıyan öğelerin varakasına damga basılır: **"BU KISIM KURGUDUR."**
 
 ---
 
@@ -121,9 +148,10 @@ Vatan lafına alay eder; Fecir kapatılınca uyuyamaz.
 
 ## 4. FİSAGORİLER (tam kurgu) & DÜŞMAN KURUMLAR
 
-*(v3'ten aynen — özet:)* "Her şey sayıdır" diyen antik tarikatın sarnıçlarda
-25 asır hesap tutmuş bakiyesi; çift kayıtlı defter ve bileşik faiz çağında kendi
-ilahiyatının hükümran olduğunu görüp **Düyun-u Umumiye'ye muhasip olarak sızdılar**.
+*(Aynen sürüyor — özet:)* "Her şey sayıdır" diyen antik tarikatın, Sayeban'ın
+altındaki sarnıçlarda 25 asır hesap tutmuş bakiyesi; çift kayıtlı defter ve
+bileşik faiz çağında kendi ilahiyatının hükümran olduğunu görüp **Düyûn
+Divanı'na (Borçhane) muhasip olarak sızdılar**.
 Rütbeler: Dinleyiciler / Hesapçılar. Semboller: tetraktis, monokord, evrak
 köşesindeki on nokta. Mahzenlerinde pirinç dişlili **Büyük Defter ("Ahenk")** —
 dönemin gerçek teknolojisi olan fark makinesi soyundan; kalbinde kadim çark
@@ -132,9 +160,13 @@ salt-ses düşmanı). Reisleri **Baş Muhasip RAKIM EFENDİ**: *"Şahsi değil
 efendim. Bileşik faiz şahsi olamaz."* Kuzgun, defterlerinde kapanmamış tek
 satırdır — **"açık kalem"**; kovalanması muhasebeseldir.
 
-Reji + kolcular, zaptiye + hafiye ağı ("Örümcek" Mürüvvet Hanım — kurgu) ve
-kompozit işbirlikçi **Mabeyinci Paşa** v3'teki gibi. (Mabeyinci, Dört Paşa'nın
-kirli aracısıdır — gerçek ilhamlı paşaların elini kirletmeden pisliği taşır.)
+**BÖCEKBAŞILIK** (korunan renk): Şehrin hırsız-uğursuz takibinden sorumlu kadim
+teşkilat — zaptiyeden ayrı, daha eski, daha sinsi. Başında **BÖCEKBAŞI MÜRÜVVET
+HANIM** (sokak lakabı "Örümcek"): jurnal defterlerinin ve hafiye ağının sahibesi.
+Jurnal/eşkâl sistemi onun mekanik imzasıdır: görülmek, kayda geçmektir. Sezon
+boyunca raporlarının Divan'a satıldığını fark eder — finaldeki tarafsızlığı onun
+küçük isyanıdır. Reji kolcuları ve kompozit işbirlikçi **Mabeyinci Paşa** (Dört
+Paşa'nın kirli aracısı) aynen sürer.
 
 ---
 
@@ -149,24 +181,24 @@ bilgi halkaları, sahte-bilgi tuzakları; iz artık sefaretlerden birine de çı
 1. **MÜHÜRSÜZ ALEV** — Reji mahalle deposu + Mabeyinci Paşa'nın konağı (mevcut
    prototip haritası). Fanus tanışması; görev aslında cemiyetin Kuzgun tahkikatı.
    *Vuruş: Reji'nin mahalle tahsilatı keser.*
-2. **BABIÂLİ BASKINI** — Nadirof'un emriyle mühürlenen matbaadan hurufat
+2. **MATBAACILAR YOKUŞU BASKINI** — Nadirof'un emriyle mühürlenen matbaadan hurufat
    kasalarını geri al. Jurnal/eşkâl tanışması. *Vuruş: sansürün eline geçen
    matbaa geri alınır.*
-3. **CİBALİ AMBARI** — Kaçakçılarla ilk iş; kolcuların el koyduğu balyalar ve
-   ambar defteri. Kanca: defter arasında köşesi **on noktalı** Düyun evrakı.
+3. **DUHAN KAPISI AMBARI** — Kaçakçılarla ilk iş; kolcuların el koyduğu balyalar
+   ve ambar defteri. Kanca: defter arasında köşesi **on noktalı** Divan evrakı.
    *Vuruş: kolcu zulmünün delili çıkar.*
 
 **Perde II — Terazi (4-6)**
-4. **DÜYUN SARAYI: KASA KATI** — İpotek senedi ("asıl nüsha Deftere işlendi"
+4. **BORÇHANE: KASA KATI** — İpotek senedi ("asıl nüsha Deftere işlendi"
    damgalı); ilk kukla-tahsildar; Rakım, "açık kalem"in döndüğünü anlar.
    *Vuruş: şehrin rehin senedi çalınır.*
-5. **SEFARET BALOSU (PERA)** — Dört Paşa aynı çatı altında; Rakım şeref
+5. **SEFARET BALOSU (FRENK MAHALLESİ)** — Dört Paşa aynı çatı altında; Rakım şeref
    konuğu. Ana hedef: Ahenk'in "akort çizelgesi". **Paşa terazisi mekaniği:**
    dört odadan en fazla ikisine girecek vaktin var — hangi paşanın sırrını
    aldığın (Vâsıf'ın İngiliz mektubu / Refik'in sürgün listesi / Şefik'in
    "özel defteri" / Nadirof'un Rus protokolü) finalin şartlarını ve Fecir'in
    manşetini belirler. *Vuruş: paşaları birbirinin sermayesiyle vurur.*
-6. **NADİROF'UN YALISI** — Boğaz gecesi; kayıkla yanaşma, rıhtım feneri,
+6. **NADİROF'UN YALISI (KOY)** — Koy gecesi; kayıkla yanaşma, rıhtım feneri,
    yalı baskını: Rus elçisiyle gizli protokolün aslı. Fecir bastığında
    "Nadirof" lakabı sokağa düşer. *Vuruş: en teslimiyetçi paşayı devirir
    (siyasi doruk).*
@@ -175,7 +207,7 @@ bilgi halkaları, sahte-bilgi tuzakları; iz artık sefaretlerden birine de çı
 7. **TELGRAFHANE** *(seçimli hazırlık)* — Vade Gecesi öncesi haber ağını kes;
    Server Paşa'nın "ricası" ve (balodaki seçimlere göre) kasa planları.
    Muhbir düğümü çözülür. *Vuruş: tahsilat gecesinin gözünü kör eder.*
-8. **VADE GECESİ: AHENK** *(final)* — Muharrem'in on beşi. Düyun sarayı →
+8. **VADE GECESİ: AHENK** *(final)* — Muharrem'in on beşi. Borçhane →
    kasa katı → Fisagori mahzeni. Ahenk "tam sese" gelirken Kuzgun makineyi
    kırmaz — **Kalb'i söker**: kapanmayan hesap hüküm doğuramaz; temerrüt ilan
    edilemez, imtiyaz devri düşer. *Vuruş: haciz hükmünü hukuken imkânsız kılar.*

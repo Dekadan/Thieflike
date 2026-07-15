@@ -152,10 +152,13 @@
 - **Sahne imzası:** *"Sizi affetmek isterdim Kuzgun Bey. Fakat affetmek, yuvarlamaktır.
   Biz yuvarlamayız."*
 
-### "ÖRÜMCEK" MÜRÜVVET HANIM *(kurgu — başhafiye)*
-- **Kimlik:** Jurnal ağının örücüsü; teşkilatın gayrıresmî beyni (resmî unvanı yoktur — kurgu payı).
+### BÖCEKBAŞI MÜRÜVVET HANIM — sokak lakabı "Örümcek" *(kurgu)*
+- **Kimlik:** **Böcekbaşılığın** başı — şehrin hırsız-uğursuz takibinden sorumlu,
+  zaptiyeden eski ve sinsi teşkilat (tarihî Böcekbaşılık kurumunun kurgu yankısı;
+  kadın Böcekbaşı kurgu payıdır). Jurnal defterlerinin ve hafiye ağının sahibesi.
 - **Geçmiş:** Hafiye dulu; kocasının jurnallerini temize çekerken ağın kendisinden
-  iyi işlediğini fark etti. Kimse atamadı; kimse de sökemedi.
+  iyi işlediğini fark etti. Kimse atamadı; kimse de sökemedi — teşkilat onu
+  "muvakkaten" başa geçirdi, yirmi yıldır muvakkat.
 - **Motivasyon:** Devlet — soyut değil: sokakların yanmaması. Sezon boyunca raporlarının
   Düyun'a satıldığını fark eder; finaldeki tarafsızlığı (ne yardım ne engel) onun isyanıdır.
 - **Sahne imzası:** Kuzgun'un eşkâl dosyasını kapatıp mühürlerken: *"Bu adam yok.
