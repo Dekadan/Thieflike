@@ -33,7 +33,7 @@ function setBright(d){
 }
 
 // ---------------- Dünya (Paşa Rüstem'in Konağı) ----------------
-let floorG, solidG, indoorG, doors, lights, loots, guards, bodies, projs, toasts, player, state, timeInMission, tension;
+let floorG, solidG, indoorG, doors, lights, loots, guards, bodies, projs, toasts, oddities, player, state, timeInMission, tension;
 function idx(x,y){return y*MW+x;}
 function buildWorld(){
   floorG=new Array(MW*MH).fill('g');
@@ -93,7 +93,7 @@ function buildWorld(){
       scanT:0,loseT:0,repathT:0,stuckT:0,searchN:0,boost:1,bark:'',barkT:0,idleT:4+Math.random()*8,
       bob:Math.random()*7,moving:false,scr:null,visNow:0};
   }
-  bodies=[]; projs=[]; toasts=[];
+  bodies=[]; projs=[]; toasts=[]; oddities=[];
   player={x:5*TILE+8,y:26*TILE+8,ang:-Math.PI/2,pitch:0,crouch:false,stepAcc:0,bobT:0,
     pebble:3,flames:0,loot:0,seen:0,ko:0,moving:false,channel:null};
   timeInMission=0; tension=false;
@@ -136,14 +136,32 @@ function lightAtPx(px,py){
   return (x<0||y<0||x>=MW||y>=MH)?0:lightG[idx(x,y)];
 }
 const APPEAR_BARKS=['Bu ışık da nereden çıktı?','Kim yaktı bunu?','Az önce karanlıktı orası...'];
+function oddityNoticeCheck(g,od){
+  const ox=od.x*TILE+8, oy=od.y*TILE+8;
+  if(Math.hypot(g.x-ox,g.y-oy)>115)return false;
+  if(!losTile(Math.floor(g.x/TILE),Math.floor(g.y/TILE),od.x,od.y))return false;
+  g.bark=od.appeared?APPEAR_BARKS[(Math.random()*APPEAR_BARKS.length)|0]
+                    :BARKS.douse[(Math.random()*BARKS.douse.length)|0];
+  g.barkT=2.6; hearNoise(g,ox,oy);
+  return true;
+}
+function clearOddityAt(tx,ty){
+  for(let i=oddities.length-1;i>=0;i--)if(oddities[i].x===tx&&oddities[i].y===ty)oddities.splice(i,1);
+}
+// Işık değişimi, atış anında kimse görmese bile kalıcı bir "açıklanamayan ışık" olarak
+// dünyada kalır — devriye rotasına geri döndüğünde ya da rotası değiştiğinde onu bulur.
+// Oyuncu da her durumda (fark edildi / edilmedi) net bir bildirim alır.
 function notifyLightChange(tx,ty,appeared){
+  clearOddityAt(tx,ty);
+  let noticed=false;
   for(const g of guards){
     if(g.state!=='patrol'&&g.state!=='search')continue;
-    if(Math.hypot(g.x-(tx*TILE+8),g.y-(ty*TILE+8))>115)continue;
-    if(!losTile(Math.floor(g.x/TILE),Math.floor(g.y/TILE),tx,ty))continue;
-    g.bark=appeared?APPEAR_BARKS[(Math.random()*APPEAR_BARKS.length)|0]
-                   :BARKS.douse[(Math.random()*BARKS.douse.length)|0];
-    g.barkT=2.6; hearNoise(g,tx*TILE+8,ty*TILE+8);
+    if(oddityNoticeCheck(g,{x:tx,y:ty,appeared}))noticed=true;
+  }
+  if(noticed)toast('Bir ases fark etti!','#ff8a6a');
+  else{
+    oddities.push({x:tx,y:ty,appeared});
+    toast(appeared?'Kimse görmedi… şimdilik.':'Sönüşü kimse görmedi… şimdilik.','#8a93ad');
   }
 }
 
@@ -292,6 +310,15 @@ function updateGuard(g,dt){
   for(const b of bodies)if(!b.found&&guardVision(g,b.x,b.y,true)>0.15){
     b.found=true;say(g,'body');SFX.alert();g.boost=1.25;tension=true;
     g.target=[b.x,b.y];g.path=findPath(g.x,g.y,b.x,b.y);g.pi=0;setState(g,'suspect');g.meter=0.6;
+  }
+  if((g.state==='patrol'||g.state==='search')&&oddities.length){
+    for(let i=oddities.length-1;i>=0;i--){
+      if(oddityNoticeCheck(g,oddities[i])){
+        oddities.splice(i,1);
+        toast('Bir ases şimdi fark etti — geç mi kaldın?','#ff8a6a');
+        break;
+      }
+    }
   }
   if(g.state==='patrol'){
     g.idleT-=dt;
