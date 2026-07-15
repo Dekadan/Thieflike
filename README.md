@@ -1,11 +1,13 @@
 # GÖLGE OYUNU (kod adı: KUZGUN)
 
-> *"Sendika şehri kalemle soyuyor. Ben de kalem işindeyim sayılır."* — Kuzgun
+> *"Devleti kalemle soyuyorlar. Ben de kalem işindeyim sayılır."* — Kuzgun
 
-**Yüksek konsept:** Çöken bir imparatorlukta, **imparatorluğu soyanları soyan adam.**
-Büyük İflas sonrası Sayeban'da gelirler yabancı alacaklıların Sendikası'na devredilmiş,
-ateş bile tekele bağlanmıştır — mühürsüz alev yakmak suçtur. Kuzgun, gizli Şafak
-Cemiyeti'nin "El"idir: kalemler yazar, matbaa basar, El çalar. (Ayrıntı: `docs/07`.)
+**Yüksek konsept (TARİHÎ KURGU):** Çöken bir imparatorlukta, **imparatorluğu soyanları
+soyan adam.** Alternatif-tarih İstanbul'unda Düyun-u Umumiye gelirlere, Reji tütüne —
+ve bizim kurgumuzda ışığa — el koymuştur: mühürsüz alev yakmak suçtur. Kuzgun,
+**Yeni Osmanlılar Cemiyeti'nin** tutanaklara yazılmayan üyesidir; Namık Kemal yazar,
+matbaa basar, Kuzgun çalar. Karşısında: Düyun'un içine yuvalanmış, "her şey sayıdır"
+diyen kadim **Fisagoriler** tarikatı. (Güncel kanon: `docs/07-evren-kitabi.md` v3.)
 
 **Thief: The Dark Project / Thief II: The Metal Age** ruhunda, Osmanlı esintili kurgusal bir liman şehrinde geçen, ışık–gölge ve ses üzerine kurulu **birinci şahıs (POV), retro piksel-doku gizlilik oyunu**. Ara sahneleri geleneksel **Karagöz gölge tiyatrosu** estetiğiyle anlatılır — çünkü bu zaten bir "gölge oyunu"dur.
 
