@@ -17,6 +17,9 @@ piksel dokular, kuantalanmış ışık (Gloomwood/Dusk/Cruelty Squad okulunun at
   kaynak yakını amber, gölge mavi; mesafe sisi karanlığa değil laciverte düşer.
 - **Siluet kuralı:** Her varlık dış hattından tanınmalı — oyun çoğu zaman karanlık.
   Karagöz disipliniyle: perde figürü gibi çiz.
+- **Karanlık ucuzdur, gizemlidir.** Sesteki "sessizlik korkutur" ilkesinin (§6)
+  görsel eşi: aydınlatılmamış/detaylandırılmamış alan "eksik" değil "gizemli"
+  okunur. Bütçe önce Işık Taşı'nın parlattığı kahraman alanlara gider (§7).
 - **El varlığı:** Ekranın sağ altında Kuzgun'un eli + **fanus** — içindeki çalıntı alevler
   gerçek zamanlı yanar. Oyuncunun gözü sürekli orada; oyunun poster karesi budur.
 

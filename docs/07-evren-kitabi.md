@@ -160,6 +160,11 @@ salt-ses düşmanı). Reisleri **Baş Muhasip RAKIM EFENDİ**: *"Şahsi değil
 efendim. Bileşik faiz şahsi olamaz."* Kuzgun, defterlerinde kapanmamış tek
 satırdır — **"açık kalem"**; kovalanması muhasebeseldir.
 
+**Kimlik notu:** Bu bizim Hammerite/Mechanist karşılığımız — ama Thief'te yan-hikâye
+kalan "eski dünya + tuhaf teknoloji" karışımı bizde ayrık değil: finalin hedefi
+(Ahenk/Kalb) doğrudan bu tarikatın icadı, yani görsel kimlikle ana entrika aynı
+kaynaktan besleniyor.
+
 **BÖCEKBAŞILIK** (korunan renk): Şehrin hırsız-uğursuz takibinden sorumlu kadim
 teşkilat — zaptiyeden ayrı, daha eski, daha sinsi. Başında **BÖCEKBAŞI MÜRÜVVET
 HANIM** (sokak lakabı "Örümcek"): jurnal defterlerinin ve hafiye ağının sahibesi.

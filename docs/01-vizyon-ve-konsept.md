@@ -31,7 +31,9 @@ aynıdır: **içeri gir, keseni doldur, asıl hedefi ele geçir, görünmeden ç
    Osmanlı gecesi, kandiller, asesler, Karagöz perdesi — bunu **hiç kimse yapmadı**.
    Yerel oyuncuda gurur, küresel oyuncuda merak uyandırır (Assassin's Creed Revelations'ın
    İstanbul'unun sevilme sebebi). "Gölge oyunu" tabirinin Türkçede zaten Karagöz demek olması,
-   pazarlamada eşi bulunmaz bir kelime oyunudur.
+   pazarlamada eşi bulunmaz bir kelime oyunudur. Bu yalnız kostüm de değil: Fisagoriler'in
+   "her şey sayıdır" tarikatını Borçhane'nin faiz makinesine bağlayan katman, ikinci ve
+   daha derin bir özgünlük ekseni (bkz. `07` §4).
 
 ## Tasarım Sütunları (her karar bunlara vurulur)
 
