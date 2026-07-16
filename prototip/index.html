@@ -19,8 +19,13 @@
 document.title='Gölge Oyunu — Kuzgun (3D Prototip)';
 // =====================================================================
 //  GÖLGE OYUNU — Kuzgun | birinci şahıs 3D prototip (WebGL, bağımsız)
-//  Serbest bakış (yukarı/aşağı/çapraz), low-poly devriyeler, yumuşak
-//  ışık havuzları. İmza mekanik: FANUS — ışığı çal, taşı, yeniden yak.
+//  v2 "Konak Gecesi": dokulu low-poly devriyeler (zırh gömlek + kaftan +
+//  börk, diz/dirsek animasyonu, asa & kılıç), pencerelerden ay ışığı,
+//  mobilyalı odalar, şadırvanlı avlu, selviler, mazgallı sur; çift
+//  kanallı ışık (kandil sıcak / ay soğuk) + alev titremesi; konumsal
+//  ses: rüzgâr, cırcır, ocak çıtırtısı, liman çanı, makam dronu,
+//  devriye adımı ve asa tak-tak telegrafı (bkz. docs/04 §6).
+//  İmza mekanik: FANUS — ışığı çal, taşı, yeniden yak.
 // =====================================================================
 const TILE=16, MW=46, MH=30, GOAL=450;
 const WALL_H=1.5, EYE=0.95, EYE_CROUCH=0.6;
@@ -33,7 +38,7 @@ function setBright(d){
 }
 
 // ---------------- Dünya (Paşa Rüstem'in Konağı) ----------------
-let floorG, solidG, indoorG, doors, lights, loots, guards, bodies, projs, toasts, player, state, timeInMission, tension;
+let floorG, solidG, indoorG, doors, lights, moonLights, winSet, props, loots, guards, bodies, projs, toasts, player, state, timeInMission, tension;
 function idx(x,y){return y*MW+x;}
 function buildWorld(){
   floorG=new Array(MW*MH).fill('g');
@@ -61,24 +66,57 @@ function buildWorld(){
   };
   door(22,6); door(22,22); door(16,10); door(16,18); door(29,18);
   door(9,14); door(35,14); door(3,17);
+  // Pencereler: kafesli kemerler; içeri soğuk ay havuzu düşürür (gizlilik kuralına dahil)
+  winSet=new Set(); moonLights=[];
+  const win=(x,y,ix,iy)=>{winSet.add(x+','+y);moonLights.push({x:ix,y:iy,type:'moon',r:2.4,on:true});};
+  for(const wx of [8,12,26,33,39])win(wx,6,wx,7);
+  for(const wx of [7,12,27,33,38])win(wx,22,wx,21);
+  for(const wy of [9,12])win(3,wy,4,wy);
+  for(const wy of [9,19])win(42,wy,41,wy);
   lights=[
     L(12,24,'torch',4.2), L(32,24,'torch',4.2), L(21,23,'lantern',4.5),
     L(22,9,'lantern',5), L(22,14,'lantern',5), L(22,19,'lantern',5),
     L(6,9,'candle',3.2), L(7,17,'candle',3.2), L(12,19,'candle',3.2),
-    L(33,17,'candle',3.2), L(39,20,'candle',3.2),
+    L(33,17,'candle',3.2,0.36), L(39,20,'candle',3.2),
     L(37,8,'lantern',5.2),
     L(14,3,'torch',4.2), L(30,3,'torch',4.2)
   ];
-  function L(x,y,type,r){return {x,y,type,r,on:true,fl:Math.random()*7};}
+  function L(x,y,type,r,base){return {x,y,type,r,base:base||0,on:true,fl:Math.random()*7};}
   loots=[
-    LT(5,16,'Gümüş şamdan',60), LT(12,17,'Sedef kakma kâse',45), LT(8,20,'İpek kese',35),
-    LT(5,8,'Bakır cezve',25), LT(12,8,'Gümüş kaşık takımı',40),
-    LT(22,13,'Mine işli vazo',55),
-    LT(32,16,'Tombak divit',50), LT(40,21,'Enfiye kutusu',55), LT(36,17,'Kehribar ağızlık',45),
-    LT(34,8,'Paşanın mühürlü kesesi',150,true), LT(39,8,'Zümrüt broş',120,true), LT(40,12,'Cep saati',75),
+    LT(5,16,'Gümüş şamdan',60), LT(12,17,'Sedef kakma kâse',45,false,0.30), LT(8,20,'İpek kese',35),
+    LT(5,8,'Bakır cezve',25,false,0.46), LT(12,8,'Gümüş kaşık takımı',40),
+    LT(22,13,'Mine işli vazo',55,false,0.54),
+    LT(32,17,'Tombak divit',50,false,0.36), LT(40,21,'Enfiye kutusu',55,false,0.94), LT(36,17,'Kehribar ağızlık',45,false,0.08),
+    LT(34,8,'Paşanın mühürlü kesesi',150,true,0.54), LT(39,8,'Zümrüt broş',120,true,0.54), LT(40,12,'Cep saati',75,false,0.44),
     LT(18,2,'Çeşme yüzüğü',35), LT(2,14,'Düşmüş kese',30)
   ];
-  function LT(x,y,name,val,big){return {x,y,name,val,big:!!big,taken:false};}
+  function LT(x,y,name,val,big,h){return {x,y,name,val,big:!!big,h:h||0,taken:false};}
+  // Mobilya + bahçe (statik mesh verisi; solidP hem çarpışma hem görüş hattını kapatır)
+  props=[];
+  const P=(k,x,y,o)=>{props.push(Object.assign({k,x,y},o||{}));};
+  const solidP=(x,y,v)=>{solidG[idx(x,y)]=v||5;};
+  for(let x=5;x<=8;x++){P('counter',x,8);solidP(x,8);}
+  P('pots',5,8);P('pots',7,8);
+  P('barrel',14,8);solidP(14,8); P('barrel',14,9);solidP(14,9);
+  P('table',9,17,{x1:12});for(let x=9;x<=12;x++)solidP(x,17);
+  for(const [cx,cy] of [[8,17],[9,18],[11,18],[12,18],[27,12],[27,15],[37,17],[38,19],[31,16]])P('cushion',cx,cy);
+  for(const [dx,dy] of [[28,11],[28,12],[28,16],[28,17]]){P('divan',dx,dy);solidP(dx,dy);}
+  P('desk',32,17,{x1:33});solidP(32,17);solidP(33,17);
+  for(const [cx,cy] of [[36,9],[38,11],[40,12]]){P('chest',cx,cy);solidP(cx,cy);}
+  for(const [cx,cy] of [[34,8],[39,8],[22,13]]){P('ped',cx,cy);solidP(cx,cy);}
+  P('tshelf',40,21);solidP(40,21);
+  for(let x=31;x<=34;x++)P('wshelf',x,21);
+  for(let y=16;y<=18;y++)P('wshelfV',41,y);
+  for(let y=8;y<=20;y++)for(let x=21;x<=23;x++)P('runner',x,y);
+  for(let y=9;y<=11;y++)for(let x=33;x<=38;x++)P('rug',x,y);
+  P('banner',29,9,{face:'w'});P('banner',29,13,{face:'w'});
+  P('banner',16,12,{face:'e'});P('banner',16,15,{face:'e'});
+  for(const [tx,ty] of [[2,2],[7,1],[37,1],[43,2],[1,13],[44,8],[44,20],[2,27],[9,27],[35,27],[43,27],[1,22]]){
+    P('tree',tx,ty,{h:hashN(tx,ty)});solidP(tx,ty,3);
+  }
+  for(const [bx,by] of [[4,23],[15,23],[30,23],[41,23],[6,5],[18,5],[28,5],[37,5]])P('bush',bx,by);
+  P('fountain',27,26);
+  for(const [fx,fy] of [[27,26],[28,26],[27,27],[28,27]])solidP(fx,fy,4);
   guards=[
     G([[6,25],[39,25]]),
     G([[18,9],[26,9],[26,20],[18,20]]),
@@ -91,7 +129,7 @@ function buildWorld(){
     return {x:p[0]*TILE+8,y:p[1]*TILE+8,wps,wpi:0,static:!!st,post:[p[0]*TILE+8,p[1]*TILE+8],
       dir:face??0,scanBase:face??0,state:'patrol',meter:0,target:null,path:null,pi:0,
       scanT:0,loseT:0,repathT:0,stuckT:0,searchN:0,boost:1,bark:'',barkT:0,idleT:4+Math.random()*8,
-      bob:Math.random()*7,moving:false,scr:null,visNow:0};
+      bob:Math.random()*7,moving:false,scr:null,visNow:0,poseT:0,stepA:0,tapN:0,tapT:2+Math.random()*3};
   }
   bodies=[]; projs=[]; toasts=[];
   player={x:5*TILE+8,y:26*TILE+8,ang:-Math.PI/2,pitch:0,crouch:false,stepAcc:0,bobT:0,
@@ -101,7 +139,10 @@ function buildWorld(){
 }
 
 // ---------------- Işık sistemi (karo bazlı; oyun kuralı) ----------------
-let lightG;
+// Oyun kuralı lightG karo çözünürlüğünde kalır (denge aynı); görsel için
+// 2× çözünürlükte iki kanal tutulur: sıcak (kandil) + soğuk (ay).
+const LR=2, VW=MW*LR, VH=MH*LR;
+let lightG, warmV, coolV;
 function doorAt(x,y){for(const d of doors)if(d.x===x&&d.y===y)return d;return null;}
 function losTile(x0,y0,x1,y1){
   let dx=Math.abs(x1-x0),dy=Math.abs(y1-y0),sx=x0<x1?1:-1,sy=y0<y1?1:-1,err=dx-dy;
@@ -117,16 +158,32 @@ function losTile(x0,y0,x1,y1){
 }
 function computeLight(){
   lightG=new Float32Array(MW*MH);
+  warmV=new Float32Array(VW*VH);
+  coolV=new Float32Array(VW*VH);
   for(let y=0;y<MH;y++)for(let x=0;x<MW;x++)
     lightG[idx(x,y)]=indoorG[idx(x,y)]?0.11:0.30;
-  for(const li of lights){
+  for(let y=0;y<VH;y++)for(let x=0;x<VW;x++){
+    const o=y*VW+x;
+    if(indoorG[idx(x>>1,y>>1)]){warmV[o]=0.05;coolV[o]=0.06;}
+    else coolV[o]=0.30;
+  }
+  const all=lights.concat(moonLights);
+  for(const li of all){
     if(!li.on)continue;
-    const R=Math.ceil(li.r);
+    const R=Math.ceil(li.r), cool=li.type==='moon';
     for(let y=li.y-R;y<=li.y+R;y++)for(let x=li.x-R;x<=li.x+R;x++){
       if(x<0||y<0||x>=MW||y>=MH)continue;
       const d=Math.hypot(x-li.x,y-li.y);
       if(d>li.r||!losTile(li.x,li.y,x,y))continue;
-      lightG[idx(x,y)]=Math.min(1,lightG[idx(x,y)]+Math.pow(1-d/li.r,1.4));
+      lightG[idx(x,y)]=Math.min(1,lightG[idx(x,y)]+Math.pow(1-d/li.r,1.4)*(cool?0.8:1));
+    }
+    const arr=cool?coolV:warmV;
+    for(let sy=(li.y-R)*LR;sy<=(li.y+R+1)*LR;sy++)for(let sx=(li.x-R)*LR;sx<=(li.x+R+1)*LR;sx++){
+      if(sx<0||sy<0||sx>=VW||sy>=VH)continue;
+      const d=Math.hypot((sx+0.5)/LR-(li.x+0.5),(sy+0.5)/LR-(li.y+0.5));
+      if(d>li.r||!losTile(li.x,li.y,sx>>1,sy>>1))continue;
+      const o=sy*VW+sx;
+      arr[o]=Math.min(1.1,arr[o]+Math.pow(1-d/li.r,1.4)*(cool?0.8:1));
     }
   }
   if(glReady)uploadLightTex();
@@ -172,54 +229,167 @@ function findPath(sx,sy,tx,ty){
   return null;
 }
 
-// ---------------- Ses ----------------
-let AC=null, master=null, muted=false;
+// ---------------- Ses: konumsal SFX + ambiyans motoru ----------------
+// docs/04 §6: "Bu oyun kulakla oynanır." Rüzgâr, cırcır, ocak çıtırtısı,
+// uzak liman çanı, Nihavend dronu + gerilim katmanı; devriye adımları ve
+// asa tak-tak telegrafı stereo-pan ile konumlandırılır.
+let AC=null, master=null, muted=false, noiseBuf=null, amb=null;
 function audioInit(){
   if(AC)return;
   try{
     AC=new (window.AudioContext||window.webkitAudioContext)();
-    master=AC.createGain();master.gain.value=0.5;master.connect(AC.destination);
-    const len=2*AC.sampleRate, buf=AC.createBuffer(1,len,AC.sampleRate), d=buf.getChannelData(0);
-    for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
-    const src=AC.createBufferSource();src.buffer=buf;src.loop=true;
-    const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=210;
-    const g=AC.createGain();g.gain.value=0.018;
-    src.connect(f);f.connect(g);g.connect(master);src.start();
+    master=AC.createGain();master.gain.value=muted?0:0.5;master.connect(AC.destination);
+    const len=2*AC.sampleRate;
+    noiseBuf=AC.createBuffer(1,len,AC.sampleRate);
+    const nd=noiseBuf.getChannelData(0);
+    for(let i=0;i<len;i++)nd[i]=Math.random()*2-1;
+    amb={out:0,bellT:10+Math.random()*10,owlT:16+Math.random()*12,chirpT:1.5,ckT:0.1};
+    const mkLoop=(type,fq,q,g0)=>{
+      const s=AC.createBufferSource();s.buffer=noiseBuf;s.loop=true;
+      const f=AC.createBiquadFilter();f.type=type;f.frequency.value=fq;f.Q.value=q||1;
+      const g=AC.createGain();g.gain.value=g0||0;
+      s.connect(f);f.connect(g);g.connect(master);s.start();return g;
+    };
+    amb.wind=mkLoop('bandpass',430,0.6,0);
+    amb.hum=mkLoop('lowpass',190,1,0.013); // taban gece uğultusu
+    // Nihavend dronu (re ekseni: D2 + beşli + oktav)
+    const dr=AC.createGain();dr.gain.value=0;
+    const dlp=AC.createBiquadFilter();dlp.type='lowpass';dlp.frequency.value=240;
+    dlp.connect(dr);dr.connect(master);
+    [[73.42,'sawtooth',1],[73.95,'sawtooth',0.7],[110.0,'sine',0.8],[146.83,'sine',0.25]].forEach(([f,tp,v])=>{
+      const o=AC.createOscillator();o.type=tp;o.frequency.value=f;
+      const g=AC.createGain();g.gain.value=v*0.33;o.connect(g);g.connect(dlp);o.start();
+    });
+    amb.drone=dr;
+    // gerilim katmanı: küçük ikili (mi bemol) + tremolo — şüphe/alarmda açılır
+    const tg=AC.createGain();tg.gain.value=0;
+    const tlp=AC.createBiquadFilter();tlp.type='lowpass';tlp.frequency.value=560;
+    tlp.connect(tg);tg.connect(master);
+    [[77.78,'sawtooth'],[155.56,'sawtooth']].forEach(([f,tp])=>{
+      const o=AC.createOscillator();o.type=tp;o.frequency.value=f;
+      const g=AC.createGain();g.gain.value=0.5;o.connect(g);g.connect(tlp);o.start();
+    });
+    const lfo=AC.createOscillator();lfo.frequency.value=5.2;
+    const lg=AC.createGain();lg.gain.value=180;
+    lfo.connect(lg);lg.connect(tlp.frequency);lfo.start();
+    amb.tense=tg;
   }catch(e){}
 }
-function tone(fr,dur,type,vol,slide){
-  if(!AC||muted)return;
-  const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;
+function spat(x,y,maxD){ // kaynak konumu → {pan, hacim}; duvar arkası boğuklaşır
+  const dx=x-player.x,dy=y-player.y,d=Math.hypot(dx,dy);
+  if(d>maxD)return null;
+  const rel=Math.atan2(dy,dx)-player.ang;
+  const los=losTile(Math.floor(player.x/TILE),Math.floor(player.y/TILE),
+                    Math.max(0,Math.min(MW-1,Math.floor(x/TILE))),Math.max(0,Math.min(MH-1,Math.floor(y/TILE))));
+  return {pan:Math.sin(rel)*Math.min(1,d/60),vol:Math.pow(Math.max(0,1-d/maxD),1.5)*(los?1:0.4)};
+}
+function chan(vol,pos){
+  if(!AC||muted)return null;
+  const g=AC.createGain();let v=vol;
+  if(pos){
+    const sp=spat(pos.x,pos.y,pos.d||10*TILE);
+    if(!sp||sp.vol*vol<0.002)return null;
+    v*=sp.vol;
+    if(AC.createStereoPanner){const p=AC.createStereoPanner();p.pan.value=sp.pan;g.connect(p);p.connect(master);}
+    else g.connect(master);
+  }else g.connect(master);
+  return {g,v};
+}
+function tone(fr,dur,type,vol,slide,pos){
+  const c=chan(vol,pos);if(!c)return;
+  const o=AC.createOscillator(),t=AC.currentTime;
   o.type=type||'sine';o.frequency.setValueAtTime(fr,t);
   if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,slide),t+dur);
-  g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
-  o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+0.02);
+  c.g.gain.setValueAtTime(c.v,t);c.g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(c.g);o.start(t);o.stop(t+dur+0.02);
 }
-function noiseSfx(dur,vol,freq){
-  if(!AC||muted)return;
-  const len=Math.floor(dur*AC.sampleRate),buf=AC.createBuffer(1,len,AC.sampleRate),d=buf.getChannelData(0);
+function noiseSfx(dur,vol,freq,pos,hp){
+  const c=chan(vol,pos);if(!c)return;
+  const len=Math.max(1,Math.floor(dur*AC.sampleRate)),buf=AC.createBuffer(1,len,AC.sampleRate),d=buf.getChannelData(0);
   for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*(1-i/len);
   const s=AC.createBufferSource();s.buffer=buf;
-  const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=freq||700;
-  const g=AC.createGain();g.gain.value=vol;
-  s.connect(f);f.connect(g);g.connect(master);s.start();
+  const f=AC.createBiquadFilter();f.type=hp?'highpass':'lowpass';f.frequency.value=freq||700;
+  c.g.gain.value=c.v;
+  s.connect(f);f.connect(c.g);s.start();
 }
 const SFX={
-  step:(v,fl)=>noiseSfx(0.05,Math.min(0.24,0.05+v*0.0022),fl==='w'?900:500),
+  step:(v,fl)=>{ // oyuncu adımı: zemine göre karakter
+    const V=Math.min(0.25,0.05+v*0.0023);
+    if(fl==='w'){tone(102,0.06,'sine',V*0.85,64);noiseSfx(0.05,V*0.4,620);
+      if(Math.random()<0.30)tone(215+Math.random()*70,0.16,'sawtooth',V*0.28,130);} // gıcırtı
+    else if(fl==='s'){noiseSfx(0.03,V*0.7,2200,null,true);tone(170,0.035,'triangle',V*0.5,110);}
+    else if(fl==='c'){noiseSfx(0.06,V*0.5,280);}
+    else{noiseSfx(0.07,V*0.55,1200,null,true);noiseSfx(0.05,V*0.3,500);}
+  },
+  gstep:(g,fl,run)=>{ // devriye adımı (konumsal — görmeden duyarsın)
+    const pos={x:g.x,y:g.y,d:9*TILE},V=run?0.17:0.10;
+    if(fl==='w')tone(96,0.05,'sine',V,66,pos);
+    else if(fl==='c')noiseSfx(0.05,V*0.7,300,pos);
+    else noiseSfx(0.035,V,fl==='s'?2000:1100,pos,fl==='s');
+  },
+  tak:g=>{ // asa tak-tak: devriye habercisi (docs/04)
+    const pos={x:g.x,y:g.y,d:13*TILE};
+    tone(1250,0.028,'square',0.10,850,pos);tone(620,0.05,'sine',0.055,360,pos);
+  },
   loot:()=>{tone(660,0.09,'sine',0.16);setTimeout(()=>tone(990,0.13,'sine',0.14),70);},
   big:()=>{tone(523,0.1,'sine',0.16);setTimeout(()=>tone(784,0.1,'sine',0.15),80);setTimeout(()=>tone(1046,0.18,'sine',0.14),160);},
   suspect:()=>tone(300,0.14,'square',0.07,430),
   alert:()=>{tone(470,0.3,'sawtooth',0.14,190);noiseSfx(0.2,0.1,1200);},
   giveup:()=>tone(360,0.2,'square',0.05,240),
   steal:()=>{noiseSfx(0.25,0.1,2400);tone(880,0.2,'sine',0.06,1320);},
-  place:()=>{noiseSfx(0.18,0.1,600);tone(220,0.15,'sine',0.08,330);},
-  pebble:()=>tone(1300,0.04,'square',0.1),
+  place:pos=>{noiseSfx(0.18,0.1,600,pos);tone(220,0.15,'sine',0.08,330,pos);},
+  pebble:pos=>{tone(1300,0.04,'square',0.14,null,pos);tone(880,0.05,'square',0.06,480,pos);},
   ko:()=>{tone(72,0.2,'sine',0.3,45);noiseSfx(0.1,0.08,300);},
-  door:()=>tone(150,0.07,'square',0.08,110),
+  door:(x,y)=>{ // menteşe gıcırtısı; konum verilirse pan'lı
+    const pos=x==null?null:{x,y,d:11*TILE};
+    tone(88,0.34,'sawtooth',0.045,58,pos);tone(1240,0.26,'sine',0.02,660,pos);noiseSfx(0.1,0.04,520,pos);
+  },
   throw:()=>noiseSfx(0.12,0.05,2000),
   win:()=>{[392,466,587,784].forEach((f,i)=>setTimeout(()=>tone(f,0.35,'sine',0.14),i*160));},
   lose:()=>{[392,330,262,196].forEach((f,i)=>setTimeout(()=>tone(f,0.4,'sawtooth',0.1),i*180));}
 };
+function updateAudio(dt){
+  if(!AC||!amb)return;
+  const T=AC.currentTime, set=(g,v,tc)=>g.gain.setTargetAtTime(v,T,tc||0.35);
+  const ind=indoorG[idx(Math.floor(player.x/TILE),Math.floor(player.y/TILE))]?1:0;
+  amb.out+=((1-ind)-amb.out)*Math.min(1,dt*2.5);
+  set(amb.wind,0.005+0.016*amb.out);
+  set(amb.drone,0.012,1.2);
+  const alertN=guards.some(g=>g.state==='alert'), susN=guards.some(g=>g.state==='suspect'||g.state==='search');
+  set(amb.tense,alertN?0.034:susN?0.011:0,alertN?0.12:0.8);
+  // en yakın alevden ocak çıtırtısı (rastgele kısa patlamalar)
+  let bd=1e9,bl=null;
+  for(const li of lights)if(li.on){const d=Math.hypot(li.x*TILE+8-player.x,li.y*TILE+8-player.y);if(d<bd){bd=d;bl=li;}}
+  amb.ckT-=dt;
+  if(bl&&bd<5.5*TILE&&amb.ckT<=0){
+    amb.ckT=0.04+Math.random()*0.22;
+    if(Math.random()<0.75)noiseSfx(0.02+Math.random()*0.03,(0.05+Math.random()*0.10)*Math.pow(1-bd/(5.5*TILE),1.6),2600,{x:bl.x*TILE+8,y:bl.y*TILE+8,d:6*TILE},true);
+  }
+  // cırcır böcekleri (açık havada belirgin)
+  amb.chirpT-=dt;
+  if(amb.chirpT<=0){
+    amb.chirpT=0.5+Math.random()*2.2;
+    const v=0.005+0.028*amb.out;
+    if(v>0.008)for(let i=0;i<3;i++)setTimeout(()=>tone(4100+Math.random()*350,0.022,'square',v),i*62);
+  }
+  // uzak liman çanı (kuzeybatıdan)
+  amb.bellT-=dt;
+  if(amb.bellT<=0){
+    amb.bellT=36+Math.random()*36;
+    const pos={x:-1400,y:-700,d:1e9};
+    tone(146.8,2.6,'sine',0.045,null,pos);tone(293.7,1.7,'sine',0.018,null,pos);tone(352,1.1,'sine',0.010,null,pos);
+  }
+  // baykuş
+  amb.owlT-=dt;
+  if(amb.owlT<=0){
+    amb.owlT=24+Math.random()*32;
+    if(amb.out>0.4){
+      const pos={x:player.x+(Math.random()-0.5)*900,y:player.y-500,d:1e9};
+      tone(392,0.22,'sine',0.035,330,pos);
+      setTimeout(()=>tone(360,0.34,'sine',0.030,300,pos),350);
+    }
+  }
+}
 
 // ---------------- Devriye YZ ----------------
 const BARKS={
@@ -270,8 +440,16 @@ function moveAlong(g,speed,dt){
   if(d<3){g.pi++;return g.pi>=g.path.length;}
   g.dir=Math.atan2(dy,dx);g.moving=true;
   g.x+=dx/d*speed*dt;g.y+=dy/d*speed*dt;g.bob+=speed*dt*0.09;
+  g.stepA+=speed*dt;
+  if(g.stepA>=14){
+    g.stepA=0;
+    const fl=floorG[idx(Math.floor(g.x/TILE),Math.floor(g.y/TILE))];
+    SFX.gstep(g,fl,speed>55);
+    g.tapN++;
+    if(g.state==='patrol'&&g.tapN%2===0)SFX.tak(g);
+  }
   for(const dr of doors)if(!dr.open){
-    if(Math.hypot(dr.x*TILE+8-g.x,dr.y*TILE+8-g.y)<14){dr.open=true;computeLight();SFX.door();}
+    if(Math.hypot(dr.x*TILE+8-g.x,dr.y*TILE+8-g.y)<14){dr.open=true;computeLight();SFX.door(dr.x*TILE+8,dr.y*TILE+8);}
   }
   return false;
 }
@@ -299,7 +477,11 @@ function updateGuard(g,dt){
     if(g.static){
       const d=Math.hypot(g.post[0]-g.x,g.post[1]-g.y);
       if(d>4){if(!g.path||g.pi>=g.path.length){g.path=findPath(g.x,g.y,g.post[0],g.post[1]);g.pi=0;}moveAlong(g,30,dt);}
-      else {g.dir=g.scanBase+Math.sin(timeInMission*0.7+g.bob)*0.65;g.moving=false;}
+      else {
+        g.dir=g.scanBase+Math.sin(timeInMission*0.7+g.bob)*0.65;g.moving=false;
+        g.tapT-=dt;
+        if(g.tapT<=0){SFX.tak(g);g.tapT=2.5+Math.random()*4;} // nöbetçi asasını yere vurur
+      }
     }else{
       const wp=g.wps[g.wpi],tx=wp[0]*TILE+8,ty=wp[1]*TILE+8;
       if(!g.path||g.pi>=g.path.length){
@@ -355,7 +537,7 @@ addEventListener('keydown',e=>{
   audioInit();
   if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space','Tab','KeyE'].includes(e.code))e.preventDefault();
   if(keys[e.code])return; keys[e.code]=true;
-  if(e.code==='KeyM'){muted=!muted;toast(muted?'Ses kapalı':'Ses açık','#9fb0c8');}
+  if(e.code==='KeyM'){muted=!muted;if(master)master.gain.value=muted?0:0.5;toast(muted?'Ses kapalı':'Ses açık','#9fb0c8');}
   if(e.code==='Digit1')setBright(-0.1);
   if(e.code==='Digit2')setBright(0.1);
   if(state==='title'&&e.code==='Enter'){buildWorld();state='play';}
@@ -519,11 +701,11 @@ function updateProjs(dt){
     const hitWall=solidG[idx(tX,tY)]||(dr&&!dr.open);
     if(hitWall||((p.left-=adv)<=0.5)){
       const lx=hitWall?p.x:nx,ly=hitWall?p.y:ny;
-      if(p.kind==='pebble'){SFX.pebble();emitNoise(lx,ly,85);}
+      if(p.kind==='pebble'){SFX.pebble({x:lx,y:ly});emitNoise(lx,ly,85);}
       else{
         const fx=Math.floor(lx/TILE),fy=Math.floor(ly/TILE);
-        lights.push({x:fx,y:fy,type:'placed',r:4,on:true,fl:Math.random()*7});
-        computeLight();SFX.place();
+        lights.push({x:fx,y:fy,type:'placed',r:4,base:0,on:true,fl:Math.random()*7});
+        computeLight();SFX.place({x:lx,y:ly});
         emitNoise(lx,ly,20);
         notifyLightChange(fx,fy,true);
       }
@@ -541,6 +723,10 @@ const glc=document.getElementById('gl');
 const gl=glc.getContext('webgl',{antialias:false});
 let glReady=false, prog=null, atlasTex=null, lightTex=null;
 let meshStatic=null, meshCube=null, meshQuad=null, meshOcta=null;
+let meshDoor=null, meshWaterA=null, meshWaterB=null;
+const GP={}; // devriye gövde parçaları (VBO'lar)
+const GP_W=[1,1,1,1];
+let gDt=0.016;
 const U={}, A={};
 
 // ---- mat4 yardımcıları (sütun-major) ----
@@ -574,10 +760,14 @@ function mLookAt(ex,ey,ez,tx,ty,tz){
   m[15]=1;
   return m;
 }
+const mm=(...ms)=>ms.reduce(mMul); // zincirleme çarpım (soldan sağa uygulanır)
 
 // ---- doku atlası (kodla boyanmış piksel dokular) ----
-const CELL=32, AT_COLS=8, AT_ROWS=4, AT_W=AT_COLS*CELL, AT_H=AT_ROWS*CELL;
-const TI={stone:0,pillar:1,door:2,gate:3,fstone:4,carpet:5,wood:6,grass:7,ceil:8,white:9,face:10,flameA:11,flameB:12,glow:13,moon:14};
+const CELL=32, AT_COLS=8, AT_ROWS=6, AT_W=AT_COLS*CELL, AT_H=AT_ROWS*CELL;
+const TI={stone:0,pillar:1,door:2,gate:3,fstone:4,carpet:5,wood:6,grass:7,ceil:8,white:9,face:10,flameA:11,flameB:12,glow:13,moon:14,
+  plaster:15,plasterBand:16,rough:17,window:18,shelf:19,
+  chain:20,tabard:21,clothR:22,shalvar:23,sash:24,skin:25,hair:26,bork:27,brass:28,boot:29,blade:30,
+  canopy:31,bark:32,waterA:33,waterB:34,cushion:35,tableW:36,chest:37,banner:38,grass2:39,stone2:40,barrel:41,runner:42,marble:43};
 function makeAtlas(){
   const c=document.createElement('canvas');c.width=AT_W;c.height=AT_H;
   const g=c.getContext('2d');
@@ -650,14 +840,20 @@ function makeAtlas(){
     g.fillStyle='#2e2438';g.fillRect(0,14,32,3);
   });
   cell(TI.white,g=>{g.fillStyle='#fff';g.fillRect(0,0,32,32);});
-  cell(TI.face,g=>{ // ases yüzü (kutu kafanın ön yüzü)
-    g.fillStyle='#c99a78';g.fillRect(0,0,32,32);
-    g.fillStyle='#8a6248';g.fillRect(0,0,32,3);
-    g.fillStyle='#2a1a12';g.fillRect(7,11,5,3);g.fillRect(20,11,5,3);   // gözler
-    g.fillStyle='#1c120c';g.fillRect(6,8,7,2);g.fillRect(19,8,7,2);     // kaşlar
-    g.fillStyle='#5c3a24';g.fillRect(14,14,4,6);                        // burun
-    g.fillStyle='#3a2418';g.fillRect(8,22,16,4);                        // pos bıyık
-    g.fillStyle='#7a4a30';g.fillRect(12,27,8,2);
+  cell(TI.face,g=>{ // ases yüzü — düşük poligon kafanın ön dokusu
+    g.fillStyle='#c49573';g.fillRect(0,0,32,32);
+    g.fillStyle='#a87c5e';g.fillRect(0,0,2,32);g.fillRect(30,0,2,32);   // yanak kıvrım gölgesi
+    g.fillStyle='#241812';g.fillRect(0,0,32,5);g.fillRect(2,5,4,3);g.fillRect(26,5,4,3); // saç çizgisi
+    g.fillStyle='#8a6248';g.fillRect(4,9,24,2);                          // alın kırışığı
+    g.fillStyle='#2a1b10';g.fillRect(5,11,8,2);g.fillRect(19,11,8,2);    // kalın kaşlar
+    g.fillStyle='#e6d9c2';g.fillRect(7,13,5,3);g.fillRect(20,13,5,3);    // göz akı
+    g.fillStyle='#1d1712';g.fillRect(9,13,2,3);g.fillRect(22,13,2,3);    // bebekler
+    g.fillStyle='#a97a58';g.fillRect(14,12,4,8);                         // burun
+    g.fillStyle='#8a6248';g.fillRect(17,13,1,7);g.fillRect(13,19,1,1);g.fillRect(18,19,1,1);
+    g.fillStyle='#2b1a10';                                               // pos bıyık
+    g.fillRect(8,21,16,3);g.fillRect(6,22,3,2);g.fillRect(23,22,3,2);g.fillRect(10,24,12,1);
+    g.fillStyle='#7a4a34';g.fillRect(13,26,6,1);                         // ağız gölgesi
+    g.fillStyle='#a37b5f';g.fillRect(4,28,24,4);                         // çene gölgesi
   });
   const flame=(fr)=>g2=>{
     const grd=g2.createRadialGradient(16,20-fr*2,2,16,18,14);
@@ -680,6 +876,246 @@ function makeAtlas(){
     g2.fillStyle='rgba(0,0,0,0)';g2.clearRect(0,0,32,32);
     g2.fillStyle='#efe9d4';g2.beginPath();g2.arc(16,16,12,0,7);g2.fill();
     g2.fillStyle='#c9c2ab';g2.beginPath();g2.arc(11,13,3,0,7);g2.fill();g2.beginPath();g2.arc(20,20,2,0,7);g2.fill();
+  });
+  // ---- iç mekân duvarları ----
+  cell(TI.plaster,g=>{ // sıva + ahşap süpürgelik (halılı odalar)
+    g.fillStyle='#7e7666';g.fillRect(0,0,32,32);
+    for(let i=0;i<26;i++){const x=(rnd(i,3)*32)|0,y=(rnd(i,11)*24)|0;
+      g.fillStyle=rnd(i,5)>0.5?'#877f6e':'#756d5e';g.fillRect(x,y,2,1);}
+    g.fillStyle='#5e564a';g.fillRect(0,23,32,1);
+    g.fillStyle='#4c381f';g.fillRect(0,24,32,8);
+    g.fillStyle='#2e2112';g.fillRect(0,24,32,1);g.fillRect(0,28,32,1);
+    g.fillStyle='#5d472a';g.fillRect(0,26,32,1);
+  });
+  cell(TI.plasterBand,g=>{ // sıva + üstte çini bordür (büyük hol / hazine)
+    g.fillStyle='#7e7666';g.fillRect(0,0,32,32);
+    for(let i=0;i<24;i++){const x=(rnd(i,7)*32)|0,y=8+((rnd(i,13)*20)|0);
+      g.fillStyle=rnd(i,9)>0.5?'#877f6e':'#756d5e';g.fillRect(x,y,2,1);}
+    g.fillStyle='#c7ccd4';g.fillRect(0,0,32,7);           // çini şeridi
+    g.fillStyle='#2a4a8c';
+    for(let x=0;x<32;x+=8){g.fillRect(x+3,1,2,2);g.fillRect(x+1,3,2,2);g.fillRect(x+5,3,2,2);g.fillRect(x+3,5,2,1);}
+    g.fillStyle='#a04030';for(let x=0;x<32;x+=8)g.fillRect(x+3,3,2,2);
+    g.fillStyle='#3a4358';g.fillRect(0,7,32,1);
+    g.fillStyle='#5e564a';g.fillRect(0,30,32,2);
+  });
+  cell(TI.rough,g=>{ // mutfak: isli moloz taş
+    g.fillStyle='#4a443a';g.fillRect(0,0,32,32);
+    for(let r=0;r<4;r++)for(let q=0;q<3;q++){
+      const off=(r%2)*5,x=q*11+off-5,y=r*8;
+      g.fillStyle=shadeHex(0x47,0x41,0x37,rnd(q+4,r)*0.2-0.1);
+      g.fillRect(x+1,y+1,10,7);
+    }
+    g.fillStyle='#2e2a22';for(let y=0;y<32;y+=8)g.fillRect(0,y,32,1);
+    g.fillStyle='rgba(20,16,12,0.5)';g.fillRect(0,0,32,4); // is
+  });
+  cell(TI.window,g=>{ // kafesli sivri kemer pencere + ay camı
+    g.fillStyle='#3d4160';g.fillRect(0,0,32,32);
+    for(let y2=0;y2<32;y2+=8){g.fillStyle='#23263c';g.fillRect(0,y2,32,1);}
+    g.fillStyle='#565c78';g.fillRect(6,4,20,26);          // söve
+    g.fillStyle='#0e1626';g.fillRect(8,8,16,22);          // açıklık
+    g.beginPath();g.moveTo(8,10);g.lineTo(16,3);g.lineTo(24,10);g.closePath();g.fill(); // sivri kemer
+    const gg=g.createLinearGradient(8,6,24,30);
+    gg.addColorStop(0,'#7f9ed8');gg.addColorStop(0.5,'#33507c');gg.addColorStop(1,'#1c2c4c');
+    g.fillStyle=gg;g.fillRect(9,9,14,20);
+    g.fillStyle='#241c14';                                 // ahşap kafes
+    for(let x=9;x<24;x+=4)g.fillRect(x,7,1,22);
+    for(let y2=11;y2<29;y2+=4)g.fillRect(9,y2,14,1);
+    g.fillStyle='#565c78';g.fillRect(6,29,20,3);           // denizlik
+  });
+  cell(TI.shelf,g=>{ // kitap rafları
+    g.fillStyle='#2e2112';g.fillRect(0,0,32,32);
+    const sp=['#7c3140','#3e6b4f','#cbb98a','#2a4a8c','#8a5a2c','#5a2330','#4a5a74'];
+    for(let s=0;s<3;s++){
+      const sy=2+s*10;
+      let x=2;
+      while(x<29){const w=2+((rnd(x,s)*3)|0),h=7+((rnd(x,s+5)*2)|0);
+        g.fillStyle=sp[(rnd(x,s+9)*sp.length)|0];g.fillRect(x,sy+9-h,w,h);
+        g.fillStyle='rgba(0,0,0,0.25)';g.fillRect(x+w-1,sy+9-h,1,h);
+        x+=w+1;}
+      g.fillStyle='#5d472a';g.fillRect(0,sy+9,32,2);
+    }
+    g.fillStyle='#4c381f';g.fillRect(0,0,2,32);g.fillRect(30,0,2,32);
+  });
+  // ---- devriye giysi dokuları ----
+  cell(TI.chain,g=>{ // zırh gömlek (örme halka)
+    g.fillStyle='#3f4a63';g.fillRect(0,0,32,32);
+    for(let y2=0;y2<32;y2+=3)for(let x=((y2/3)%2)*2;x<32;x+=4){
+      g.fillStyle='#55627e';g.fillRect(x,y2,2,2);
+      g.fillStyle='#6b7994';g.fillRect(x,y2,2,1);
+      g.fillStyle='#2c3448';g.fillRect(x+2,y2+1,1,1);
+    }
+  });
+  cell(TI.tabard,g=>{ // ases kaftanı (göğüs): kırmızı + köprülü ilik + pirinç düğme
+    g.fillStyle='#a04030';g.fillRect(0,0,32,32);
+    for(let x=0;x<32;x+=5){g.fillStyle=x%10?'#8f3629':'#ab4534';g.fillRect(x,0,5,32);}
+    g.fillStyle='#7a2b20';g.fillRect(13,0,6,32);           // ön pat
+    g.fillStyle='#5a1f16';g.fillRect(13,0,1,32);g.fillRect(18,0,1,32);
+    g.fillStyle='#2b1a12';g.fillRect(6,2,20,3);            // yaka
+    g.fillStyle='#c8a04e';for(let y2=7;y2<30;y2+=6)g.fillRect(15,y2,2,2); // düğmeler
+    g.fillStyle='#6d241b';for(let y2=7;y2<30;y2+=6){g.fillRect(9,y2,4,1);g.fillRect(19,y2,4,1);} // kaytan
+    g.fillStyle='#6d241b';g.fillRect(0,29,32,3);           // etek bandı
+  });
+  cell(TI.clothR,g=>{ // kaftan kumaşı (sırt/etek): kıvrım gölgeli kırmızı
+    g.fillStyle='#9a3d2e';g.fillRect(0,0,32,32);
+    for(let x=0;x<32;x+=4){g.fillStyle=(x%8)?'#883327':'#a54533';g.fillRect(x,0,4,32);}
+    g.fillStyle='rgba(40,10,6,0.35)';g.fillRect(3,0,2,32);g.fillRect(14,0,2,32);g.fillRect(25,0,2,32);
+    g.fillStyle='#6d241b';g.fillRect(0,29,32,3);
+  });
+  cell(TI.shalvar,g=>{ // şalvar: koyu füme, bol kıvrım
+    g.fillStyle='#333a52';g.fillRect(0,0,32,32);
+    for(let x=0;x<32;x+=6){g.fillStyle=(x%12)?'#2a3044':'#3c445e';g.fillRect(x,0,6,32);}
+    g.fillStyle='rgba(10,12,20,0.4)';g.fillRect(8,0,2,32);g.fillRect(21,0,2,32);
+  });
+  cell(TI.sash,g=>{ // kuşak: krem dokuma + lal çizgiler
+    g.fillStyle='#cbb98a';g.fillRect(0,0,32,32);
+    for(let y2=0;y2<32;y2+=3){g.fillStyle='#b8a578';g.fillRect(0,y2,32,1);}
+    g.fillStyle='#7c3140';g.fillRect(0,9,32,3);g.fillRect(0,20,32,3);
+    g.fillStyle='#5a2330';g.fillRect(0,10,32,1);g.fillRect(0,21,32,1);
+  });
+  cell(TI.skin,g=>{
+    g.fillStyle='#c49573';g.fillRect(0,0,32,32);
+    for(let i=0;i<18;i++){const x=(rnd(i,21)*32)|0,y=(rnd(i,23)*32)|0;
+      g.fillStyle=rnd(i,25)>0.5?'#cda07e':'#b98c6a';g.fillRect(x,y,2,2);}
+  });
+  cell(TI.hair,g=>{ // kafanın yan/arka dokusu: saç + ense + kulak
+    g.fillStyle='#b98c6c';g.fillRect(0,0,32,32);
+    g.fillStyle='#241812';g.fillRect(0,0,32,13);
+    for(let x=0;x<32;x+=3){g.fillStyle='#1a110c';g.fillRect(x,10+((rnd(x,1)*4)|0),2,3);}
+    g.fillStyle='#2e1e14';g.fillRect(0,13,32,2);
+    g.fillStyle='#a87c5e';g.fillRect(13,17,6,8);           // kulak
+    g.fillStyle='#8a6248';g.fillRect(15,19,3,5);
+    g.fillStyle='#a37b5f';g.fillRect(0,28,32,4);           // ense gölgesi
+  });
+  cell(TI.bork,g=>{ // börk: koyu lal keçe + sarık bandı
+    g.fillStyle='#6b2018';g.fillRect(0,0,32,32);
+    for(let i=0;i<30;i++){const x=(rnd(i,31)*32)|0,y=(rnd(i,33)*22)|0;
+      g.fillStyle=rnd(i,35)>0.5?'#78271d':'#5d1b14';g.fillRect(x,y,2,2);}
+    g.fillStyle='#d8c8a8';g.fillRect(0,22,32,10);          // sarık dolaması
+    g.fillStyle='#bcaa88';g.fillRect(0,24,32,1);g.fillRect(0,28,32,1);
+    g.fillStyle='#e6d9c2';g.fillRect(0,26,32,1);
+  });
+  cell(TI.brass,g=>{
+    g.fillStyle='#c8a04e';g.fillRect(0,0,32,32);
+    g.fillStyle='#e2c47c';g.fillRect(0,0,32,6);
+    for(let i=0;i<10;i++){const x=(rnd(i,41)*32)|0,y=(rnd(i,43)*32)|0;
+      g.fillStyle='#a5803a';g.fillRect(x,y,3,2);}
+    g.fillStyle='#8a6a2e';g.fillRect(0,28,32,4);
+  });
+  cell(TI.boot,g=>{ // çizme derisi
+    g.fillStyle='#3a2a1c';g.fillRect(0,0,32,32);
+    g.fillStyle='#453324';g.fillRect(0,0,32,4);
+    g.fillStyle='#241a10';g.fillRect(0,10,32,3);g.fillRect(0,22,32,3); // kayışlar
+    g.fillStyle='#c8a04e';g.fillRect(14,10,3,3);g.fillRect(14,22,3,3); // tokalar
+    for(let i=0;i<8;i++){const x=(rnd(i,51)*32)|0,y=(rnd(i,53)*32)|0;
+      g.fillStyle='#2e2115';g.fillRect(x,y,3,1);}
+  });
+  cell(TI.blade,g=>{ // kılıç namlusu: ay çeliği
+    g.fillStyle='#96a0b4';g.fillRect(0,0,32,32);
+    g.fillStyle='#dfe4ec';g.fillRect(13,0,6,32);           // sırt parlaması
+    g.fillStyle='#7c8698';g.fillRect(19,0,4,32);           // oluk
+    g.fillStyle='#5a6478';g.fillRect(28,0,4,32);           // keskin kenar gölgesi
+    g.fillStyle='#eef2f8';g.fillRect(15,0,2,32);
+  });
+  // ---- bahçe & mobilya ----
+  cell(TI.canopy,g=>{ // selvi yeşili
+    g.fillStyle='#1c2c1e';g.fillRect(0,0,32,32);
+    for(let i=0;i<90;i++){const x=(rnd(i,61)*32)|0,y=(rnd(i,63)*32)|0;
+      g.fillStyle=rnd(i,65)>0.6?'#2a4228':'#152015';g.fillRect(x,y,2,2);}
+    for(let i=0;i<14;i++){const x=(rnd(i,67)*32)|0,y=(rnd(i,69)*32)|0;
+      g.fillStyle='#3e6b4f';g.fillRect(x,y,1,2);}
+  });
+  cell(TI.bark,g=>{
+    g.fillStyle='#4a3620';g.fillRect(0,0,32,32);
+    for(let x=0;x<32;x+=4){g.fillStyle=(x%8)?'#3a2a18':'#57402a';g.fillRect(x,0,3,32);}
+    g.fillStyle='#241a10';g.fillRect(6,4,1,12);g.fillRect(18,14,1,14);g.fillRect(26,2,1,10);
+  });
+  const waterCell=(ph)=>g=>{
+    g.fillStyle='#1e3852';g.fillRect(0,0,32,32);
+    g.strokeStyle='#2f5a80';g.lineWidth=1;
+    for(let i=0;i<4;i++){
+      g.beginPath();g.arc(16+((i%2)*8-4),16+(i*7-10)+ph,7+i*3,0.2,2.9);g.stroke();
+    }
+    g.fillStyle='#bcd8f0';
+    g.fillRect((8+ph*3)%30,6,2,1);g.fillRect((22-ph*2)%30,18,2,1);g.fillRect((14+ph*4)%30,26,1,1);
+  };
+  cell(TI.waterA,waterCell(0));
+  cell(TI.waterB,waterCell(2));
+  cell(TI.cushion,g=>{ // kilim yastık
+    g.fillStyle='#7c3140';g.fillRect(0,0,32,32);
+    g.fillStyle='#5a2330';g.fillRect(0,0,32,3);g.fillRect(0,29,32,3);
+    g.save();g.translate(16,16);g.rotate(Math.PI/4);
+    g.fillStyle='#cbb98a';g.fillRect(-5,-5,10,10);
+    g.fillStyle='#3c1622';g.fillRect(-2,-2,4,4);g.restore();
+    g.fillStyle='#cbb98a';
+    g.fillRect(3,3,2,2);g.fillRect(27,3,2,2);g.fillRect(3,27,2,2);g.fillRect(27,27,2,2);
+  });
+  cell(TI.tableW,g=>{ // cilalı ceviz
+    g.fillStyle='#38281a';g.fillRect(0,0,32,32);
+    for(let y2=0;y2<32;y2+=6){g.fillStyle='#241708';g.fillRect(0,y2,32,1);
+      g.fillStyle='#453321';g.fillRect(0,y2+3,32,1);}
+    g.fillStyle='rgba(255,235,190,0.10)';g.fillRect(0,8,32,3);
+  });
+  cell(TI.chest,g=>{ // sandık önü: ahşap + demir kuşak + kilit
+    g.fillStyle='#5d4022';g.fillRect(0,0,32,32);
+    for(let x=0;x<32;x+=6){g.fillStyle='#4b3218';g.fillRect(x,0,1,32);}
+    g.fillStyle='#2b2a33';g.fillRect(0,4,32,4);g.fillRect(0,24,32,4);
+    g.fillStyle='#8a8ea6';
+    for(let x=3;x<32;x+=8){g.fillRect(x,5,2,2);g.fillRect(x,25,2,2);}
+    g.fillStyle='#c8a04e';g.fillRect(13,12,6,8);
+    g.fillStyle='#8a6a2e';g.fillRect(15,15,2,3);
+  });
+  cell(TI.banner,g=>{ // duvar sancağı: lal zemin + altın madalyon
+    g.fillStyle='#5a2330';g.fillRect(0,0,32,32);
+    g.fillStyle='#7c3140';g.fillRect(2,2,28,28);
+    g.strokeStyle='#c8a04e';g.lineWidth=1;g.strokeRect(3.5,3.5,25,25);
+    g.save();g.translate(16,15);g.rotate(Math.PI/4);
+    g.strokeRect(-5.5,-5.5,11,11);g.restore();
+    g.fillStyle='#c8a04e';g.fillRect(15,14,2,2);
+    for(let x=3;x<30;x+=4)g.fillRect(x,29,2,3);            // saçak
+    g.fillStyle='#3a2a18';g.fillRect(0,0,32,2);            // askı çubuğu
+  });
+  cell(TI.grass2,g=>{ // çiçekli çim
+    g.fillStyle='#22331f';g.fillRect(0,0,32,32);
+    for(let i=0;i<55;i++){const x=(rnd(i,71)*32)|0,y=(rnd(i,73)*32)|0;
+      g.fillStyle=rnd(i,75)>0.5?'#2c4228':'#1a2a18';g.fillRect(x,y,1,2);}
+    for(let i=0;i<5;i++){const x=(rnd(i,77)*30)|0,y=(rnd(i,79)*30)|0;
+      g.fillStyle=rnd(i,81)>0.5?'#cbb98a':'#9a7a9a';g.fillRect(x,y,2,2);
+      g.fillStyle='#3e6b4f';g.fillRect(x,y+2,1,2);}
+  });
+  cell(TI.stone2,g=>{ // yosunlu taş varyantı
+    g.fillStyle='#3d4160';g.fillRect(0,0,32,32);
+    for(let r=0;r<4;r++)for(let q=0;q<2;q++){
+      const off=(r%2)*8,x=q*16+off-8,y=r*8;
+      g.fillStyle=shadeHex(0x39,0x3d,0x5a,rnd(q+2,r+2)*0.16-0.08);
+      g.fillRect(x+1,y+1,15,7);
+    }
+    g.fillStyle='#23263c';for(let y=0;y<32;y+=8)g.fillRect(0,y,32,1);
+    g.fillStyle='rgba(62,107,79,0.5)';
+    g.fillRect(2,20,7,5);g.fillRect(20,4,8,4);g.fillRect(12,27,6,4);
+    g.fillStyle='#181b2e';g.fillRect(9,2,1,14);            // çatlak
+  });
+  cell(TI.barrel,g=>{
+    g.fillStyle='#6a4a26';g.fillRect(0,0,32,32);
+    for(let x=0;x<32;x+=5){g.fillStyle=(x%10)?'#57391c':'#755430';g.fillRect(x,0,5,32);
+      g.fillStyle='#3a2a18';g.fillRect(x,0,1,32);}
+    g.fillStyle='#2b2a33';g.fillRect(0,5,32,3);g.fillRect(0,24,32,3);
+  });
+  cell(TI.runner,g=>{ // yolluk kilim
+    g.fillStyle='#5c2433';g.fillRect(0,0,32,32);
+    g.fillStyle='#c8a04e';g.fillRect(2,0,2,32);g.fillRect(28,0,2,32);
+    g.fillStyle='#3c1622';g.fillRect(5,0,2,32);g.fillRect(25,0,2,32);
+    g.save();g.translate(16,8);g.rotate(Math.PI/4);g.fillStyle='#7c3140';g.fillRect(-4,-4,8,8);g.restore();
+    g.save();g.translate(16,24);g.rotate(Math.PI/4);g.fillStyle='#7c3140';g.fillRect(-4,-4,8,8);g.restore();
+    g.fillStyle='#cbb98a';g.fillRect(15,7,2,2);g.fillRect(15,23,2,2);
+    for(let y2=0;y2<32;y2+=4){g.fillStyle='rgba(0,0,0,0.12)';g.fillRect(0,y2,32,1);}
+  });
+  cell(TI.marble,g=>{ // şadırvan mermeri
+    g.fillStyle='#9aa2b0';g.fillRect(0,0,32,32);
+    g.strokeStyle='#7c8494';g.lineWidth=1;
+    g.beginPath();g.moveTo(0,8);g.quadraticCurveTo(12,14,20,6);g.quadraticCurveTo(28,0,32,4);g.stroke();
+    g.beginPath();g.moveTo(0,22);g.quadraticCurveTo(14,18,22,26);g.quadraticCurveTo(28,31,32,28);g.stroke();
+    g.fillStyle='#b8bfca';g.fillRect(0,0,32,2);
+    g.fillStyle='#6e7686';g.fillRect(0,30,32,2);
   });
   return c;
   function shadeHex(r,gg,b,v){
@@ -707,21 +1143,23 @@ const FS=`
 precision mediump float;
 varying vec2 vUV; varying float vShade; varying vec3 vWorld;
 uniform sampler2D uTex, uLight;
-uniform vec3 uCam; uniform vec4 uTint; uniform float uEmissive, uBright;
+uniform vec3 uCam; uniform vec4 uTint; uniform float uEmissive, uBright, uFlick;
 void main(){
   vec4 t=texture2D(uTex,vUV)*uTint;
   if(t.a<0.06)discard;
-  float L=texture2D(uLight,vec2(vWorld.x/46.0,vWorld.z/30.0)).r;
-  // görsel taban aydınlık yüksek tutulur; oyun kuralı (devriye görüşü) L'yi ayrı kullanır
-  float br=mix(clamp(0.36+0.84*L,0.0,1.2),1.0,uEmissive)*uBright;
-  br=floor(br*14.0+0.5)/14.0;
-  vec3 warm=vec3(1.08,0.99,0.86), cool=vec3(0.72,0.81,1.10);
-  vec3 tint=mix(cool,warm,clamp(L*1.7,0.0,1.0));
+  // r = sıcak (kandil, titrer), g = soğuk (ay, sabit)
+  vec2 lrg=texture2D(uLight,vec2(vWorld.x/46.0,vWorld.z/30.0)).rg;
+  float Lw=lrg.r*uFlick, Lc=lrg.g, L=Lw+Lc;
+  // görsel taban aydınlık yüksek tutulur; oyun kuralı (devriye görüşü) lightG'yi ayrı kullanır
+  float br=mix(clamp(0.33+0.87*L,0.0,1.25),1.0,uEmissive)*uBright;
+  br=floor(br*12.0+0.5)/12.0;
+  vec3 warm=vec3(1.14,0.98,0.76), cool=vec3(0.64,0.77,1.12);
+  vec3 tint=(warm*Lw+cool*Lc+vec3(0.74,0.82,1.06)*0.05)/(L+0.05);
   vec3 col=t.rgb*br*vShade*mix(tint,vec3(1.0),uEmissive);
   float d=distance(vWorld.xz,uCam.xz);
-  float fog=clamp(1.0-d/42.0,0.34,1.0);
+  float fog=clamp(1.0-d/44.0,0.32,1.0);
   fog=mix(fog,1.0,uEmissive); // ışık saçanlar sise batmaz
-  col=mix(vec3(0.045,0.055,0.10),col,fog);
+  col=mix(vec3(0.04,0.05,0.10),col,fog);
   gl_FragColor=vec4(col,t.a);
 }`;
 function glInit(){
@@ -737,7 +1175,7 @@ function glInit(){
   gl.linkProgram(prog);
   if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(prog));
   gl.useProgram(prog);
-  for(const n of ['uVP','uModel','uCam','uTint','uEmissive','uBright','uTex','uLight'])U[n]=gl.getUniformLocation(prog,n);
+  for(const n of ['uVP','uModel','uCam','uTint','uEmissive','uBright','uFlick','uTex','uLight'])U[n]=gl.getUniformLocation(prog,n);
   for(const n of ['aPos','aUV','aShade'])A[n]=gl.getAttribLocation(prog,n);
   // atlas
   atlasTex=gl.createTexture();
@@ -747,10 +1185,11 @@ function glInit(){
   gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);
   gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
-  // ışık dokusu
+  // ışık dokusu (RGB: r sıcak, g soğuk; 2× çözünürlük)
+  gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
   lightTex=gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D,lightTex);
-  gl.texImage2D(gl.TEXTURE_2D,0,gl.LUMINANCE,MW,MH,0,gl.LUMINANCE,gl.UNSIGNED_BYTE,new Uint8Array(MW*MH));
+  gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,VW,VH,0,gl.RGB,gl.UNSIGNED_BYTE,new Uint8Array(VW*VH*3));
   gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
@@ -761,14 +1200,21 @@ function glInit(){
   meshCube=buildCube();
   meshQuad=buildQuad();
   meshOcta=buildOcta();
+  meshDoor=buildCellCube(TI.door);
+  meshWaterA=buildWaterQuad(TI.waterA);
+  meshWaterB=buildWaterQuad(TI.waterB);
+  buildGuardParts();
   glReady=true;
   return true;
 }
 function uploadLightTex(){
-  const d=new Uint8Array(MW*MH);
-  for(let i=0;i<MW*MH;i++)d[i]=Math.min(255,lightG[i]*255)|0;
+  const d=new Uint8Array(VW*VH*3);
+  for(let i=0;i<VW*VH;i++){
+    d[i*3]=Math.min(255,warmV[i]*255)|0;
+    d[i*3+1]=Math.min(255,coolV[i]*255)|0;
+  }
   gl.bindTexture(gl.TEXTURE_2D,lightTex);
-  gl.texImage2D(gl.TEXTURE_2D,0,gl.LUMINANCE,MW,MH,0,gl.LUMINANCE,gl.UNSIGNED_BYTE,d);
+  gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,VW,VH,0,gl.RGB,gl.UNSIGNED_BYTE,d);
 }
 function buildVBO(arr){
   const b=gl.createBuffer();
@@ -784,32 +1230,68 @@ function pushQuad(a,p1,p2,p3,p4,cellUV,shade,uvRot){
   const tri=[0,1,2,0,2,3];
   for(const i of tri)a.push(pts[i][0],pts[i][1],pts[i][2],c[i][0],c[i][1],shade);
 }
+// ---- kutu/frustum yardımcıları (statik dünya + devriye parçaları) ----
+function faceCells(C){
+  if(typeof C==='number')return{f:C,b:C,l:C,r:C,t:C,bo:C};
+  const s=C.s??C.f;
+  return {f:C.f??s,b:C.b??s,l:C.l??s,r:C.r??s,t:C.t??s,bo:C.bo??s};
+}
+function fbox(a,x0,x1,y0,y1,z0,z1,C,shm){
+  const c=faceCells(C),m=shm||1;
+  pushQuad(a,[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0],uv(c.f),0.95*m);
+  pushQuad(a,[x1,y0,z1],[x0,y0,z1],[x0,y1,z1],[x1,y1,z1],uv(c.b),0.72*m);
+  pushQuad(a,[x0,y0,z1],[x0,y0,z0],[x0,y1,z0],[x0,y1,z1],uv(c.l),0.66*m);
+  pushQuad(a,[x1,y0,z0],[x1,y0,z1],[x1,y1,z1],[x1,y1,z0],uv(c.r),0.84*m);
+  pushQuad(a,[x0,y1,z1],[x1,y1,z1],[x1,y1,z0],[x0,y1,z0],uv(c.t),1.02*m);
+  pushQuad(a,[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1],uv(c.bo),0.45*m);
+}
+function fprism(a,cx,cz,bw,bd,tw,td,y0,y1,C,shm){ // incelen prizma (frustum)
+  const c=faceCells(C),m=shm||1;
+  pushQuad(a,[cx-bw,y0,cz-bd],[cx+bw,y0,cz-bd],[cx+tw,y1,cz-td],[cx-tw,y1,cz-td],uv(c.f),0.95*m);
+  pushQuad(a,[cx+bw,y0,cz+bd],[cx-bw,y0,cz+bd],[cx-tw,y1,cz+td],[cx+tw,y1,cz+td],uv(c.b),0.72*m);
+  pushQuad(a,[cx-bw,y0,cz+bd],[cx-bw,y0,cz-bd],[cx-tw,y1,cz-td],[cx-tw,y1,cz+td],uv(c.l),0.66*m);
+  pushQuad(a,[cx+bw,y0,cz-bd],[cx+bw,y0,cz+bd],[cx+tw,y1,cz+td],[cx+tw,y1,cz-td],uv(c.r),0.84*m);
+  pushQuad(a,[cx-tw,y1,cz+td],[cx+tw,y1,cz+td],[cx+tw,y1,cz-td],[cx-tw,y1,cz-td],uv(c.t),1.02*m);
+  pushQuad(a,[cx-bw,y0,cz-bd],[cx+bw,y0,cz-bd],[cx+bw,y0,cz+bd],[cx-bw,y0,cz+bd],uv(c.bo),0.45*m);
+}
 function buildStaticMesh(){
   const a=[];
   const gateCells=new Set(['38,0','39,0','40,0']);
+  const open=v=>v===0||v>=3; // mobilya/ağaç/şadırvan duvar yüzünü gizlemez
   for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){
     const s=solidG[idx(x,y)];
-    if(s){ // duvar yüzleri (komşusu boş olanlar)
-      const mat=s===2?uv(TI.pillar):uv(TI.stone);
+    if(s===1||s===2){ // duvar yüzleri (komşusu geçilir olanlar)
+      const edge=(x===0||y===0||x===MW-1||y===MH-1);
+      const H=edge?2.0:WALL_H;
       const isGate=gateCells.has(x+','+y);
-      const m=isGate?uv(TI.gate):mat;
-      // kuzey yüz (komşu y-1)  — normal -z yönü
-      if(y>0&&!solidG[idx(x,y-1)])pushQuad(a,[x,0,y],[x+1,0,y],[x+1,WALL_H,y],[x,WALL_H,y],m,0.86);
-      if(y<MH-1&&!solidG[idx(x,y+1)])pushQuad(a,[x+1,0,y+1],[x,0,y+1],[x,WALL_H,y+1],[x+1,WALL_H,y+1],m,0.98);
-      if(x>0&&!solidG[idx(x-1,y)])pushQuad(a,[x,0,y+1],[x,0,y],[x,WALL_H,y],[x,WALL_H,y+1],m,0.74);
-      if(x<MW-1&&!solidG[idx(x+1,y)])pushQuad(a,[x+1,0,y],[x+1,0,y+1],[x+1,WALL_H,y+1],[x+1,WALL_H,y],m,0.80);
+      const isWin=winSet.has(x+','+y);
+      const ftex=(ex,ey)=>{
+        if(isGate)return uv(TI.gate);
+        if(s===2)return uv(TI.pillar);
+        if(isWin)return uv(TI.window);
+        if(indoorG[idx(ex,ey)]&&!edge){ // iç yüz: odaya göre sıva/çini/moloz
+          const f=floorG[idx(ex,ey)];
+          return uv(f==='w'?TI.rough:f==='c'?TI.plaster:f==='s'?TI.plasterBand:TI.stone);
+        }
+        return uv(hashN(x*3+ey,y*5+ex)>0.8?TI.stone2:TI.stone);
+      };
+      if(y>0&&open(solidG[idx(x,y-1)]))pushQuad(a,[x,0,y],[x+1,0,y],[x+1,H,y],[x,H,y],ftex(x,y-1),0.86);
+      if(y<MH-1&&open(solidG[idx(x,y+1)]))pushQuad(a,[x+1,0,y+1],[x,0,y+1],[x,H,y+1],[x+1,H,y+1],ftex(x,y+1),0.98);
+      if(x>0&&open(solidG[idx(x-1,y)]))pushQuad(a,[x,0,y+1],[x,0,y],[x,H,y],[x,H,y+1],ftex(x-1,y),0.74);
+      if(x<MW-1&&open(solidG[idx(x+1,y)]))pushQuad(a,[x+1,0,y],[x+1,0,y+1],[x+1,H,y+1],[x+1,H,y],ftex(x+1,y),0.80);
+      if(edge&&!isGate&&((x+y)%2===0))fbox(a,x+0.22,x+0.78,H,H+0.28,y+0.22,y+0.78,TI.stone,0.9); // sur mazgalı
       continue;
     }
-    // zemin
+    // zemin (mobilya/ağaç/şadırvan hücreleri de zeminlerini çizer)
     const f=floorG[idx(x,y)];
-    const fm=f==='c'?uv(TI.carpet):f==='w'?uv(TI.wood):f==='g'?uv(TI.grass):uv(TI.fstone);
+    const fm=f==='c'?uv(TI.carpet):f==='w'?uv(TI.wood):f==='g'?uv(hashN(x,y)>0.82?TI.grass2:TI.grass):uv(TI.fstone);
     pushQuad(a,[x,0,y+1],[x+1,0,y+1],[x+1,0,y],[x,0,y],fm,1.0);
     // tavan (yalnız iç mekân)
     if(indoorG[idx(x,y)])pushQuad(a,[x,WALL_H,y],[x+1,WALL_H,y],[x+1,WALL_H,y+1],[x,WALL_H,y+1],uv(TI.ceil),0.55);
     // kapı lentosu (kapı hücresi üstü)
     if(doorAt(x,y)){
       const dm=uv(TI.stone);
-      const top=1.12;
+      const top=1.34;
       const d=doorAt(x,y);
       if(d.horiz){ // duvar x ekseninde: lento kuzey-güney yüzlü
         pushQuad(a,[x,top,y],[x+1,top,y],[x+1,WALL_H,y],[x,WALL_H,y],dm,0.86);
@@ -820,6 +1302,74 @@ function buildStaticMesh(){
         pushQuad(a,[x+1,top,y],[x+1,top,y+1],[x+1,WALL_H,y+1],[x+1,WALL_H,y],dm,0.80);
         pushQuad(a,[x,top,y+1],[x+1,top,y+1],[x+1,top,y],[x,top,y],dm,0.5);
       }
+    }
+  }
+  // tavan kirişleri (oda başına)
+  for(const [x0,x1,yb] of [[17,29,10],[17,29,14],[17,29,18],[4,16,10],[4,16,18],[30,42,10],[30,42,18]])
+    fbox(a,x0,x1,1.36,1.48,yb+0.44,yb+0.56,TI.wood,0.8);
+  // mobilya + bahçe donanımı
+  for(const p of props){
+    const X=p.x,Y=p.y;
+    if(p.k==='counter'){
+      fbox(a,X,X+1,0,0.44,Y+0.12,Y+0.92,{t:TI.tableW,s:TI.rough},1);
+    }else if(p.k==='pots'){
+      fbox(a,X+0.18,X+0.36,0.44,0.60,Y+0.30,Y+0.48,TI.brass,1);
+      fbox(a,X+0.55,X+0.78,0.44,0.68,Y+0.35,Y+0.58,TI.barrel,1);
+    }else if(p.k==='barrel'){
+      fprism(a,X+0.5,Y+0.5,0.16,0.16,0.21,0.21,0,0.32,TI.barrel,1);
+      fprism(a,X+0.5,Y+0.5,0.21,0.21,0.16,0.16,0.32,0.64,{s:TI.barrel,t:TI.wood},1);
+    }else if(p.k==='table'){
+      const x0=X,x1=p.x1+1;
+      fbox(a,x0+0.12,x1-0.12,0.20,0.28,Y+0.15,Y+0.85,TI.tableW,1);
+      for(const lx of [x0+0.2,x1-0.3])for(const lz of [Y+0.2,Y+0.72])
+        fbox(a,lx,lx+0.1,0,0.20,lz,lz+0.1,TI.tableW,0.8);
+    }else if(p.k==='divan'){
+      fbox(a,X+0.15,X+0.98,0,0.16,Y+0.02,Y+0.98,TI.tableW,0.9);
+      fbox(a,X+0.15,X+0.98,0.16,0.34,Y+0.02,Y+0.98,{t:TI.cushion,s:TI.clothR},1);
+      fbox(a,X+0.80,X+0.98,0.34,0.70,Y+0.02,Y+0.98,{l:TI.cushion,s:TI.clothR},1);
+    }else if(p.k==='desk'){
+      const x0=X,x1=p.x1+1;
+      fbox(a,x0+0.15,x1-0.15,0.26,0.34,Y+0.2,Y+0.8,TI.tableW,1);
+      fbox(a,x0+0.2,x0+0.32,0,0.26,Y+0.3,Y+0.7,TI.tableW,0.8);
+      fbox(a,x1-0.32,x1-0.2,0,0.26,Y+0.3,Y+0.7,TI.tableW,0.8);
+    }else if(p.k==='chest'){
+      fbox(a,X+0.14,X+0.86,0,0.30,Y+0.22,Y+0.78,{s:TI.chest,t:TI.wood},1);
+      fprism(a,X+0.5,Y+0.5,0.36,0.28,0.26,0.18,0.30,0.46,{s:TI.chest,t:TI.wood},1);
+    }else if(p.k==='ped'){
+      fprism(a,X+0.5,Y+0.5,0.22,0.22,0.15,0.15,0,0.44,TI.marble,1);
+      fbox(a,X+0.26,X+0.74,0.44,0.52,Y+0.26,Y+0.74,TI.marble,1);
+    }else if(p.k==='tshelf'){
+      fbox(a,X+0.08,X+0.92,0,0.90,Y+0.35,Y+0.95,{f:TI.shelf,s:TI.tableW,t:TI.tableW},1);
+    }else if(p.k==='wshelf'){
+      fbox(a,X+0.04,X+0.96,0,1.08,Y+0.78,Y+0.99,{f:TI.shelf,s:TI.tableW,t:TI.tableW},1);
+    }else if(p.k==='wshelfV'){
+      fbox(a,X+0.78,X+0.99,0,1.08,Y+0.04,Y+0.96,{l:TI.shelf,s:TI.tableW,t:TI.tableW},1);
+    }else if(p.k==='cushion'){
+      fprism(a,X+0.5,Y+0.5,0.18,0.18,0.13,0.13,0,0.10,{s:TI.cushion,t:TI.cushion},1);
+    }else if(p.k==='runner'){
+      pushQuad(a,[X,0.015,Y+1],[X+1,0.015,Y+1],[X+1,0.015,Y],[X,0.015,Y],uv(TI.runner),1.0);
+    }else if(p.k==='rug'){
+      pushQuad(a,[X,0.015,Y+1],[X+1,0.015,Y+1],[X+1,0.015,Y],[X,0.015,Y],uv(TI.carpet),1.0);
+    }else if(p.k==='banner'){
+      if(p.face==='w')pushQuad(a,[X-0.02,0.35,Y+0.85],[X-0.02,0.35,Y+0.15],[X-0.02,1.34,Y+0.15],[X-0.02,1.34,Y+0.85],uv(TI.banner),0.85);
+      else pushQuad(a,[X+1.02,0.35,Y+0.15],[X+1.02,0.35,Y+0.85],[X+1.02,1.34,Y+0.85],[X+1.02,1.34,Y+0.15],uv(TI.banner),0.85);
+    }else if(p.k==='tree'){ // selvi
+      const h=1.9+p.h*0.5;
+      fbox(a,X+0.42,X+0.58,0,0.4,Y+0.42,Y+0.58,TI.bark,1);
+      fprism(a,X+0.5,Y+0.5,0.34,0.34,0.26,0.26,0.35,0.95,TI.canopy,1);
+      fprism(a,X+0.5,Y+0.5,0.28,0.28,0.17,0.17,0.90,Math.max(1.35,h*0.72),TI.canopy,0.92);
+      fprism(a,X+0.5,Y+0.5,0.19,0.19,0.02,0.02,Math.max(1.3,h*0.70),h,TI.canopy,0.85);
+    }else if(p.k==='bush'){
+      fprism(a,X+0.5,Y+0.5,0.27,0.27,0.12,0.12,0,0.34,TI.canopy,0.9);
+    }else if(p.k==='fountain'){ // şadırvan (2×2)
+      const cx=X+1,cz=Y+1,r=0.95,w=0.16,hb=0.30;
+      fbox(a,cx-r,cx+r,0,hb,cz-r,cz-r+w,TI.marble,1);
+      fbox(a,cx-r,cx+r,0,hb,cz+r-w,cz+r,TI.marble,1);
+      fbox(a,cx-r,cx-r+w,0,hb,cz-r+w,cz+r-w,TI.marble,1);
+      fbox(a,cx+r-w,cx+r,0,hb,cz-r+w,cz+r-w,TI.marble,1);
+      fprism(a,cx,cz,0.09,0.09,0.07,0.07,0,0.72,TI.marble,1);
+      fprism(a,cx,cz,0.30,0.30,0.36,0.36,0.72,0.82,TI.marble,1);
+      fprism(a,cx,cz,0.05,0.05,0.015,0.015,0.82,1.06,TI.brass,1);
     }
   }
   return buildVBO(a);
@@ -850,6 +1400,52 @@ function buildOcta(){ // sekizyüzlü (loot mücevheri)
     a.push(bot[0],bot[1],bot[2],w[0],w[1],sh*0.7, p2[0],p2[1],p2[2],w[2],w[3],sh*0.7, p1[0],p1[1],p1[2],w[0],w[3],sh*0.7);
   }
   return buildVBO(a);
+}
+function buildCellCube(cell){ // dokulu birim küp (kapı kanadı)
+  const a=[];fbox(a,-0.5,0.5,0,1,-0.5,0.5,cell,1);return buildVBO(a);
+}
+function buildWaterQuad(cell){ // yatay su yüzeyi (1×1, merkezli)
+  const a=[];pushQuad(a,[-0.5,0,0.5],[0.5,0,0.5],[0.5,0,-0.5],[-0.5,0,-0.5],uv(cell),1);return buildVBO(a);
+}
+// ---- devriye gövde parçaları: incelen prizmalar + piksel doku giydirme ----
+// (docs/04: "düşük poligon gövde + piksel doku giydirme" — Thief 1998 reçetesi)
+function buildGuardParts(){
+  const mk=fn=>{const a=[];fn(a);return buildVBO(a);};
+  GP.torso=mk(a=>fprism(a,0,0,0.185,0.115,0.225,0.13,0,0.30,
+    {f:TI.tabard,b:TI.clothR,l:TI.chain,r:TI.chain,t:TI.clothR,bo:TI.clothR}));
+  GP.skirt=mk(a=>fprism(a,0,0,0.25,0.155,0.19,0.12,-0.26,0,{f:TI.tabard,s:TI.clothR}));
+  GP.sash =mk(a=>fprism(a,0,0,0.20,0.125,0.21,0.128,0,0.075,TI.sash));
+  GP.thigh=mk(a=>fprism(a,0,0,0.066,0.066,0.088,0.088,-0.26,0,TI.shalvar));
+  GP.shin =mk(a=>{
+    fprism(a,0,0,0.050,0.050,0.062,0.062,-0.24,0,TI.boot);
+    fbox(a,-0.052,0.052,-0.24,-0.15,-0.14,0.05,TI.boot); // ayak (burun öne)
+  });
+  GP.armU=mk(a=>fprism(a,0,0,0.054,0.054,0.047,0.047,-0.20,0,TI.chain));
+  GP.armL=mk(a=>{
+    fprism(a,0,0,0.047,0.047,0.040,0.040,-0.16,0,TI.chain);
+    fprism(a,0,0,0.036,0.036,0.041,0.041,-0.235,-0.16,TI.skin); // el
+  });
+  GP.head=mk(a=>fprism(a,0,0,0.095,0.088,0.095,0.088,0,0.20,
+    {f:TI.face,b:TI.hair,l:TI.hair,r:TI.hair,t:TI.hair,bo:TI.skin}));
+  GP.bork=mk(a=>{
+    fprism(a,0,0,0.107,0.107,0.088,0.088,0,0.175,TI.bork);
+    fbox(a,-0.022,0.022,0.045,0.115,-0.112,-0.100,TI.brass); // alın plakası
+  });
+  GP.sword=mk(a=>{ // kılıç: kabza aşağıda (0), namlu +y
+    fprism(a,0,0,0.030,0.007,0.012,0.004,0.13,0.63,TI.blade);
+    fbox(a,-0.055,0.055,0.105,0.130,-0.016,0.016,TI.brass);   // balçak
+    fprism(a,0,0,0.015,0.012,0.017,0.014,0,0.105,TI.boot);    // kabza
+    fbox(a,-0.02,0.02,-0.03,0,-0.02,0.02,TI.brass);           // topuz
+  });
+  GP.asa=mk(a=>{ // devriye asası (tak-tak): elde, ucu yere değer
+    fbox(a,-0.012,0.012,-0.36,0.55,-0.012,0.012,TI.bark);
+    fbox(a,-0.016,0.016,-0.36,-0.31,-0.016,0.016,TI.brass);   // yer demiri
+    fbox(a,-0.02,0.02,0.50,0.55,-0.02,0.02,TI.brass);         // baş
+  });
+  GP.scab=mk(a=>{ // kın (sol kalça)
+    fprism(a,0,0,0.020,0.010,0.030,0.014,-0.36,0,TI.boot);
+    fbox(a,-0.024,0.024,-0.40,-0.36,-0.016,0.016,TI.brass);
+  });
 }
 // yıldızlar UI katmanında çizilir (bkz. drawStarsUI) — sabit yön vektörleri
 const STAR_DIRS=[];
@@ -914,6 +1510,8 @@ function renderWorld(t){
   gl.uniformMatrix4fv(U.uVP,false,VP);
   gl.uniform3fv(U.uCam,camPos);
   gl.uniform1f(U.uBright,BRIGHT);
+  // kandil titremesi: sıcak kanalı hafifçe soluklandırır
+  gl.uniform1f(U.uFlick,1+0.055*Math.sin(t*10.7)+0.04*Math.sin(t*7.3+1.7)+0.02*Math.sin(t*23.1));
   // ay (derinliğe yazmadan; yıldızlar UI katmanında)
   gl.depthMask(false);
   bindMesh(meshQuad);
@@ -923,16 +1521,19 @@ function renderWorld(t){
   // statik dünya
   bindMesh(meshStatic);
   drawMesh(meshStatic,mIdent(),[1,1,1,1],0);
-  // kapılar (yana kayarak açılır)
-  bindMesh(meshCube);
+  // kapılar (yana kayarak açılır) — meşe dokulu kanat
+  bindMesh(meshDoor);
   for(const d of doors){
     const cx=d.x+0.5, cz=d.y+0.5;
     const slide=d.animT*0.92;
     let m;
-    if(d.horiz)m=mMul(mTrans(cx+slide,0,cz),mMul(mScale(0.98,1.12,0.14),mIdent()));
-    else m=mMul(mTrans(cx,0,cz+slide),mMul(mScale(0.14,1.12,0.98),mIdent()));
-    drawMesh(meshCube,m,[0.42,0.30,0.16,1],0);
-    // kapı kolu
+    if(d.horiz)m=mMul(mTrans(cx+slide,0,cz),mScale(0.98,1.33,0.14));
+    else m=mMul(mTrans(cx,0,cz+slide),mScale(0.14,1.33,0.98));
+    drawMesh(meshDoor,m,[1,1,1,1],0);
+  }
+  bindMesh(meshCube);
+  for(const d of doors){
+    const cx=d.x+0.5, cz=d.y+0.5, slide=d.animT*0.92;
     let hm;
     if(d.horiz)hm=mMul(mTrans(cx+slide-0.3,0.55,cz+0.09),mScale(0.06,0.05,0.05));
     else hm=mMul(mTrans(cx+0.09,0.55,cz+slide-0.3),mScale(0.05,0.05,0.06));
@@ -941,11 +1542,11 @@ function renderWorld(t){
   // devriyeler (kutu-gövde low-poly)
   for(const g of guards)drawGuard(g,t);
   for(const b of bodies)drawBody(b);
-  // loot mücevherleri
+  // loot mücevherleri (mobilya üstündekiler yüksekten süzülür)
   bindMesh(meshOcta);
   for(const l of loots)if(!l.taken){
     const bobY=0.06*Math.sin(t*2.2+l.x);
-    const m=mMul(mTrans(l.x+0.5,0.12+bobY,l.y+0.5),mMul(mRotY(t*1.4+l.x),mScale(0.16,0.24,0.16)));
+    const m=mMul(mTrans(l.x+0.5,0.12+l.h+bobY,l.y+0.5),mMul(mRotY(t*1.4+l.x),mScale(0.16,0.24,0.16)));
     drawMesh(meshOcta,m,l.big?[1,0.92,0.55,1]:[1,0.84,0.42,1],0.55);
   }
   // mermiler
@@ -955,76 +1556,128 @@ function renderWorld(t){
     drawMesh(meshCube,m,p.kind==='pebble'?[0.75,0.75,0.82,1]:[1,0.75,0.3,1],p.kind==='flame'?1:0.2);
   }
   // alevler (çapraz billboard + additive parıltı)
+  const flameH=li=>li.type==='torch'?0.72
+    :li.type==='candle'?(li.base||0)+0.30
+    :li.type==='placed'?0.10
+    :indoorG[idx(li.x,li.y)]?1.04:0.52; // fener: içeride tavandan asılı
   gl.depthMask(false);
   gl.blendFunc(gl.SRC_ALPHA,gl.ONE);
   for(const li of lights){
     if(!li.on)continue;
     const fl=((t*8+li.fl)|0)%2?TI.flameA:TI.flameB;
-    const h=li.type==='torch'?0.55:li.type==='candle'?0.28:0.45;
-    const sc=li.type==='candle'?0.2:0.3;
+    const h=flameH(li);
+    const sc=li.type==='candle'?0.2:li.type==='placed'?0.22:0.3;
     const wx=li.x+0.5,wz=li.y+0.5;
     const face=Math.atan2(wz-pz,wx-px)+Math.PI/2;
     bindMesh(meshQuad);
     const m=mMul(mTrans(wx,h,wz),mMul(mRotY(-face),mScale(sc,sc*1.6,1)));
     drawMesh(meshQuad,m,[1,1,1,1],1,uv(fl));
-    const gm=mMul(mTrans(wx,h-0.16,wz),mMul(mRotY(-face),mScale(1.7,1.7,1)));
+    const gm=mMul(mTrans(wx,h-0.85,wz),mMul(mRotY(-face),mScale(1.7,1.7,1)));// quad y∈[0,1]: aleve ortala
     drawMesh(meshQuad,gm,[1,0.8,0.45,0.5+0.1*Math.sin(t*9+li.fl)],1,uv(TI.glow));
   }
   gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
   gl.depthMask(true);
-  // ışık kaynağı kaideleri (sönmüş olsa da görünür)
-  bindMesh(meshCube);
+  // ışık donanımları (sönmüş olsa da görünür)
   for(const li of lights){
-    const wx=li.x+0.5,wz=li.y+0.5;
+    const wx=li.x+0.5,wz=li.y+0.5,ind=indoorG[idx(li.x,li.y)];
+    bindMesh(meshCube);
     if(li.type==='lantern'){
-      drawMesh(meshCube,mMul(mTrans(wx,0,wz),mScale(0.1,0.42,0.1)),[0.35,0.28,0.16,1],0);
-      drawMesh(meshCube,mMul(mTrans(wx,0.36,wz),mScale(0.2,0.16,0.2)),[0.55,0.42,0.2,1],0);
-    }else if(li.type==='torch'){
-      drawMesh(meshCube,mMul(mTrans(wx,0,wz),mScale(0.07,0.55,0.07)),[0.32,0.24,0.13,1],0);
+      if(ind){ // tavandan zincirle asılı pirinç kandil
+        drawMesh(meshCube,mMul(mTrans(wx,1.14,wz),mScale(0.016,0.37,0.016)),[0.30,0.30,0.36,1],0);
+        bindMesh(meshOcta);
+        drawMesh(meshOcta,mMul(mTrans(wx,0.94,wz),mScale(0.11,0.16,0.11)),[0.78,0.62,0.34,1],li.on?0.3:0.04);
+      }else{ // direk feneri
+        drawMesh(meshCube,mMul(mTrans(wx,0,wz),mScale(0.1,0.42,0.1)),[0.35,0.28,0.16,1],0);
+        drawMesh(meshCube,mMul(mTrans(wx,0.38,wz),mScale(0.2,0.18,0.2)),[0.62,0.48,0.24,1],li.on?0.22:0.02);
+      }
+    }else if(li.type==='torch'){ // avlu mangalı
+      drawMesh(meshCube,mMul(mTrans(wx,0,wz),mScale(0.06,0.58,0.06)),[0.30,0.24,0.14,1],0);
+      bindMesh(meshOcta);
+      drawMesh(meshOcta,mMul(mTrans(wx,0.52,wz),mScale(0.17,0.11,0.17)),[0.26,0.23,0.25,1],li.on?0.12:0);
     }else if(li.type==='candle'){
-      drawMesh(meshCube,mMul(mTrans(wx,0,wz),mScale(0.07,0.26,0.07)),[0.85,0.8,0.66,1],0);
+      const b=li.base||0;
+      drawMesh(meshCube,mMul(mTrans(wx,b,wz),mScale(0.05,0.24,0.05)),[0.85,0.8,0.66,1],0);
+      drawMesh(meshCube,mMul(mTrans(wx,b,wz),mScale(0.12,0.02,0.12)),[0.66,0.52,0.30,1],0);
+    }else if(li.type==='placed'){ // fanustan bırakılan alev: pişmiş toprak kandil
+      drawMesh(meshCube,mMul(mTrans(wx,0,wz),mScale(0.09,0.05,0.09)),[0.62,0.40,0.26,1],0.1);
     }
   }
+  // şadırvan suyu (hafif kırpışan iki kare)
+  const wmesh=((t*3)|0)%2?meshWaterA:meshWaterB;
+  bindMesh(wmesh);
+  drawMesh(wmesh,mMul(mTrans(28,0.22,27),mScale(1.56,1,1.56)),[1,1,1,0.94],0.26);
 }
 function drawGuard(g,t){
+  // İncelen prizma uzuvlar + doku giydirme; yürüyüşte diz/dirsek bükülür,
+  // devriyede asa, alarm/aramada çekilmiş kılıç (poz yumuşak geçişli).
   const wx=g.x/TILE, wz=g.y/TILE;
-  const swing=g.moving?Math.sin(g.bob*1.6)*0.5:0;
-  const base=mMul(mTrans(wx,0,wz),mRotY(-g.dir-Math.PI/2)); // yerel -z = baktığı yön
-  const B=(local,tint,em)=>{bindMesh(meshCube);drawMesh(meshCube,mMul(base,local),tint,em||0);};
-  const KAFTAN=[0.62,0.25,0.19,1], KAFTAN_D=[0.48,0.19,0.15,1], KUSAK=[0.85,0.8,0.66,1],
-        SKIN=[0.79,0.6,0.47,1], BORK=[0.42,0.16,0.12,1], LEG=[0.29,0.15,0.12,1];
-  // bacaklar (kalçadan salınım)
-  B(mMul(mTrans(-0.09,0.46,0),mMul(mRotX(swing),mMul(mTrans(0,-0.46,0),mScale(0.15,0.46,0.15)))),LEG);
-  B(mMul(mTrans(0.09,0.46,0),mMul(mRotX(-swing),mMul(mTrans(0,-0.46,0),mScale(0.15,0.46,0.15)))),LEG);
-  // gövde + kuşak + omuz
-  B(mMul(mTrans(0,0.46,0),mScale(0.42,0.5,0.26)),KAFTAN);
-  B(mMul(mTrans(0,0.62,0),mScale(0.44,0.08,0.28)),KUSAK);
-  B(mMul(mTrans(0,0.9,0),mScale(0.46,0.1,0.28)),KAFTAN_D);
-  // kollar
-  B(mMul(mTrans(-0.27,0.9,0),mMul(mRotX(-swing*0.7),mMul(mTrans(0,-0.4,0),mScale(0.11,0.4,0.11)))),KAFTAN_D);
-  B(mMul(mTrans(0.27,0.9,0),mMul(mRotX(swing*0.7),mMul(mTrans(0,-0.4,0),mScale(0.11,0.4,0.11)))),KAFTAN_D);
-  // kafa + yüz + börk
-  B(mMul(mTrans(0,0.97,0),mScale(0.24,0.24,0.24)),SKIN);
-  bindMesh(meshQuad);
-  const fm=mMul(base,mMul(mTrans(0,0.97,-0.125),mScale(0.24,0.24,1)));
-  drawMesh(meshQuad,fm,[1,1,1,1],0,uv(TI.face));
-  B(mMul(mTrans(0,1.21,0),mScale(0.3,0.13,0.3)),BORK);
-  B(mMul(mTrans(0,1.33,0),mScale(0.16,0.05,0.16)),BORK);
-  // mızrak (sol el hizası)
-  B(mMul(mTrans(0.3,0.75,-0.05),mMul(mRotX(0.06),mScale(0.035,1.35,0.035))),[0.45,0.4,0.3,1]);
-  B(mMul(mTrans(0.3,2.06,-0.13),mScale(0.05,0.16,0.05)),[0.75,0.77,0.85,1],0.15);
+  const mv=g.moving?1:0, ph=g.bob*1.6;
+  const swing=mv?Math.sin(ph)*0.52:0;
+  g.poseT+=(((g.state==='alert'||g.state==='search')?1:0)-g.poseT)*Math.min(1,gDt*5);
+  const pT=g.poseT;
+  const bobY=mv*Math.abs(Math.sin(ph))*0.028;
+  const base=mMul(mTrans(wx,bobY,wz),mRotY(-g.dir-Math.PI/2)); // yerel -z = baktığı yön
+  const D=(mesh,local,tint,em)=>{bindMesh(mesh);drawMesh(mesh,mMul(base,local),tint||GP_W,em||0);};
+  // bacaklar: kalça salınımı + öne alınan bacakta diz bükülmesi
+  const bendA=mv?Math.max(0,Math.sin(ph+0.8))*0.75:0.04;
+  const bendB=mv?Math.max(0,Math.sin(ph+Math.PI+0.8))*0.75:0.04;
+  D(GP.thigh,mm(mTrans(-0.10,0.50,0),mRotX(swing)));
+  D(GP.shin, mm(mTrans(-0.10,0.50,0),mRotX(swing),mTrans(0,-0.26,0),mRotX(bendA)));
+  D(GP.thigh,mm(mTrans(0.10,0.50,0),mRotX(-swing)));
+  D(GP.shin, mm(mTrans(0.10,0.50,0),mRotX(-swing),mTrans(0,-0.26,0),mRotX(bendB)));
+  // üst gövde: kalçadan hafif öne eğim + yürüyüş yalpası
+  const TOPm=mm(base,mTrans(0,0.50,0),mRotX(mv*0.06+pT*0.10),mRotZ(mv*Math.sin(ph)*0.03));
+  const DT=(mesh,local,tint,em)=>{bindMesh(mesh);drawMesh(mesh,mMul(TOPm,local),tint||GP_W,em||0);};
+  DT(GP.skirt,mTrans(0,0.02,0));
+  DT(GP.torso,mIdent());
+  DT(GP.sash,mTrans(0,0.005,0));
+  // kafa: şüphede sağa sola tarar, devriyede ağır süzülür
+  const hy=(g.state==='suspect'||g.state==='search')?Math.sin(t*3.2+g.bob)*0.5
+          :(!mv?Math.sin(t*0.6+g.bob)*0.22:Math.sin(ph)*0.05);
+  DT(GP.head,mm(mTrans(0,0.305,0),mRotY(hy)));
+  DT(GP.bork,mm(mTrans(0,0.505,0),mRotY(hy)));
+  // kollar (omuz TOP-yerel y=0.26 → dünya ~0.76)
+  const swL=-swing*0.75;
+  const upL=mm(mTrans(-0.265,0.26,0),mRotZ(0.10),mRotX(swL));
+  DT(GP.armU,upL);
+  DT(GP.armL,mm(upL,mTrans(0,-0.20,0),mRotX(-0.28-Math.max(0,-swing)*0.35)));
+  const swR=(1-pT)*(-swing*0.15-0.22)+pT*(-0.85); // asa tutuşu → kılıç kaldırma
+  const elR=(1-pT)*(-0.28)+pT*(-0.50);
+  const upR=mm(mTrans(0.265,0.26,0),mRotZ(-0.10),mRotX(swR));
+  DT(GP.armU,upR);
+  const loR=mm(upR,mTrans(0,-0.20,0),mRotX(elR));
+  DT(GP.armL,loR);
+  // sol kalçada kın
+  DT(GP.scab,mm(mTrans(-0.20,0.06,0.03),mRotX(0.5),mRotZ(0.18)));
+  if(pT>0.5){ // kılıç çekilmiş: namlu dikeye yakın, hafif öne
+    DT(GP.sword,mm(loR,mTrans(0,-0.20,-0.02),mRotX(-(swR+elR)-0.30)),GP_W,0.12);
+  }else{      // devriye asası: yere dik, ucu tabana değer
+    DT(GP.asa,mm(loR,mTrans(0,-0.20,0),mRotX(-(swR+elR))));
+  }
   // UI için baş konumu
-  g.scr=project(wx,1.55,wz);
+  g.scr=project(wx,1.35+bobY,wz);
 }
-function drawBody(b){
+function drawBody(b){ // bayıltılmış ases: sırtüstü, börk yana yuvarlanmış
   const wx=b.x/TILE, wz=b.y/TILE;
-  const base=mMul(mTrans(wx,0.1,wz),mMul(mRotY(-b.dir),mRotZ(Math.PI/2)));
-  bindMesh(meshCube);
-  const B=(local,tint)=>drawMesh(meshCube,mMul(base,local),tint,0);
-  B(mMul(mTrans(0,0.0,0),mScale(0.42,0.5,0.26)),[0.5,0.2,0.16,1]);
-  B(mMul(mTrans(0,0.45,0),mScale(0.22,0.22,0.22)),[0.79,0.6,0.47,1]);
-  B(mMul(mTrans(0,-0.4,0.05),mScale(0.15,0.4,0.15)),[0.29,0.15,0.12,1]);
-  B(mMul(mTrans(0,-0.4,-0.08),mScale(0.15,0.4,0.15)),[0.29,0.15,0.12,1]);
+  const base=mm(mTrans(wx,0.10,wz),mRotY(-b.dir),mRotX(-1.42));
+  const D=(mesh,local,tint,em)=>{bindMesh(mesh);drawMesh(mesh,mMul(base,local),tint||GP_W,em||0);};
+  D(GP.thigh,mm(mTrans(-0.10,0.50,0),mRotZ(0.10)));
+  D(GP.shin, mm(mTrans(-0.10,0.50,0),mRotZ(0.10),mTrans(0,-0.26,0)));
+  D(GP.thigh,mm(mTrans(0.10,0.50,0),mRotZ(-0.10)));
+  D(GP.shin, mm(mTrans(0.10,0.50,0),mRotZ(-0.10),mTrans(0,-0.26,0)));
+  D(GP.skirt,mTrans(0,0.52,0));
+  D(GP.torso,mTrans(0,0.50,0));
+  D(GP.sash,mTrans(0,0.505,0));
+  D(GP.head,mm(mTrans(0,0.805,0),mRotY(0.35)));
+  const upL=mm(mTrans(-0.265,0.76,0),mRotZ(0.85));
+  D(GP.armU,upL);D(GP.armL,mm(upL,mTrans(0,-0.20,0)));
+  const upR=mm(mTrans(0.265,0.76,0),mRotZ(-0.65));
+  D(GP.armU,upR);D(GP.armL,mm(upR,mTrans(0,-0.20,0)));
+  // düşen börk ve asa
+  bindMesh(GP.bork);
+  drawMesh(GP.bork,mm(mTrans(wx+Math.cos(b.dir+1.2)*0.34,0.02,wz+Math.sin(b.dir+1.2)*0.34),mRotZ(1.35),mRotX(0.4)),GP_W,0);
+  bindMesh(GP.asa);
+  drawMesh(GP.asa,mm(mTrans(wx-Math.cos(b.dir+0.5)*0.30,0.03,wz-Math.sin(b.dir+0.5)*0.30),mRotY(b.dir*1.7),mRotX(Math.PI/2)),GP_W,0);
 }
 
 // =====================================================================
@@ -1214,8 +1867,25 @@ function drawMap(){
     ux.fillRect(ox+x*sc,oy+y*sc,sc,sc);
   }
   for(const d of doors){ux.fillStyle=d.open?'#8f6c36':'#6d4d2b';ux.fillRect(ox+d.x*sc,oy+d.y*sc,sc,sc);}
+  // bahçe donanımı: selviler + şadırvan
+  for(const p of props){
+    if(p.k==='tree'){ux.fillStyle='#55704a';ux.beginPath();ux.arc(ox+(p.x+0.5)*sc,oy+(p.y+0.5)*sc,sc*0.42,0,7);ux.fill();}
+    else if(p.k==='fountain'){ux.fillStyle='#8fa9c2';ux.fillRect(ox+p.x*sc,oy+p.y*sc,sc*2,sc*2);
+      ux.strokeStyle='#5f7a94';ux.strokeRect(ox+p.x*sc,oy+p.y*sc,sc*2,sc*2);}
+  }
   ux.fillStyle='#5f8a58';ux.fillRect(ox+38*sc,oy+1*sc,3*sc,2*sc);
   text('ÇIKIŞ',ox+39.5*sc,oy+1.4*sc-6,11,'#3c5a38','center',F_UI,'700');
+  // oda adları
+  const LBL=[['MUTFAK',9.5,10.6],['YEMEK ODASI',9.5,19.2],['BÜYÜK HOL',22.5,14.6],['HAZİNE',35.5,10.6],
+             ['KÜTÜPHANE',35.5,18.2],['ÖN AVLU',12,26.2],['ARKA BAHÇE',12,3.6]];
+  for(const [n,lx,ly] of LBL)text(n,ox+lx*sc,oy+ly*sc,10,'rgba(90,72,48,0.85)','center',F_UI,'700');
+  // kuzey oku (sol altta, çim üzerinde)
+  const kx=ox+2.2*sc,ky=oy+mh-2.2*sc;
+  ux.strokeStyle='#5c4a30';ux.lineWidth=2;
+  ux.beginPath();ux.moveTo(kx,ky);ux.lineTo(kx,ky-14);ux.stroke();
+  ux.fillStyle='#5c4a30';
+  ux.beginPath();ux.moveTo(kx,ky-18);ux.lineTo(kx-4,ky-11);ux.lineTo(kx+4,ky-11);ux.closePath();ux.fill();
+  text('K',kx,ky+11,10,'#5c4a30','center',F_UI,'700');
   const pxm=ox+player.x/TILE*sc, pym=oy+player.y/TILE*sc;
   ux.fillStyle='#7a2020';
   ux.beginPath();
@@ -1223,7 +1893,7 @@ function drawMap(){
   ux.lineTo(pxm+Math.cos(player.ang+2.5)*6,pym+Math.sin(player.ang+2.5)*6);
   ux.lineTo(pxm+Math.cos(player.ang-2.5)*6,pym+Math.sin(player.ang-2.5)*6);
   ux.closePath();ux.fill();
-  text('Paşa Rüstem Konağı — kat planı',ox+mw/2,oy+mh+22,13,'#4a3a28','center',F_DISP,'600');
+  text('Paşa Rüstem Konağı — kat planı',ox+mw/2,oy+mh+9,13,'#4a3a28','center',F_DISP,'600');
 }
 function drawTitle(t){
   ux.clearRect(0,0,uiW,uiH);
@@ -1284,7 +1954,7 @@ function drawTitle(t){
   });
   if(Math.sin(t*3.4)>-0.25)
     text('— ENTER: Geceye Başla —',uiW/2,uiH-Math.max(46,uiH*0.09),Math.min(22,uiH*0.042),'#ffd76a','center',F_DISP,'700');
-  text('Thief: The Dark Project ruhuyla · Karagöz\'ün perdesinden · M ses · R yeniden',uiW/2,uiH-16,Math.min(13,uiH*0.026),'rgba(140,152,176,0.8)');
+  text('Thief: The Dark Project ruhuyla · v2: dokulu devriyeler, ay ışığı pencereleri, liman ambiyansı · M ses · R yeniden',uiW/2,uiH-16,Math.min(13,uiH*0.026),'rgba(140,152,176,0.8)');
 }
 function drawEnd(win,t){
   ux.fillStyle=win?'rgba(6,12,8,0.82)':'rgba(16,5,7,0.84)';
@@ -1324,7 +1994,7 @@ buildWorld();
 if(glReady)meshStatic=buildStaticMesh();
 function frame(ts){
   const t=ts/1000, dt=Math.min(0.05,(ts-last)/1000||0.016);
-  last=ts;
+  last=ts; gDt=dt;
   if(glFail){
     ux.clearRect(0,0,uiW,uiH);
     ux.fillStyle='#0b0e1a';ux.fillRect(0,0,uiW,uiH);
@@ -1337,6 +2007,7 @@ function frame(ts){
     updateChannel(dt);
     for(const g of guards)updateGuard(g,dt);
     updateProjs(dt);
+    updateAudio(dt);
     renderWorld(t);
     drawHUD(t);
   }else if(state==='title'){

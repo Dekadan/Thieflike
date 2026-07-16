@@ -51,6 +51,7 @@ yerleştirmek**; keseni doldurup sırra kadem basmak.
 - [x] Çekirdek mekanik tasarımı + imza mekanik (**Fanus**)
 - [x] Sanat/ses yönü ve pazar analizi
 - [x] Oynanabilir **birinci şahıs gerçek 3D** prototip (WebGL; serbest bakış, ışık-gölge, ses, devriye YZ, fanus, bayıltma)
+- [x] Prototip v2 "Konak Gecesi": **piksel dokulu low-poly asesler** (zırh gömlek, kaftan, börk; asa/kılıç, diz-dirsek animasyonu), pencerelerden **ay ışığı**, mobilyalı odalar, şadırvanlı avlu, selviler, mazgallı sur; çift kanallı titreşen ışık; **konumsal ses** (rüzgâr, cırcır, çıtırtı, liman çanı, makam dronu, asa tak-tak telegrafı)
 - [ ] Godot 4 (3D low-res) projesine geçiş (bkz. `docs/06`)
 - [ ] Dikey dilim: "Kesat Zamanlar" görevi
 
